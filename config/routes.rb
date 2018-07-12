@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :task_lists
   resources :tasks
   resources :monsters

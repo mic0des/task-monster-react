@@ -5,6 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import SignInForm from './components/auth/SignInForm'
 import SignOutLink from './components/auth/SignOutLink'
+import SignUpForm from './components/auth/SignUpForm'
 
-ReactDOM.render(<SignInForm />, document.getElementById('root'));
+ReactDOM.render(<SignUpForm />, document.getElementById('root'));
 registerServiceWorker();

@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import SignInForm from './components/auth/SignInForm'
 import SignOutLink from './components/auth/SignOutLink'
 import SignUpForm from './components/auth/SignUpForm'
+import Monster from './components/Monster'
 
-ReactDOM.render(<SignUpForm />, document.getElementById('root'));
+ReactDOM.render(<Monster />, document.getElementById('root'));
 registerServiceWorker();

@@ -26,16 +26,16 @@ const Monster = props => {
 				</Grid>
 				<Grid item xs={3}>
 					<Paper>
-					<ul className="stats">
-						<li style={{listStyleType: "none"}}><h3>Schrödinger</h3></li>
-						<li style={{listStyleType: "none"}}><h4>Level 1</h4></li>
-						<li style={{listStyleType: "none"}}>HP: 100</li>
-						<li style={{listStyleType: "none"}}>Attack: 49</li>
-						<li style={{listStyleType: "none"}}>Defense: 49</li>
-						<li style={{listStyleType: "none"}}>Sp. Attack: 65</li>
-						<li style={{listStyleType: "none"}}>Sp. Defense: 65</li>
-						<li style={{listStyleType: "none"}}>Speed: 45</li>
-					</ul>
+						<ul className="stats">
+							<li style={{listStyleType: "none"}}><h3>Schrödinger ♂</h3></li>
+							<li style={{listStyleType: "none"}}><h4>Level 1</h4></li>
+							<li style={{listStyleType: "none"}}>HP: 100</li>
+							<li style={{listStyleType: "none"}}>Attack: 49</li>
+							<li style={{listStyleType: "none"}}>Defense: 49</li>
+							<li style={{listStyleType: "none"}}>Sp. Attack: 65</li>
+							<li style={{listStyleType: "none"}}>Sp. Defense: 65</li>
+							<li style={{listStyleType: "none"}}>Speed: 45</li>
+						</ul>
 					</Paper>
 				</Grid>      			
       		</Grid>

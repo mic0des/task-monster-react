@@ -67,15 +67,18 @@
 import React, { Component } from 'react';
 import TaskForm from './containers/TaskForm';
 import Tasks from './containers/Tasks';
+import Monster from './components/Monster';
+import './App.css';
 
 export class App extends Component {
   render() {
     return (
       <div className="container-fluid">
         <div className="row title justify-content-center" style={{ paddingTop: '12px' }}>
-          <h1>Task Maker</h1>
+          <h1 className="title">Task Monster</h1>
         </div>
         <hr />
+        <Monster />
         <TaskForm />
         <Tasks />
       </div>

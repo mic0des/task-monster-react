@@ -1,7 +1,7 @@
 export const addTask = task => {
   return {
     type: 'ADD_TASK',
-    quote: Object.assign({}, task)
+    task: Object.assign({}, task)
   }
 }
 

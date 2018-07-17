@@ -1,45 +1,47 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import './App.css';
+// import React, { Component } from 'react';
+// import logo from './logo.svg';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+// import './App.css';
 
-// react/components/App.js
-var Router       = require('react-router');
-var RouteHandler = Router.RouteHandler;
-var $            = require('jquery');
+// // react/components/App.js
+// var Router       = require('react-router');
+// var RouteHandler = Router.RouteHandler;
+// var $            = require('jquery');
  
-class App extends Component {
+// class App extends Component {
 
-  constructor(props) {
-    super(props);
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      signedIn: null
-    }
-  }
+//     this.state = {
+//       signedIn: null
+//     }
+//   }
 
-  componentWillMount() {
-      $.ajax({
-        method: "GET",
-        url: "/auth/is_signed_in.json"
-      })
-      .done(function(data){
-        this.setState({ signedIn: data.signed_in });
-      }.bind(this));
-  }
+//   componentWillMount() {
+//       $.ajax({
+//         method: "GET",
+//         url: "/auth/is_signed_in.json"
+//       })
+//       .done(function(data){
+//         this.setState({ signedIn: data.signed_in });
+//       }.bind(this));
+//   }
 
-  getInitialState() {
-    return { signedIn: null };
-  }
+//   getInitialState() {
+//     return { signedIn: null };
+//   }
 
-  render() {
-    return (
-      <RouteHandler signedIn={this.state.signedIn} />
-    )
-  }
-}
+//   render() {
+//     return (
+//       <RouteHandler signedIn={this.state.signedIn} />
+//     )
+//   }
+// }
 
-export default App;
+// export default App;
+
+// ================
 
 // class App extends Component {
 //   render() {
@@ -62,3 +64,23 @@ export default App;
 
 // export default App;
 
+import React, { Component } from 'react';
+import TaskForm from './containers/TaskForm';
+import Tasks from './containers/Tasks';
+
+export class App extends Component {
+  render() {
+    return (
+      <div className="container-fluid">
+        <div className="row title justify-content-center" style={{ paddingTop: '12px' }}>
+          <h1>Task Maker</h1>
+        </div>
+        <hr />
+        <TaskForm />
+        <Tasks />
+      </div>
+    );
+  }
+}
+
+export default App;

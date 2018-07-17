@@ -36,7 +36,7 @@ export class TaskForm extends Component {
               <div className="panel-body">
                 <form className="form-horizontal" onSubmit={this.handleOnSubmit}>
                   <div className="form-group">
-                    <label htmlFor="content" className="col-md-4 control-label">Quote</label>
+                    <label htmlFor="content" className="col-md-4 control-label">Task</label>
                     <div className="col-md-5">
                       <textarea 
                         className="form-control"

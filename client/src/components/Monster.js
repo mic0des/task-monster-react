@@ -25,7 +25,7 @@ const Monster = props => {
 					<img src="/Neko-Breathing-Resize.gif" id="monster" alt="your monster" height= "220px" width="281px" onMouseOver={e => (e.currentTarget.src = "/Neko-Open.gif")} onMouseLeave={e => (e.currentTarget.src = "/Neko-Breathing-Resize.gif")} onMouseUp={e => (e.currentTarget.src = "/Neko-Breathing-Resize.gif")}/>
 				</Grid>
 				<Grid item xs={3}>
-					<Paper>
+				
 						<ul className="stats">
 							<li style={{listStyleType: "none"}}><h3>Schrödinger ♂</h3></li>
 							<li style={{listStyleType: "none"}}><h4>Level 1</h4></li>
@@ -36,7 +36,7 @@ const Monster = props => {
 							<li style={{listStyleType: "none"}}>Sp. Defense: 65</li>
 							<li style={{listStyleType: "none"}}>Speed: 45</li>
 						</ul>
-					</Paper>
+					
 				</Grid>      			
       		</Grid>
 		</div>

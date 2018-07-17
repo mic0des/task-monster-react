@@ -36,9 +36,9 @@ export class TaskForm extends Component {
               <div className="panel-body">
                 <form className="form-horizontal" onSubmit={this.handleOnSubmit}>
                   <div className="form-group">
-                    <label htmlFor="content" className="col-md-4 control-label">Task</label>
+                    <label htmlFor="content" className="col-md-4 control-label">Add Task</label>
                     <div className="col-md-5">
-                      <textarea 
+                      <input type="text" 
                         className="form-control"
                         name="task"
                         value={this.state.task}
@@ -47,9 +47,6 @@ export class TaskForm extends Component {
                     </div>
                   </div>
                   <div className="form-group">
-                    <div className="col-md-6 col-md-offset-4">
-                      <button type="submit" className="btn btn-default">Add</button>
-                    </div>
                   </div>
                 </form>
               </div>

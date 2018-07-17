@@ -77,7 +77,6 @@ export class App extends Component {
         <div className="row title justify-content-center" style={{ paddingTop: '12px' }}>
           <h1 className="title">Task Monster</h1>
         </div>
-        <hr />
         <Monster />
         <TaskForm />
         <Tasks />

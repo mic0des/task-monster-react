@@ -68,6 +68,7 @@ import React, { Component } from 'react';
 import TaskForm from './containers/TaskForm';
 import Tasks from './containers/Tasks';
 import Monster from './components/Monster';
+import ProgressBar from './components/ProgressBar';
 import './App.css';
 
 export class App extends Component {
@@ -78,6 +79,7 @@ export class App extends Component {
           <h1 className="title">Task Monster</h1>
         </div>
         <Monster />
+        <ProgressBar />
         <TaskForm />
         <Tasks />
       </div>

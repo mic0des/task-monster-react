@@ -9,7 +9,7 @@ class Tasks extends Component {
     const { tasks, removeTask } = this.props;
     return (
       <div>
-        
+
         <div className="row justify-content-center">
           <h2>Tasks</h2>
         </div>

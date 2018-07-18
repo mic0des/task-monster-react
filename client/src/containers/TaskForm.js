@@ -28,12 +28,17 @@ export class TaskForm extends Component {
   }
 
   render() {
+
+    let count = 100;
+    let checked = 0;
+    let count_new = 0;
+    
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-8 col-md-offset-2">
             <div className="panel panel-default">
-              <div className="panel-body">
+              <div className="panel-body">             
                 <form className="form-horizontal" onSubmit={this.handleOnSubmit}>
                   <div className="form-group">
                     <label htmlFor="content" className="col-md-4 control-label">Add Task</label>

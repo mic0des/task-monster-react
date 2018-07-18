@@ -59,16 +59,16 @@ p {
 }
 
 .bar {
-  background: linear-gradient(to right, lighten(#7b4397, 10%) , lighten(#dc2430, 10%));
+  background: linear-gradient(to right, #9658b5, #e3505a);
   height: 20px;
   width: 15px;
   border-radius: 9px;
-  span {
-    float: right;
-    padding: 4px;
-    color: #fff;
-    font-size: 0.7em
-  }
+}
+.bar span {
+  float: right;
+  padding: 4px;
+  color: #fff;
+  font-size: 0.7em;
 }
 
 button {

@@ -28,10 +28,6 @@ export class TaskForm extends Component {
   }
 
   render() {
-
-    let count = 100;
-    let checked = 0;
-    let count_new = 0;
     
     return (
       <div className="container">

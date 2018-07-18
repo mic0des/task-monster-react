@@ -11,3 +11,10 @@ export const removeTask = taskId => {
     taskId
   }
 }
+
+export const checkTask = taskId => {
+  return {
+    type: 'CHECK_TASK',
+    taskId
+  }
+}

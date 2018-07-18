@@ -8,6 +8,11 @@ export default (state = [], action) => {
     case 'REMOVE_TASK':
       return state.filter(task => task.id !== action.taskId);
 
+    case 'CHECK_TASK':
+      let task = state.find(task => task.id === action.taskId);
+      task.done = task.done === true ? false : true;
+      return state;
+
     default: 
       return state;
   }

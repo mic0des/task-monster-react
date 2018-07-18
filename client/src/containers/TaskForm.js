@@ -20,7 +20,7 @@ export class TaskForm extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
-    const task = Object.assign({}, this.state, { id: uuid() });
+    const task = Object.assign({}, this.state, { done: false, id: uuid() });
     this.props.addTask(task);
     this.setState({
       task: ''

@@ -9,11 +9,21 @@ export class ProgressBar extends Component {
       progress: 0
     };
   }
+
+  componentWillReceiveProps(nextprops) {
+    this.setState({
+      progress: nextprops.tasks.filter(task => task.done === true).length
+    })
+  }
   
   eventHandler() {
     this.setState({
-      progress: this.state.progress < this.props.tasks.length ? this.state.progress + 0.25 : 100
+      progress: this.props.tasks.filter(task => task.done === true).length
     });
+  }
+
+  tasksChecked() {
+    this.props.tasks.filter(task => task.done === true).length;
   }
   
   render() {

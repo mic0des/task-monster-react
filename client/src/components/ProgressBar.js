@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
 
 export class ProgressBar extends Component {
 
@@ -27,19 +28,24 @@ export class ProgressBar extends Component {
   }
   
   render() {
-    var progress = {
+    let progress = {
       width: parseInt(((this.state.progress / this.props.tasks.length) * 100),10) + "%"
     }
 
     return (
       <div>
+            <Grid container spacing={24}
+            alignItems="center"
+            direction="row"
+            justify="center">
+
+            <Grid item xs={3}>
         <p>EXP to next Level:</p>
         <div className="shell">
           <div className="bar" style={ progress }><span>{ (parseInt(((this.state.progress / this.props.tasks.length) * 100),10)) + "%" }</span></div>
         </div>
-        <br/>
-        <br/>
-        <br/>
+        </Grid>
+        </Grid>
       </div>
     )
   }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import TaskCard from '../components/TaskCard';
 import { removeTask } from '../actions/tasks';
 import { checkTask } from '../actions/tasks';
+import Grid from '@material-ui/core/Grid';
 
 class Tasks extends Component {
 
@@ -12,11 +13,14 @@ class Tasks extends Component {
       <div>
         
 
-              <ul>
+      <Grid container spacing={24}
+            alignItems="center"
+            direction="row"
+            justify="center">
+            <Grid item xs={3}>
                 {tasks.map(task => <li key={task.id} style={{listStyleType: "none"}}>{<TaskCard key={task.id} checkTask={checkTask} removeTask={removeTask} task={task} />}</li>)}
-              </ul>
-
-
+              </Grid>
+            </Grid>
 
       </div>
     );

@@ -20,21 +20,18 @@ const Monster = props => {
 	const { classes } = props;
 	return (
 		<div className={classes.root} >
-			<Grid container spacing={24}>
-				<Grid item xs={3}>
-					<img src="/Neko-Breathing-Resize.gif" id="monster" alt="your monster" height= "220px" width="281px" onMouseOver={e => (e.currentTarget.src = "/Neko-Open.gif")} onMouseLeave={e => (e.currentTarget.src = "/Neko-Breathing-Resize.gif")} onMouseUp={e => (e.currentTarget.src = "/Neko-Breathing-Resize.gif")}/>
+			<Grid container spacing={24}
+            alignItems="center"
+            direction="row"
+            justify="center">
+				<Grid item xs={1.5}>
+					<img src="/Neko-Breathing-Resize.gif" id="monster" alt="your monster" height= "110px" width="140.5px" onMouseOver={e => (e.currentTarget.src = "/Neko-Open.gif")} onMouseLeave={e => (e.currentTarget.src = "/Neko-Breathing-Resize.gif")} onMouseUp={e => (e.currentTarget.src = "/Neko-Breathing-Resize.gif")}/>
 				</Grid>
 				<Grid item xs={3}>
 				
 						<ul className="stats">
-							<li style={{listStyleType: "none"}}><h3>Schrödinger ♂</h3></li>
-							<li style={{listStyleType: "none"}}><h4>Level 1</h4></li>
-							<li style={{listStyleType: "none"}}>HP: 100</li>
-							<li style={{listStyleType: "none"}}>Attack: 49</li>
-							<li style={{listStyleType: "none"}}>Defense: 49</li>
-							<li style={{listStyleType: "none"}}>Sp. Attack: 65</li>
-							<li style={{listStyleType: "none"}}>Sp. Defense: 65</li>
-							<li style={{listStyleType: "none"}}>Speed: 45</li>
+							<li style={{listStyleType: "none", fontFamily: "Roboto"}}><h3>Schrödinger ♂</h3></li>
+							<li style={{listStyleType: "none", fontFamily: "Roboto"}}><h4>Level 1</h4></li>
 						</ul>
 					
 				</Grid>      			

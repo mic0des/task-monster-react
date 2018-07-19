@@ -3,6 +3,7 @@ import uuid from 'uuid';
 import { connect } from 'react-redux';
 import { addTask } from '../actions/tasks';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
 export class TaskForm extends Component {
 
@@ -30,7 +31,12 @@ export class TaskForm extends Component {
 
   render() {
     
-    return (            
+    return (
+          <Grid container spacing={24}
+            alignItems="center"
+            direction="row"
+            justify="center">  
+            <Grid item xs={3}>          
       <form className="form-horizontal" onSubmit={this.handleOnSubmit}>
         <TextField
           id="with-placeholder"
@@ -39,10 +45,13 @@ export class TaskForm extends Component {
           className="form-control"
           margin="normal"
           name="task"
+          style={{width: "16em"}}
           onChange={this.handleOnChange}
           value={this.state.task}
         />
       </form>
+      </Grid>
+      </Grid>
     );
   }
 }

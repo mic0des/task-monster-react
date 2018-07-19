@@ -40,6 +40,7 @@ export class TaskForm extends Component {
                     <label htmlFor="content" className="col-md-4 control-label">Add Task</label>
                     <div className="col-md-5">
                       <input type="text" 
+                        autocomplete="off"
                         className="form-control"
                         name="task"
                         value={this.state.task}

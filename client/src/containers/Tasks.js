@@ -10,20 +10,14 @@ class Tasks extends Component {
     const { tasks, removeTask, checkTask } = this.props;
     return (
       <div>
-
-        <div className="row justify-content-center">
-          <h2>Tasks</h2>
-        </div>
         
-        <div className="container">
-          <div className="row">
-            <div className="col-md-4">
+
               <ul>
                 {tasks.map(task => <li key={task.id} style={{listStyleType: "none"}}>{<TaskCard key={task.id} checkTask={checkTask} removeTask={removeTask} task={task} />}</li>)}
               </ul>
-            </div>
-          </div>
-        </div>
+
+
+
       </div>
     );
   }

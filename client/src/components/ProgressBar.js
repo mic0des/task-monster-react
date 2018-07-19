@@ -37,7 +37,9 @@ export class ProgressBar extends Component {
         <div className="shell">
           <div className="bar" style={ progress }><span>{ (parseInt(((this.state.progress / this.props.tasks.length) * 100),10)) + "%" }</span></div>
         </div>
-        <button onClick={ this.eventHandler.bind(this) }>+</button>
+        <br/>
+        <br/>
+        <br/>
       </div>
     )
   }

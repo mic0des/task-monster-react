@@ -25,7 +25,16 @@ class TaskCard extends React.Component {
     const { task, removeTask, checkTask } = this.props;
 
     return (
+      <div>
       <FormControlLabel control={<Checkbox value={task.task} onChange={() => checkTask(task.id)} />} label={task.task} />
+                <button 
+            type="button" 
+            onClick={() => removeTask(task.id)} 
+            className="btn btn-danger"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
     )
   }  
 }

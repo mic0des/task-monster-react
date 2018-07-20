@@ -76,15 +76,12 @@ export class App extends Component {
   render() {
     return (
       <div className="container-fluid">
-      <Grid container spacing={24}
-            alignItems="center"
-            direction="row"
-            justify="center">
-            <Grid item xs={3}>
-        <div className="row title justify-content-center" style={{ paddingTop: '12px' }}>
-          <h1 className="title" >Task Monster</h1>
-        </div>
-        </Grid>
+        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+          <Grid item xs={3}>
+            <div className="row title justify-content-center" style={{ paddingTop: '12px' }}>
+              <h1 className="title" >Task Monster</h1>
+            </div>
+          </Grid>
         </Grid>
         <Monster />
         <ProgressBar />

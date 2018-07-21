@@ -70,6 +70,8 @@ import Tasks from './containers/Tasks';
 import Monster from './components/Monster';
 import ProgressBar from './components/ProgressBar';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import TaskModule from './components/TaskModule';
 import './App.css';
 
 export class App extends Component {
@@ -83,10 +85,7 @@ export class App extends Component {
             </div>
           </Grid>
         </Grid>
-        <Monster />
-        <ProgressBar />
-        <TaskForm />
-        <Tasks />
+        <TaskModule />
       </div>
     );
   }

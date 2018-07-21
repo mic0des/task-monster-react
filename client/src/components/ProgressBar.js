@@ -34,8 +34,8 @@ export class ProgressBar extends Component {
 
     return (
       <div>
-        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-          <Grid item xs={3}>
+         <Grid style={{paddingTop: '0px'}} container spacing={24} alignItems="center" direction="row" justify="center">
+           <Grid item xs={8.5}>
             <p>EXP to next Level:</p>
             <div className="shell">
               <div className="bar" style={ progress }><span>{ (parseInt(((this.state.progress / this.props.tasks.length) * 100),10)) + "%" }</span></div>

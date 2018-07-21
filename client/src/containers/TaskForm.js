@@ -32,7 +32,7 @@ export class TaskForm extends Component {
   render() {    
     return (
       <Grid container spacing={24} alignItems="center" direction="row" justify="center">  
-        <Grid item xs={3}>          
+        <Grid item xs={9.5}>          
           <form className="form-horizontal" onSubmit={this.handleOnSubmit}>
             <TextField
               id="with-placeholder"

@@ -9,6 +9,8 @@ import TaskForm from '../containers/TaskForm';
 import Tasks from '../containers/Tasks';
 import Monster from './Monster';
 import ProgressBar from './ProgressBar';
+import ToDoCard from './ToDoCard';
+import Grid from '@material-ui/core/Grid';
 
 class TaskModule extends React.Component {
   state = {
@@ -31,19 +33,30 @@ class TaskModule extends React.Component {
   render() {
     return (
       <div>
-        <Button style={{color: '#3f51b5'}} onClick={this.handleClickOpen('paper')}>New Task +</Button>
-        <Button onClick={this.handleClickOpen('paper')}>Finish React client side</Button>
-        <Button onClick={this.handleClickOpen('paper')}>Hook client side to Rails</Button>
-        <Button onClick={this.handleClickOpen('paper')}>Win Hackathon</Button>
-        <Button onClick={this.handleClickOpen('paper')}>Crush Algorithms & Data Structures</Button>
-        <Button onClick={this.handleClickOpen('paper')}>Find a job</Button>     
+        <Grid  container spacing={24} alignItems="center" direction="row" justify="flex-start">
+           <Grid item xs={3}>
+            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
+          </Grid>
+                     <Grid item xs={3}>
+            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
+          </Grid>
+                     <Grid item xs={3}>
+            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
+          </Grid>
+                     <Grid item xs={3}>
+            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
+          </Grid>
+                     <Grid item xs={3}>
+            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
+          </Grid>
+        </Grid>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           scroll={this.state.scroll}
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title">Finish React App</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">Finish React Client Side</DialogTitle>
           <DialogContent>
             <DialogContentText>
               <Monster />

@@ -40,7 +40,7 @@ function ToDoCard(props) {
             Finish React Client Side
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            Shrodinger Level 1
+            Shrödinger Level 1
           </Typography>
         </CardContent>
         <CardActions>

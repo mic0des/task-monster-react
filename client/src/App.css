@@ -34,8 +34,19 @@ p {
 .title {
   font-family: 'Amatic SC', cursive;
   display:inline;
-  font-size:2em;
+  font-size:1.9em;
+  padding:.2em;
 }
+
+.row {
+    display: 'flex';
+    justify-content: 'center'
+}
+
+.avatar {
+    margin: -33px;
+}
+
 
 #progress {
   height: 100vh;

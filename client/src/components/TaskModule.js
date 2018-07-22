@@ -34,28 +34,23 @@ class TaskModule extends React.Component {
     return (
       <div>
         <Grid  container spacing={24} alignItems="center" direction="row" justify="flex-start">
-           <Grid item xs={3}>
+          <Grid item xs={3}>
             <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
           </Grid>
-                     <Grid item xs={3}>
+          <Grid item xs={3}>
             <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
           </Grid>
-                     <Grid item xs={3}>
+          <Grid item xs={3}>
             <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
           </Grid>
-                     <Grid item xs={3}>
+          <Grid item xs={3}>
             <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
           </Grid>
-                     <Grid item xs={3}>
+          <Grid item xs={3}>
             <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
           </Grid>
         </Grid>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          scroll={this.state.scroll}
-          aria-labelledby="scroll-dialog-title"
-        >
+        <Dialog open={this.state.open} onClose={this.handleClose} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle id="scroll-dialog-title">Finish React Client Side</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -70,7 +65,7 @@ class TaskModule extends React.Component {
               Close
             </Button>
             <Button onClick={this.handleClose} color="primary">
-                Pin
+              Pin
             </Button>
           </DialogActions>
         </Dialog>

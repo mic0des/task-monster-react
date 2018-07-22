@@ -53,17 +53,15 @@ export default class SignUpForm extends React.Component {
 
     $.ajax({
       method: "POST",
-      url: "/users.json",
+      url: "http://localhost:3001/users.json",
       data: {
         user: {
           email: this.state.email,
-          uid: this.state.email,
           password: this.state.password,
           password_confirmation: this.state.password_confirmation,
           name: this.state.name,
           provider: "email"
-        },
-        authenticity_token: Functions.getMetaContent("csrf-token")
+        }
       }
     })
     .done(function(data){
@@ -76,7 +74,7 @@ export default class SignUpForm extends React.Component {
       <Grid container spacing={24} alignItems="center" direction="row" justify="center">
       <form className="signUp">
         <div>
-          <TextField style={{width: "14em"}} autoComplete="off" id="username" className="username" name="username" placeholder="Username" value={this.state.name} onChange={this.handleChange} margin="normal" />
+          <TextField style={{width: "14em"}} autoComplete="off" id="username" className="username" name="name" placeholder="Username" value={this.state.name} onChange={this.handleChange} margin="normal" />
         </div>
  
         <div>

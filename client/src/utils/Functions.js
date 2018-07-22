@@ -10,10 +10,6 @@ var Functions = {
  
     return "";
   }
-
-	progressBarCalc: function(){
-		$(".progressbar-label").text((parseInt(((checked / count) * 100),10)) + "%");
-	}
 }
  
 module.exports = Functions;

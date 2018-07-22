@@ -58,15 +58,17 @@ export default class SignUpForm extends React.Component {
         user: {
           email: this.state.email,
           password: this.state.password,
-          password_confirmation: this.state.password_confirmation,
-          name: this.state.name,
-          provider: "email"
+          password_confirmation: this.state.password_confirmation
+          // name: this.state.name
         }
       }
     })
+    // .done(function(data){
+    //   window.location.reload();
+    // }.bind(this));
     .done(function(data){
-      window.location.reload();
-    }.bind(this));
+      console.log(data);
+    })
   }
 
   render() {

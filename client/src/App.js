@@ -74,6 +74,7 @@ import Paper from '@material-ui/core/Paper';
 import TaskModule from './components/TaskModule';
 import Navigation from './components/Navigation';
 import './App.css';
+import SignUpForm from './components/auth/SignUpForm'
 
 export class App extends Component {
   render() {
@@ -83,6 +84,7 @@ export class App extends Component {
         <br/>
         <br/>
         <TaskModule />
+        <SignUpForm/>
       </div>
     );
   }

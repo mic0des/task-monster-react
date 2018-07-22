@@ -169,6 +169,7 @@ DEPENDENCIES
   byebug
   devise
   foreman (~> 0.82.0)
+  jwt
   listen (>= 3.0.5, < 3.2)
   omniauth
   omniauth-facebook

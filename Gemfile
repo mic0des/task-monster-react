@@ -9,6 +9,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google'
 gem 'devise'
+gem 'jwt'
 
 gem 'foreman', '~> 0.82.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

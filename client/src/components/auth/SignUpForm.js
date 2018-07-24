@@ -23,7 +23,7 @@ export default class SignUpForm extends React.Component {
       password: "",
       password_confirmation: "",
       name: "",
-      showPassword: false,
+      showPassword: false
     }
   }
 
@@ -67,7 +67,8 @@ export default class SignUpForm extends React.Component {
     //   window.location.reload();
     // }.bind(this));
     .done(function(data){
-      console.log(data);
+      localStorage.setItem('id_token', data.auth_token)
+      console.log(data)
     })
   }
 

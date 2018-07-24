@@ -1,7 +1,7 @@
 export default (state = {
     isFetching: false,
     isAuthenticated: !localStorage.id_token || localStorage.id_token === "undefined" ? false : true,
-    id_token: ''
+    id_token: !localStorage.id_token || localStorage.id_token === "undefined" ? '' : localStorage.id_token
   }, action) => {
 
   switch (action.type) {

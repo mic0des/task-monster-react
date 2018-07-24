@@ -25,6 +25,7 @@ export default (state = {
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: false,
+        id_token: '',
         errorMessage: action
       })
 

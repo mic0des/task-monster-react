@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+var $         = require('jquery');
 
 export class Navigation extends Component {
+
+  signOut = event => {
+    localStorage.removeItem("id_token")
+  };
+
+
   render() {
     return (
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
@@ -19,7 +26,7 @@ export class Navigation extends Component {
             <Button className="nav">Jelo</Button>
             <Button variant="contained" color="primary" className="nav">New Task</Button>
             <Button className="nav">Monsters</Button>
-            <Button className="nav">Log Out</Button>
+            <Button className="nav" onClick={this.signOut}>Log Out</Button>
           </Grid>
         </Grid>
     );

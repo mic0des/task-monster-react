@@ -8,13 +8,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import { loginError } from '../../actions/auth';
+import { receiveLogin } from '../../actions/auth';
+import { bindActionCreators } from 'redux';
 var React          = require('react');
 var Functions      = require('../../utils/Functions.js');
 var $              = require('jquery');
  
-export default class SignInForm extends React.Component {
-  constructor() {
-    super();
+class SignInForm extends React.Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: "",
@@ -48,14 +52,26 @@ export default class SignInForm extends React.Component {
         }
       }
     })
-    // .done(function(data){
-    //   window.reload();
-    // }.bind(this));
     .done(function(data){
       localStorage.setItem('id_token', data.auth_token)
-      console.log(data)
-    })
+      if (!localStorage.id_token || localStorage.id_token === "undefined") {
+        this.props.loginError(data.errors)
+      } else {
+        this.props.receiveLogin(data.auth_token)       
+      }
+      // window.reload();
+    }.bind(this));
   }
+  //   .done(data => {
+  //     localStorage.setItem('id_token', data.auth_token)
+  //     if (!localStorage.id_token || localStorage.id_token === "undefined") {
+  //       this.store.dispatch(loginError(data.errors))
+  //     } else {
+  //       receiveLogin(data.auth_token)       
+  //     }
+  //     console.log(data)
+  //   })
+  // }
 
   render() {
     return (
@@ -76,3 +92,19 @@ export default class SignInForm extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  };
+};
+ 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    loginError: loginError,
+    receiveLogin: receiveLogin
+  }, dispatch);
+};
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);
+

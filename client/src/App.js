@@ -75,6 +75,7 @@ import TaskModule from './components/TaskModule';
 import Navigation from './components/Navigation';
 import './App.css';
 import SignUpForm from './components/auth/SignUpForm'
+import SignInForm from './components/auth/SignInForm'
 
 export class App extends Component {
   render() {
@@ -85,6 +86,7 @@ export class App extends Component {
         <br/>
         <TaskModule />
         <SignUpForm/>
+        <SignInForm />
       </div>
     );
   }

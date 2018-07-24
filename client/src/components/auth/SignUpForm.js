@@ -8,15 +8,19 @@ import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import { loginError } from '../../actions/auth';
+import { receiveLogin } from '../../actions/auth';
+import { bindActionCreators } from 'redux';
 var React          = require('react');
 var _              = require('lodash');
 var Functions      = require('../../utils/Functions.js');
 var $              = require('jquery');
 
 
-export default class SignUpForm extends React.Component {
-  constructor() {
-    super();
+class SignUpForm extends React.Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: "",
@@ -56,6 +60,7 @@ export default class SignUpForm extends React.Component {
       url: "http://localhost:3001/users.json",
       data: {
         user: {
+          username: this.state.name,
           email: this.state.email,
           password: this.state.password,
           password_confirmation: this.state.password_confirmation
@@ -68,8 +73,12 @@ export default class SignUpForm extends React.Component {
     // }.bind(this));
     .done(function(data){
       localStorage.setItem('id_token', data.auth_token)
-      console.log(data)
-    })
+      if (!localStorage.id_token || localStorage.id_token === "undefined") {
+        this.props.loginError(data)
+      } else {
+        this.props.receiveLogin(data.auth_token)        
+      }
+    }.bind(this))
   }
 
   render() {
@@ -101,5 +110,34 @@ export default class SignUpForm extends React.Component {
       </Grid>
     );
   }
-
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  };
+};
+ 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    loginError: loginError,
+    receiveLogin: receiveLogin
+  }, dispatch);
+};
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
+
+// const mapStateToProps = (state) => {
+//   return {
+//     items: state.user
+//   };
+// };
+
+// const mapDispatchToProps = () => {
+//   return {
+//     loginError: loginError,
+//     receiveLogin: receiveLogin
+//   };
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

@@ -75,20 +75,29 @@ class SignInForm extends React.Component {
 
   render() {
     return (
-      <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-        <form className="signUp">
-          <div>
-            <TextField style={{width: "14em"}} id="email" className="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} margin="normal" />
-          </div>
-          <div>
-            <TextField style={{width: "14em"}} id="password" className="password" name="password" placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange} margin="normal" />
-          </div>
+      <div>
+        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+          <form className="signUp">
+            <div>
+              <TextField style={{width: "14em"}} id="email" className="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} margin="normal" />
+            </div>
+            <div>
+              <TextField style={{width: "14em"}} id="password" className="password" name="password" placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange} margin="normal" />
+            </div>
+            <br />
+            <div>
+              <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Log In</Button>
+            </div> 
+          </form>
           <br />
-          <div>
-            <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Log In</Button>
-          </div> 
-        </form>
-      </Grid>
+        </Grid>
+        <br />
+        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+          <Grid item xs={9.5}>
+            <div><p>No account?<Button size="small" >Sign Up</Button></p></div>
+          </Grid>
+        </Grid>
+      </div>
     );
   }
 }

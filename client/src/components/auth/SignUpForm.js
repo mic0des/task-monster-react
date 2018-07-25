@@ -83,6 +83,7 @@ class SignUpForm extends React.Component {
 
   render() {
     return (
+      <div>
       <Grid container spacing={24} alignItems="center" direction="row" justify="center">
       <form className="signUp">
         <div>
@@ -101,13 +102,19 @@ class SignUpForm extends React.Component {
           <TextField style={{width: "14em"}} id="password_confirmation" className="password_confirmation" name="password_confirmation" placeholder="Confirm Password" type="password" value={this.state.password_confirmation} onChange={this.handleChange} margin="normal" />
         </div>
 
-        <br/><br/>
+        <br/>
 
         <div>
           <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Sign Up</Button>
         </div>        
       </form>
       </Grid>
+        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+          <Grid item xs={9.5}>
+            <div><p><Button size="small" >Sign In Instead</Button></p></div>
+          </Grid>
+        </Grid>
+        </div>
     );
   }
 }

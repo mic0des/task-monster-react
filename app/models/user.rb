@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 	has_one :monster
 	has_many :task_lists
+  has_many :tasks, through: :task_lists
 
 	def gravatar_url
   		email_address = self.email

@@ -8,6 +8,7 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+var $              = require('jquery');
 
 const styles = {
   checked: {},
@@ -20,13 +21,29 @@ const styles = {
   },
 };
 
+
 class TaskCard extends React.Component {
+
+  handleOnClick = function(id, event) {
+    event.preventDefault();
+    $.ajax({
+      method: "DELETE",
+      url: `http://localhost:3001/tasks/${id}`,
+    }).done(function(data){
+      console.log(data)
+    })
+    this.setState({
+      task: ''
+    });
+    this.props.removeTask(id)
+  }
+
   render() {
     const { task, removeTask, checkTask } = this.props;
     return (
       <div>
         <FormControlLabel control={<Checkbox value={task.task} onChange={() => checkTask(task.id)} />} label={task.task} />
-          <button type="button" onClick={() => removeTask(task.id)} className="btn btn-danger" >
+          <button type="button" onClick={(e) => this.handleOnClick(task.id, e)} className="btn btn-danger" >
               <span aria-hidden="true">&times;</span>
           </button>
       </div>

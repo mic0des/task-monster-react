@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addTask } from '../actions/tasks';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+var $              = require('jquery');
 
 export class TaskForm extends Component {
 
@@ -22,8 +23,22 @@ export class TaskForm extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
-    const task = Object.assign({}, this.state, { done: false, id: uuid() });
-    this.props.addTask(task);
+    // const task = Object.assign({}, this.state, { done: false, id: uuid() });
+    // this.props.addTask(task);
+    $.ajax({
+      method: "POST",
+      url: "http://localhost:3001/tasks",
+      data: {
+        task: {
+          name: this.state.task,
+          task_list_id: 1,
+          done: false
+        }
+      }
+    }).done(function(data){
+      const task = Object.assign({task: data.name, done: false, id: data.id});
+      this.props.addTask(task);
+    }.bind(this))
     this.setState({
       task: ''
     });

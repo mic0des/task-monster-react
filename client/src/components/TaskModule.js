@@ -11,6 +11,9 @@ import Monster from './Monster';
 import ProgressBar from './ProgressBar';
 import ToDoCard from './ToDoCard';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+var $              = require('jquery');
+
 
 class TaskModule extends React.Component {
   state = {
@@ -22,8 +25,17 @@ class TaskModule extends React.Component {
     this.setState({ open: true, scroll });
   };
 
-  handleClose = () => {
+  handleClose = function(tasks, e) {
     this.setState({ open: false });
+    $.ajax({
+      method: "PATCH",
+      url: `http://localhost:3001/task_lists/${1}`,
+      data: {
+        task: {
+          last_saved: (tasks.filter(task => task.done === true).length) / tasks.length * 100
+        }
+      }
+    })
   };
 
   componentWillMount(){
@@ -31,6 +43,7 @@ class TaskModule extends React.Component {
   }
 
   render() {
+    const { tasks } = this.props
     return (
       <div>
         <Grid  container spacing={24} alignItems="center" direction="row" justify="flex-start">
@@ -50,7 +63,7 @@ class TaskModule extends React.Component {
             <ToDoCard handleClickOpen={this.handleClickOpen('paper')} />  
           </Grid>
         </Grid>
-        <Dialog open={this.state.open} onClose={this.handleClose} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
+        <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle id="scroll-dialog-title">Finish React Client Side</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -61,7 +74,7 @@ class TaskModule extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={(e) => this.handleClose(tasks, e)} color="primary">
               Close
             </Button>
             <Button onClick={this.handleClose} color="primary">
@@ -74,4 +87,10 @@ class TaskModule extends React.Component {
   }
 }
 
-export default TaskModule;
+const mapStateToProps = state => {
+  return ({
+    tasks: state.tasks
+  })
+}
+
+export default connect(mapStateToProps)(TaskModule);

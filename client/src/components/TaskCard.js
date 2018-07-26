@@ -38,11 +38,21 @@ class TaskCard extends React.Component {
     this.props.removeTask(id)
   }
 
+  handleOnCheck = function(id, event) {
+    this.props.checkTask(id)
+    $.ajax({
+      method: "PATCH",
+      url: `http://localhost:3001/tasks/${id}`,
+    }).done(function(data){
+      console.log(data)
+    })
+  }
+
   render() {
     const { task, removeTask, checkTask } = this.props;
     return (
       <div>
-        <FormControlLabel control={<Checkbox value={task.task} onChange={() => checkTask(task.id)} />} label={task.task} />
+        <FormControlLabel control={<Checkbox value={task.task} onChange={(e) => this.handleOnCheck(task.id, e)} />} label={task.task} />
           <button type="button" onClick={(e) => this.handleOnClick(task.id, e)} className="btn btn-danger" >
               <span aria-hidden="true">&times;</span>
           </button>

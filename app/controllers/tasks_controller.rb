@@ -4,6 +4,11 @@ class TasksController < ApplicationController
 		render json: @new_task
 	end
 
+	def update 
+		@task = Task.find(params["id"])
+		@task.update(done: @task.done == true ? false : true)
+	end
+
 	def destroy 
 		@task = Task.find(params["id"]).delete
 	end

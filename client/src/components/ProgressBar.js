@@ -7,21 +7,21 @@ export class ProgressBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      progress: 0
+      progress: this.props.tasks.filter(task => task.done === true).length
     };
   }
 
   componentWillReceiveProps(nextprops) {
     this.setState({
-      progress: nextprops.tasks.filter(task => task.done === true).length
+      progress: nextprops.tasks.filter(task => task.done === true).length,
     })
   }
   
-  eventHandler() {
-    this.setState({
-      progress: this.props.tasks.filter(task => task.done === true).length
-    });
-  }
+  // eventHandler() {
+  //   this.setState({
+  //     progress: this.props.tasks.filter(task => task.done === true).length
+  //   });
+  // }
 
   tasksChecked() {
     this.props.tasks.filter(task => task.done === true).length;
@@ -29,7 +29,7 @@ export class ProgressBar extends Component {
   
   render() {
     let progress = {
-      width: parseInt(((this.state.progress / this.props.tasks.length) * 100),10) + "%"
+      width: parseInt((((this.props.tasks.filter(task => task.done === true).length) / this.props.tasks.length) * 100),10) + "%"
     }
 
     return (
@@ -38,7 +38,7 @@ export class ProgressBar extends Component {
            <Grid item xs={8.5}>
             <p>EXP to next Level:</p>
             <div className="shell">
-              <div className="bar" style={ progress }><span>{ (parseInt(((this.state.progress / this.props.tasks.length) * 100),10)) + "%" }</span></div>
+              <div className="bar" style={ progress }><span>{ (parseInt((((this.props.tasks.filter(task => task.done === true).length) / this.props.tasks.length) * 100),10)) + "%" }</span></div>
             </div>
           </Grid>
         </Grid>
@@ -49,7 +49,8 @@ export class ProgressBar extends Component {
 
 const mapStateToProps = state => {
   return ({
-    tasks: state.tasks
+    tasks: state.tasks,
+    taskProgress: state.taskProgress
   })
 }
 

@@ -36,7 +36,7 @@ export class TaskForm extends Component {
         }
       }
     }).done(function(data){
-      const task = Object.assign({task: data.name, done: false, id: data.id});
+      const task = Object.assign({name: data.name, done: false, id: data.id});
       this.props.addTask(task);
     }.bind(this))
     this.setState({

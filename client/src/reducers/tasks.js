@@ -13,6 +13,11 @@ export default (state = [], action) => {
       // task.done = task.done === true ? false : true;
       return state.map(task => task.id === action.taskId ? {...task, done: task.done === true ? false : true} : task);
 
+    // case 'TASK_PROGRESS':
+    //   return state.concat({
+    //     taskProgress: action.taskListPercent
+    //   })
+
     default: 
       return state;
   }

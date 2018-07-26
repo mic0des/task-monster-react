@@ -26,7 +26,7 @@ const styles = {
 };
 
 function ToDoCard(props) {
-  const { classes, handleClickOpen } = props;
+  const { classes, handleClickOpen, taskProgress } = props;
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
@@ -34,7 +34,7 @@ function ToDoCard(props) {
       <Card className={classes.card}>
         <CardContent>
           <Typography className={classes.title} color="textSecondary">
-            Task Progress: 50%
+            Task Progress: {taskProgress}%
           </Typography>
           <Typography variant="headline" component="h2">
             Finish React Client Side

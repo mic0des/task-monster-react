@@ -26,23 +26,23 @@ class TaskModule extends React.Component {
     initial: true
   };
 
-  handleClickOpen = scroll => () => {
+  handleClickOpen = taskListId => () => {
     $.ajax({
       method: "GET",
-      url: `http://localhost:3001/task_lists/${1}`
+      url: `http://localhost:3001/task_lists/${taskListId}`
     }).done(function(data){
       console.log(data)
       this.props.taskPercentCheck(data.last_saved)
       data.tasks.map(e => this.props.addTask(e))
-      this.setState({ open: true, scroll });
+      this.setState({ open: true, scroll: 'paper' });
     }.bind(this)) 
   };
 
-  handleClose = function(tasks, e) {
+  handleClose = function(tasks, taskListId, e) {
     this.setState({ open: false, initial: true });
     $.ajax({
       method: "PATCH",
-      url: `http://localhost:3001/task_lists/${1}`,
+      url: `http://localhost:3001/task_lists/${taskListId}`,
       data: {
         task: {
           last_saved: (tasks.filter(task => task.done === true).length) / tasks.length * 100
@@ -72,47 +72,43 @@ class TaskModule extends React.Component {
     document.body.style.overflow = 'auto';
   }
 
+  // tasks = function() {$.ajax({
+  //     method: "GET",
+  //     url: `http://localhost:3001/task_lists/`
+  //     }).done(function(data){
+  //     console.log(data)
+  // })
+  // }
+
   render() {
-    const { tasks, taskPercentCheck } = this.props
+    const { tasks, taskPercentCheck, taskLists } = this.props
     return (
       <div>
         <Grid  container spacing={24} alignItems="center" direction="row" justify="flex-start">
-          <Grid item xs={3}>
-            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} toggleInitial={this.toggleInitial} initial={this.state.initial} />  
-          </Grid>
-          <Grid item xs={3}>
-            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} toggleInitial={this.toggleInitial} initial={this.state.initial} />  
-          </Grid>
-          <Grid item xs={3}>
-            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} toggleInitial={this.toggleInitial} initial={this.state.initial} />  
-          </Grid>
-          <Grid item xs={3}>
-            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} toggleInitial={this.toggleInitial} initial={this.state.initial} />  
-          </Grid>
-          <Grid item xs={3}>
-            <ToDoCard handleClickOpen={this.handleClickOpen('paper')} toggleInitial={this.toggleInitial} initial={this.state.initial} />  
-          </Grid>
+          {taskLists.map((taskList, index)=> 
+            <div key={index}>
+              <Grid item xs={3}>
+                <ToDoCard handleClickOpen={this.handleClickOpen(taskList.id)} taskName={taskList.name} taskListId={taskList.id} taskProgress={taskList.last_saved} />  
+              </Grid>   
+              <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskList.id, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
+                <DialogTitle id="scroll-dialog-title">{taskList.name}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    <Monster />
+                    <ProgressBar lastSaved={tasks.taskProgress} />
+                    <TaskForm />
+                    <Tasks />
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={(e) => this.handleClose(tasks, taskList.id, e)} color="primary">Close</Button>
+                  <Button onClick={this.handleClose} color="primary">Pin</Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+          )}
         </Grid>
-        <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
-          <DialogTitle id="scroll-dialog-title">Finish React Client Side</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <Monster />
-              <ProgressBar lastSaved={tasks.taskProgress} />
-              <TaskForm />
-              <Tasks />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={(e) => this.handleClose(tasks, e)} color="primary">
-              Close
-            </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Pin
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      </div>      
     );
   }
 }

@@ -76,15 +76,32 @@ import Navigation from './components/Navigation';
 import './App.css';
 import SignUpForm from './components/auth/SignUpForm'
 import SignInForm from './components/auth/SignInForm'
+var $            = require('jquery');
 
 export class App extends Component {
+  state = {
+    taskLists: []
+  };
+
+  componentWillMount(){
+       $.ajax({
+        method: "GET",
+        url: `http://localhost:3001/task_lists/`
+        }).done(function(data){
+          console.log(data)
+          this.setState({
+            taskLists: data.map(e => e)
+          })
+        }.bind(this))        
+  }
+
   render() {
     return (
       <div className="container-fluid">
         <Navigation />
         <br/>
         <br/>
-        <TaskModule />
+        <TaskModule taskLists={this.state.taskLists} />
         <SignUpForm/>
         <SignInForm />
       </div>

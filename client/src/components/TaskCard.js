@@ -52,7 +52,7 @@ class TaskCard extends React.Component {
     const { task, removeTask, checkTask } = this.props;
     return (
       <div>
-        <FormControlLabel control={<Checkbox value={task.name} onChange={(e) => this.handleOnCheck(task.id, e)} />} label={task.name} />
+        <FormControlLabel control={<Checkbox checked={task.done} value={task.name} onChange={(e) => this.handleOnCheck(task.id, e)} />} label={task.name} />
           <button type="button" onClick={(e) => this.handleOnClick(task.id, e)} className="btn btn-danger" >
               <span aria-hidden="true">&times;</span>
           </button>

@@ -5,11 +5,15 @@ class TaskListsController < ApplicationController
 
 	def show 
 		@task_list = TaskList.find(params["id"])
-		@tasks = Task.where(task_list_id: params["id"])
 		render :json => @task_list.to_json(:include => {:tasks => {:only => [:name, :done, :id]}}) 
 
 		# respond_to do |f|
 		# 	f.json {render :json => @task_list.to_json(:include => {:tasks => {}})} 
 		# end	
+	end
+
+	def index 
+		@task_lists = TaskList.all 
+		render :json => @task_lists.to_json(:only => [:name, :last_saved, :id])
 	end
 end

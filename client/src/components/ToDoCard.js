@@ -26,7 +26,7 @@ const styles = {
 };
 
 function ToDoCard(props) {
-  const { classes, handleClickOpen, taskProgress } = props;
+  const { classes, handleClickOpen, taskProgress, taskName } = props;
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
@@ -37,7 +37,7 @@ function ToDoCard(props) {
             Task Progress: {taskProgress}%
           </Typography>
           <Typography variant="headline" component="h2">
-            Finish React Client Side
+            {taskName}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
             Shrödinger Level 1

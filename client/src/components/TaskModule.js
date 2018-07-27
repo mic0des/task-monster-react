@@ -39,6 +39,7 @@ class TaskModule extends React.Component {
   };
 
   handleClose = function(tasks, taskListId, e) {
+    e.preventDefault();
     this.setState({ open: false, initial: true });
     $.ajax({
       method: "PATCH",
@@ -54,15 +55,6 @@ class TaskModule extends React.Component {
       )
     }.bind(this))
   };
-
-  fetchPercent = function() {
-    $.ajax({
-      method: "GET",
-      url: `http://localhost:3001/task_lists/${1}`
-    }).done(function(data){
-      console.log(data)
-    })    
-  }
 
   toggleInitial = function() {
     this.setState({initial: false})
@@ -81,33 +73,25 @@ class TaskModule extends React.Component {
   // }
 
   render() {
-    const { tasks, taskPercentCheck, taskLists } = this.props
+    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved } = this.props
     return (
-      <div>
-        <Grid  container spacing={24} alignItems="center" direction="row" justify="flex-start">
-          {taskLists.map((taskList, index)=> 
-            <div key={index}>
-              <Grid item xs={3}>
-                <ToDoCard handleClickOpen={this.handleClickOpen(taskList.id)} taskName={taskList.name} taskListId={taskList.id} taskProgress={taskList.last_saved} />  
-              </Grid>   
-              <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskList.id, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
-                <DialogTitle id="scroll-dialog-title">{taskList.name}</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    <Monster />
-                    <ProgressBar lastSaved={tasks.taskProgress} />
-                    <TaskForm />
-                    <Tasks />
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={(e) => this.handleClose(tasks, taskList.id, e)} color="primary">Close</Button>
-                  <Button onClick={this.handleClose} color="primary">Pin</Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-          )}
-        </Grid>
+      <div>              
+        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} taskName={taskName} taskListId={taskListId} taskProgress={lastSaved} />  
+        <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskListId, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
+          <DialogTitle id="scroll-dialog-title">{taskName}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <Monster />
+              <ProgressBar lastSaved={tasks.taskProgress} />
+              <TaskForm taskListId={taskListId} />
+              <Tasks />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={(e) => this.handleClose(tasks, taskListId, e)} color="primary">Close</Button>
+            <Button onClick={this.handleClose} color="primary">Pin</Button>
+          </DialogActions>
+        </Dialog>
       </div>      
     );
   }

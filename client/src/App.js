@@ -101,7 +101,9 @@ export class App extends Component {
         <Navigation />
         <br/>
         <br/>
-        <TaskModule taskLists={this.state.taskLists} />
+        <Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">
+        {this.state.taskLists.map((taskList, index)=> <Grid item xs={3}> <TaskModule lastSaved={taskList.last_saved} taskName={taskList.name} taskListId={taskList.id} /> </Grid>)}
+        </Grid>
         <SignUpForm/>
         <SignInForm />
       </div>

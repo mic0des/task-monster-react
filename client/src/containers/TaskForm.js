@@ -21,7 +21,7 @@ export class TaskForm extends Component {
     });
   }
 
-  handleOnSubmit = event => {
+  handleOnSubmit = (taskListId, event) => {
     event.preventDefault();
     // const task = Object.assign({}, this.state, { done: false, id: uuid() });
     // this.props.addTask(task);
@@ -31,7 +31,7 @@ export class TaskForm extends Component {
       data: {
         task: {
           name: this.state.task,
-          task_list_id: 1,
+          task_list_id: taskListId,
           done: false
         }
       }
@@ -48,7 +48,7 @@ export class TaskForm extends Component {
     return (
       <Grid container spacing={24} alignItems="center" direction="row" justify="center">  
         <Grid item xs={9.5}>          
-          <form className="form-horizontal" onSubmit={this.handleOnSubmit}>
+          <form className="form-horizontal" onSubmit={(e) => this.handleOnSubmit(this.props.taskListId, e)}>
             <TextField
               id="with-placeholder"
               autoComplete="off"

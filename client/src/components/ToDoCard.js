@@ -25,10 +25,23 @@ const styles = {
   },
 };
 
-function ToDoCard(props) {
-  const { classes, handleClickOpen, taskProgress, taskName } = props;
-  const bull = <span className={classes.bullet}>•</span>;
+class ToDoCard extends React.Component {
+  constructor(props) {
+    super(props);
+ 
+    this.state = {
+      percent: props.taskProgress
+    };
+  }
 
+  // componentWillReceiveProps(nextProps) {
+  //  this.setState({
+  //    percent: nextProps.taskProgress
+  //  })
+  // }
+
+render() {
+  const { classes, handleClickOpen, taskProgress, taskName } = this.props;
   return (
     <div>
       <Card className={classes.card}>
@@ -44,15 +57,24 @@ function ToDoCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button onClick={props.handleClickOpen} style={{color: '#3f51b5'}} size="small">Work On</Button>
+          <Button onClick={handleClickOpen} style={{color: '#3f51b5'}} size="small">Work On</Button>
         </CardActions>
       </Card>
     </div>
   );
+  }
 }
 
 ToDoCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = state => {
+  return ({
+    tasks: state.tasks,
+    taskProgress: state.taskProgress
+  })
+}
+
 export default withStyles(styles)(ToDoCard);
+// export default connect(mapStateToProps)(ToDoCard);

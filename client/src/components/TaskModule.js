@@ -20,11 +20,16 @@ var $              = require('jquery');
 
 
 class TaskModule extends React.Component {
-  state = {
-    open: false,
-    scroll: 'paper',
-    initial: true
-  };
+  constructor(props) {
+    super(props);
+ 
+    this.state = {
+      open: false,
+      scroll: 'paper',
+      percent: this.props.lastSaved
+    };
+  }
+
 
   handleClickOpen = taskListId => () => {
     $.ajax({
@@ -38,9 +43,9 @@ class TaskModule extends React.Component {
     }.bind(this)) 
   };
 
-  handleClose = function(tasks, taskListId, e) {
+  handleSave = function(tasks, taskListId, taskProgress, e) {
     e.preventDefault();
-    this.setState({ open: false, initial: true });
+
     $.ajax({
       method: "PATCH",
       url: `http://localhost:3001/task_lists/${taskListId}`,
@@ -50,34 +55,36 @@ class TaskModule extends React.Component {
         }
       }
     }).done(function(data) {
-      tasks.forEach(element => 
-        this.props.removeTask(element.id)
-      )
+      console.log(data)
+      this.props.taskPercentCheck(data.last_saved)
+      this.setState({...this.state, percent: taskProgress.taskProgress })
     }.bind(this))
-  };
-
-  toggleInitial = function() {
-    this.setState({initial: false})
   }
+
+  handleClose = function(tasks, taskListId, taskProgress, e) {
+    e.preventDefault();
+    tasks.forEach(element => 
+      this.props.removeTask(element.id)
+    );
+    this.setState({percent: taskProgress.taskProgress, open: false});
+  };
 
   componentWillMount(){
     document.body.style.overflow = 'auto';
   }
 
-  // tasks = function() {$.ajax({
-  //     method: "GET",
-  //     url: `http://localhost:3001/task_lists/`
-  //     }).done(function(data){
-  //     console.log(data)
-  // })
+  // componentWillReceiveProps(nextProps) {
+  //  this.setState({
+  //    percent: nextProps.lastSaved
+  //  })
   // }
 
   render() {
-    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved } = this.props
+    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress } = this.props
     return (
       <div>              
-        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} taskName={taskName} taskListId={taskListId} taskProgress={lastSaved} />  
-        <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskListId, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
+        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} taskName={taskName} taskListId={taskListId} taskProgress={this.state.percent} />  
+        <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle id="scroll-dialog-title">{taskName}</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -88,7 +95,7 @@ class TaskModule extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={(e) => this.handleClose(tasks, taskListId, e)} color="primary">Close</Button>
+            <Button onMouseOver={(e) => this.handleSave(tasks, taskListId, taskProgress, e)} onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Close</Button>
             <Button onClick={this.handleClose} color="primary">Pin</Button>
           </DialogActions>
         </Dialog>
@@ -99,7 +106,8 @@ class TaskModule extends React.Component {
 
 const mapStateToProps = state => {
   return ({
-    tasks: state.tasks
+    tasks: state.tasks,
+    taskProgress: state.taskProgress
   })
 }
  

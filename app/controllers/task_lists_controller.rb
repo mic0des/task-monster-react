@@ -15,12 +15,15 @@ class TaskListsController < ApplicationController
 	end
 
 	def create
-		raise params
-		@task_list = TaskList.create(name: params["taskList"]["name"], user_id: params["taskList"]["user_id"], last_saved: 0, monster_id: params["taskList"]["monster_id"], deadline: params["taskList"]["deadline"])
+		@task_list = TaskList.create(name: params["taskList"]["name"], user_id: params["taskList"]["user_id"], last_saved: 0, monster_id: params["taskList"]["monster"], deadline: params["taskList"]["deadline"])
 	end
 
 	def index 
-		@task_lists = TaskList.all 
+		if !!params["user_id"]
+			@task_lists = TaskList.where(user_id: params["user_id"])
+		else
+			@task_lists = TaskList.all 
+		end
 		render :json => @task_lists.to_json(:only => [:name, :last_saved, :id])
 	end
 end

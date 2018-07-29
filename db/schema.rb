@@ -10,11 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180725013101) do
+ActiveRecord::Schema.define(version: 20180728223048) do
 
   create_table "monsters", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "gender"
+    t.string "nickname"
+    t.integer "level"
+    t.string "type"
+    t.integer "user_id"
+    t.string "species"
+    t.index ["user_id"], name: "index_monsters_on_user_id"
   end
 
   create_table "task_lists", force: :cascade do |t|
@@ -23,6 +30,9 @@ ActiveRecord::Schema.define(version: 20180725013101) do
     t.integer "user_id"
     t.string "name"
     t.integer "last_saved"
+    t.datetime "deadline"
+    t.integer "monster_id"
+    t.index ["monster_id"], name: "index_task_lists_on_monster_id"
     t.index ["user_id"], name: "index_task_lists_on_user_id"
   end
 

@@ -26,7 +26,7 @@ class TaskListForm extends React.Component {
 
     this.state = {
       name: "",
-      user_id: this.parseJwt(localStorage.id_token).user_id,
+      user_id: this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : "",
       last_saved: 0,
       monster: "",
       deadline: ""
@@ -134,9 +134,9 @@ const mapStateToProps = (state) => {
 //   }, dispatch);
 // };
  
-// export default connect(mapStateToProps, mapDispatchToProps)(TaskListForm);
+export default connect(mapStateToProps)(TaskListForm);
 
-export default TaskListForm;
+// export default TaskListForm;
 
 // const mapStateToProps = (state) => {
 //   return {

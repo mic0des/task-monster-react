@@ -74,12 +74,14 @@ import Paper from '@material-ui/core/Paper';
 import TaskModule from './components/TaskModule';
 import Navigation from './components/Navigation';
 import './App.css';
-import SignUpForm from './components/auth/SignUpForm'
-import SignInForm from './components/auth/SignInForm'
-import TaskListForm from './components/TaskListForm'
+import SignUpForm from './components/auth/SignUpForm';
+import SignInForm from './components/auth/SignInForm';
+import TaskListForm from './components/TaskListForm';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 var $            = require('jquery');
 
-export class App extends Component {
+class App extends Component {
   state = {
     taskLists: []
   };
@@ -91,7 +93,8 @@ export class App extends Component {
   }
 
   componentWillMount(){
-       $.ajax({
+    if (this.props.auth.isAuthenticated === true) {
+        $.ajax({
         method: "GET",
         url: `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
         }).done(function(data){
@@ -99,7 +102,8 @@ export class App extends Component {
           this.setState({
             taskLists: data.map(e => e)
           })
-        }.bind(this))        
+        }.bind(this))      
+    }      
   }
 
   render() {
@@ -119,4 +123,10 @@ export class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return ({
+    auth: state.auth
+  })
+}
+
+export default connect(mapStateToProps)(App);

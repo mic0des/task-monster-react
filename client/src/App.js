@@ -76,6 +76,7 @@ import Navigation from './components/Navigation';
 import './App.css';
 import SignUpForm from './components/auth/SignUpForm'
 import SignInForm from './components/auth/SignInForm'
+import TaskListForm from './components/TaskListForm'
 var $            = require('jquery');
 
 export class App extends Component {
@@ -83,10 +84,16 @@ export class App extends Component {
     taskLists: []
   };
 
+  parseJwt = token => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64))
+  }
+
   componentWillMount(){
        $.ajax({
         method: "GET",
-        url: `http://localhost:3001/task_lists/`
+        url: `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
         }).done(function(data){
           console.log(data)
           this.setState({
@@ -106,6 +113,7 @@ export class App extends Component {
         </Grid>
         <SignUpForm/>
         <SignInForm />
+        <TaskListForm />
       </div>
     );
   }

@@ -12,7 +12,7 @@ const styles = theme => ({
 });
 
 const Monster = props => {
-	const { classes } = props;
+	const { classes, taskMonster } = props;
 	return (
 		<div className={classes.root} >
 			<Grid container spacing={24} alignItems="center" direction="row" justify="center">
@@ -21,7 +21,7 @@ const Monster = props => {
 				</Grid>
 				<Grid item xs={7}>				
 					<ul className="stats">
-						<li style={{listStyleType: "none", fontFamily: "Roboto"}}><h3>Schrödinger ♂ Level 1</h3></li>
+						<li style={{listStyleType: "none", fontFamily: "Roboto"}}><h3>{taskMonster.nickname} {taskMonster.gender} Level {taskMonster.level}</h3></li>
 					</ul>					
 				</Grid>      			
       		</Grid>

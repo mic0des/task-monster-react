@@ -80,15 +80,16 @@ class TaskModule extends React.Component {
   // }
 
   render() {
-    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress } = this.props
+    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress, taskMonster, deadline } = this.props
     return (
       <div>              
-        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} taskName={taskName} taskListId={taskListId} taskProgress={this.state.percent} />  
+        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} taskProgress={this.state.percent} />  
         <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle id="scroll-dialog-title">{taskName}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <Monster />
+              <p>{Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))} day(s) left</p>
+              <Monster taskMonster={taskMonster} />
               <ProgressBar lastSaved={tasks.taskProgress} />
               <TaskForm taskListId={taskListId} />
               <Tasks />

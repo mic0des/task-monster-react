@@ -113,7 +113,7 @@ class App extends Component {
         <br/>
         <br/>
         <Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">
-        {this.state.taskLists.map((taskList, index)=> <Grid key={index} item xs={3}> <TaskModule lastSaved={taskList.last_saved} taskName={taskList.name} taskListId={taskList.id} /> </Grid>)}
+        {this.state.taskLists.map((taskList, index)=> <Grid key={index} item xs={3}> <TaskModule lastSaved={taskList.last_saved} taskName={taskList.name} taskMonster={taskList.monster} deadline={taskList.deadline} taskListId={taskList.id} /> </Grid>)}
         </Grid>
         <SignUpForm/>
         <SignInForm />

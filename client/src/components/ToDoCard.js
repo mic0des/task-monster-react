@@ -41,7 +41,7 @@ class ToDoCard extends React.Component {
   // }
 
 render() {
-  const { classes, handleClickOpen, taskProgress, taskName } = this.props;
+  const { classes, handleClickOpen, taskProgress, taskName, taskMonster } = this.props;
   return (
     <div>
       <Card className={classes.card}>
@@ -50,10 +50,10 @@ render() {
             Task Progress: {taskProgress}%
           </Typography>
           <Typography variant="headline" component="h2">
-            {taskName}
+            {taskName} 
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            Shrödinger Level 1
+            {taskMonster.nickname} Level {taskMonster.level}
           </Typography>
         </CardContent>
         <CardActions>

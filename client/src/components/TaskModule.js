@@ -90,8 +90,8 @@ class TaskModule extends React.Component {
           <DialogContent>
             <DialogContentText>
               {daysLeft < 10 ? <p style={{color: "#f14d4d"}}>{daysLeft} day(s) left</p> : <p>{daysLeft} day(s) left</p> }
-              <Monster taskMonster={taskMonster} />
-              <ProgressBar lastSaved={tasks.taskProgress} />
+              <Monster taskMonster={taskMonster} tasks={tasks} />
+              
               <TaskForm taskListId={taskListId} />
               <Tasks />
             </DialogContentText>

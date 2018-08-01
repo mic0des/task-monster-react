@@ -30,7 +30,8 @@ class ToDoCard extends React.Component {
     super(props);
  
     this.state = {
-      percent: props.taskProgress
+      percent: props.taskProgress,
+      monsterLevel: props.monsterLevel
     };
   }
 
@@ -41,7 +42,7 @@ class ToDoCard extends React.Component {
   // }
 
 render() {
-  const { classes, handleClickOpen, taskProgress, taskName, taskMonster } = this.props;
+  const { classes, handleClickOpen, taskProgress, taskName, taskMonster, monsterLevel } = this.props;
   return (
     <div>
       <Card className={classes.card}>
@@ -53,7 +54,7 @@ render() {
             {taskName} 
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            {taskMonster.nickname} Level {taskMonster.level}
+            {taskMonster.nickname} Level {monsterLevel}
           </Typography>
         </CardContent>
         <CardActions>

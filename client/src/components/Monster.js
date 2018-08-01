@@ -22,25 +22,25 @@ class Monster extends React.Component {
     };
   }
 
-  levelUp = event => {
-    event.preventDefault()
-    console.log("Level up!")
-    $.ajax({
-      method: "PATCH",
-      url: `http://localhost:3001/monsters/${this.props.taskMonster.id}`,
-      data: {
-        monster: {
-          level: this.props.taskMonster.level + 1
-        }
-      }
-    }).done(function(data){
-      console.log(data);
-      this.setState({ monsterLevel: data.level });
-    }.bind(this)) 
-  }
+  // levelUp = event => {
+  //   event.preventDefault()
+  //   console.log("Level up!")
+  //   $.ajax({
+  //     method: "PATCH",
+  //     url: `http://localhost:3001/monsters/${this.props.taskMonster.id}`,
+  //     data: {
+  //       monster: {
+  //         level: this.props.taskMonster.level + 1
+  //       }
+  //     }
+  //   }).done(function(data){
+  //     console.log(data);
+  //     this.setState({ monsterLevel: data.level });
+  //   }.bind(this)) 
+  // }
 
 	render() {
-		const { classes, taskMonster, tasks } = this.props;
+		const { classes, taskMonster, tasks, levelUp, monsterLevel } = this.props;
 		const baseUrl = `/${taskMonster.nickname}-Normal.gif`;
 
 		return (
@@ -51,10 +51,10 @@ class Monster extends React.Component {
 					</Grid>
 					<Grid item xs={7}>				
 						<ul className="stats">
-							<li style={{listStyleType: "none", fontFamily: "Roboto"}}><h3>{taskMonster.nickname} {taskMonster.gender} Level {this.state.monsterLevel}</h3></li>
+							<li style={{listStyleType: "none", fontFamily: "Roboto"}}><h3>{taskMonster.nickname} {taskMonster.gender} Level {monsterLevel}</h3></li>
 						</ul>					
 					</Grid> 
-					<ProgressBar levelUp={this.levelUp} taskMonster={taskMonster} lastSaved={tasks.taskProgress} />     			
+					<ProgressBar levelUp={levelUp} taskMonster={taskMonster} lastSaved={tasks.taskProgress} />     			
       			</Grid>
 			</div>
 		)

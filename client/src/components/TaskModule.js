@@ -26,7 +26,8 @@ class TaskModule extends React.Component {
     this.state = {
       open: false,
       scroll: 'paper',
-      percent: this.props.lastSaved
+      percent: this.props.lastSaved,
+      monsterLevel: this.props.taskMonster.level
     };
   }
 
@@ -43,6 +44,23 @@ class TaskModule extends React.Component {
     }.bind(this)) 
   };
 
+  levelUp = event => {
+    event.preventDefault()
+    console.log("Level up!")
+    $.ajax({
+      method: "PATCH",
+      url: `http://localhost:3001/monsters/${this.props.taskMonster.id}`,
+      data: {
+        monster: {
+          level: this.props.taskMonster.level + 1
+        }
+      }
+    }).done(function(data){
+      console.log(data);
+      this.setState({ monsterLevel: data.level });
+    }.bind(this)) 
+  }
+
   handleSave = function(tasks, taskListId, taskProgress, e) {
     e.preventDefault();
 
@@ -57,7 +75,7 @@ class TaskModule extends React.Component {
     }).done(function(data) {
       console.log(data)
       this.props.taskPercentCheck(data.last_saved)
-      this.setState({...this.state, percent: taskProgress.taskProgress })
+      this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level })
     }.bind(this))
   }
 
@@ -66,7 +84,7 @@ class TaskModule extends React.Component {
     tasks.forEach(element => 
       this.props.removeTask(element.id)
     );
-    this.setState({percent: taskProgress.taskProgress, open: false});
+    this.setState({...this.state, percent: taskProgress.taskProgress, open: false});
   };
 
   componentWillMount(){
@@ -84,13 +102,13 @@ class TaskModule extends React.Component {
     let daysLeft = Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))
     return (
       <div>              
-        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} taskProgress={this.state.percent} />  
+        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} taskProgress={this.state.percent} />  
         <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle id="scroll-dialog-title">{taskName}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               {daysLeft < 10 ? <p style={{color: "#f14d4d"}}>{daysLeft} day(s) left</p> : <p>{daysLeft} day(s) left</p> }
-              <Monster taskMonster={taskMonster} tasks={tasks} />
+              <Monster levelUp={this.levelUp} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
               
               <TaskForm taskListId={taskListId} />
               <Tasks />

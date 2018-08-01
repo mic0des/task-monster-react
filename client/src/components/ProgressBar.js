@@ -39,7 +39,7 @@ class ProgressBar extends Component {
            <Grid item xs={8.5}>
             <p>EXP to next Level:</p>
             
-              {(parseInt((((this.props.tasks.filter(task => task.done === true).length) / this.props.tasks.length) * 100),10)) === 100 ? <Button onClick={this.props.levelUp} variant="contained" color="secondary">Finished?</Button> : <div className="shell"><div className="bar" style={ progress }><span>{ (parseInt((((this.props.tasks.filter(task => task.done === true).length) / this.props.tasks.length) * 100),10)) + "%" }</span></div></div>} 
+              {(parseInt((((this.props.tasks.filter(task => task.done === true).length) / this.props.tasks.length) * 100),10)) === 100 ? <div style={{visibility: "hidden"}} className="shell"><Button style={{visibility: "visible", marginTop: "-10px"}} onClick={this.props.levelUp} variant="contained" color="secondary">Finished?</Button></div> : <div className="shell"><div className="bar" style={ progress }><span>{ (parseInt((((this.props.tasks.filter(task => task.done === true).length) / this.props.tasks.length) * 100),10)) + "%" }</span></div></div>} 
             
           </Grid>
         </Grid>

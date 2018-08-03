@@ -23,15 +23,21 @@ var $              = require('jquery');
 class TaskListForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: "",
       user_id: this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : "",
       last_saved: 0,
       monster: "",
-      deadline: ""
+      deadline: "",
+      monsters: []
     }
   }
+
+  componentWillReceiveProps(nextprops) {
+    this.setState({
+     monsters: nextprops.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster })
+      }) 
+    }
 
   handleChange = event => {
       event.preventDefault();
@@ -97,8 +103,7 @@ class TaskListForm extends React.Component {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={1}>Shrödinger Level 1</MenuItem>
-              <MenuItem value={2}>Leaflet Level 1</MenuItem>
+              {this.state.monsters.map(monster => <MenuItem value={monster.id}>{monster.name} Level {monster.level}</MenuItem>)}
             </Select>
             <FormHelperText>Select Existing Monster</FormHelperText>
           </FormControl>

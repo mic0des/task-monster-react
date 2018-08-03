@@ -115,8 +115,8 @@ class TaskModule extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onMouseOver={(e) => this.handleSave(tasks, taskListId, taskProgress, e)} onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Close</Button>
             <Button onClick={this.handleClose} color="primary">Pin</Button>
+            <Button onMouseOver={(e) => this.handleSave(tasks, taskListId, taskProgress, e)} onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Close</Button>
           </DialogActions>
         </Dialog>
       </div>      

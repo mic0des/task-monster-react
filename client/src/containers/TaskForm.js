@@ -52,7 +52,7 @@ export class TaskForm extends Component {
             <TextField
               id="with-placeholder"
               autoComplete="off"
-              placeholder="Add an item..."
+              placeholder="Add a to-do item..."
               className="form-control"
               margin="normal"
               name="task"

@@ -79,6 +79,7 @@ import SignInForm from './components/auth/SignInForm';
 import TaskListForm from './components/TaskListForm';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Calendar from './components/Calendar';
 var $            = require('jquery');
 
 class App extends Component {
@@ -118,6 +119,7 @@ class App extends Component {
         <SignUpForm/>
         <SignInForm />
         <TaskListForm />
+        <Calendar taskLists={this.state.taskLists} />
       </div>
     );
   }

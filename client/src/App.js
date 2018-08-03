@@ -118,7 +118,7 @@ class App extends Component {
         </Grid>
         <SignUpForm/>
         <SignInForm />
-        <TaskListForm />
+        <TaskListForm taskLists={this.state.taskLists} />
         <Calendar taskLists={this.state.taskLists} />
       </div>
     );

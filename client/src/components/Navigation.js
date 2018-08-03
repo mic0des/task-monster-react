@@ -25,7 +25,7 @@ export class Navigation extends Component {
             <Avatar alt="Jelo" src="https://avatars1.githubusercontent.com/u/4992682?s=460&v=4" className="avatar" />
             <Button className="nav">Jelo</Button>
             <Button variant="contained" color="primary" className="nav">New Task</Button>
-            <Button className="nav">Monsters</Button>
+            <Button className="nav">Calendar</Button>
             <Button className="nav" onClick={this.signOut}>Log Out</Button>
           </Grid>
         </Grid>

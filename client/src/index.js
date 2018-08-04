@@ -43,9 +43,6 @@ import TaskListForm from './components/TaskListForm';
 ReactDOM.render(
   <Provider store={store}>
   	<div>
-  		<Navigation />
-  		<br/>
-        <br/>
     	<App />
     </div>
   </Provider>,

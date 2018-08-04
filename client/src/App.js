@@ -132,6 +132,9 @@ class App extends Component {
     return (
       <Router>
           <div>
+          <Navigation />
+          <br/>
+          <br/>
           <Route exact path="/tasks" render={()=>< TaskLists taskLists={this.state.taskLists} />} />
           <Route exact path="/" component={SignInForm} />
           <Route exact path="/signup" component={SignUpForm} />

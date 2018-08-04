@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { loginError } from '../../actions/auth';
 import { receiveLogin } from '../../actions/auth';
 import { bindActionCreators } from 'redux';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 var React          = require('react');
 var _              = require('lodash');
 var Functions      = require('../../utils/Functions.js');
@@ -111,7 +112,10 @@ class SignUpForm extends React.Component {
       </Grid>
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
           <Grid item xs={9.5}>
-            <div><p><Button size="small" >Sign In Instead</Button></p></div>
+          <br/>         
+            <Button className="nav">
+              <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/" exact>Sign In Instead</Link>
+            </Button>          
           </Grid>
         </Grid>
         </div>

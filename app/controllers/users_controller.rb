@@ -13,6 +13,11 @@ class UsersController < ApplicationController
 		# end
 	end
 
+	def show 
+		@user = User.find(params["id"])
+		render json: @user.to_json(:methods => [:gravatar_url_small])
+	end
+
   def payload(user)
     return nil unless user and user.id
     {

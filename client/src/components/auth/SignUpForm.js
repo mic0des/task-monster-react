@@ -77,7 +77,8 @@ class SignUpForm extends React.Component {
       if (!localStorage.id_token || localStorage.id_token === "undefined") {
         this.props.loginError(data)
       } else {
-        this.props.receiveLogin(data.auth_token)        
+        this.props.receiveLogin(data.auth_token) 
+        window.location.reload();       
       }
     }.bind(this))
   }

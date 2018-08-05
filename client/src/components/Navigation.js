@@ -7,17 +7,35 @@ import { connect } from 'react-redux';
 var $         = require('jquery');
 
 class Navigation extends Component {
+  state = {
+    gravatar: ''
+  };
 
   signOut = event => {
     localStorage.removeItem("id_token")
+    window.location.reload();  
   };
+
+  componentWillMount(){
+    if (this.props.auth.isAuthenticated === true) {
+        $.ajax({
+        method: "GET",
+        url: `http://localhost:3001/users/${this.props.user}`
+        }).done(function(data){
+          console.log(data)
+          this.setState({
+            gravatar: data.gravatar_url_small
+          })
+        }.bind(this))      
+    }      
+  }
 
   renderNav(){
     if (this.props.auth.isAuthenticated === true) {
       return <Grid style={{padding: "20px", marginTop: "30px"}} item xs={4}>
-        <Avatar alt="avatar" src="https://avatars1.githubusercontent.com/u/4992682?s=460&v=4" className="avatar" />
+        <Avatar alt="avatar" src={this.state.gravatar} className="avatar" />
         <Button className="nav">
-          <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/tasks" exact>Tasks</Link>
+          <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/" exact>Tasks</Link>
         </Button>
         <Button variant="contained" color="primary" className="nav">
           <Link style={{textDecoration: "none", color: "#fff"}} to="/newtask" exact>New Task</Link>

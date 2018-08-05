@@ -109,6 +109,14 @@ class App extends Component {
     }      
   }
 
+  homePage() {
+    if (this.props.auth.isAuthenticated === true) {
+      return <Route exact path="/" render={()=>< TaskLists taskLists={this.state.taskLists} />} />
+    } else {
+      return <Route exact path="/" component={SignInForm} />
+    }
+  }
+
   // render() {
   //   // just defines the routes
   //   return (
@@ -132,11 +140,10 @@ class App extends Component {
     return (
       <Router>
           <div>
-          <Navigation />
+          <Navigation user={this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : 'guest'} />
           <br/>
           <br/>
-          <Route exact path="/tasks" render={()=>< TaskLists taskLists={this.state.taskLists} />} />
-          <Route exact path="/" component={SignInForm} />
+          {this.homePage()}
           <Route exact path="/signup" component={SignUpForm} />
           <Route exact path="/newtask" render={()=>< TaskListForm taskLists={this.state.taskLists} />} />
           <Route exact path="/calendar" render={()=>< Calendar taskLists={this.state.taskLists} />} />

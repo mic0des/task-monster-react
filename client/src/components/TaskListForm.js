@@ -29,7 +29,7 @@ class TaskListForm extends React.Component {
       last_saved: 0,
       monster: "",
       deadline: "",
-      monsters: []
+      monsters: props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster })
     }
   }
 
@@ -121,6 +121,8 @@ class TaskListForm extends React.Component {
         </div>       
       </form>
       </Grid>
+      <br/>
+      <br/>
       </div>
     );
   }

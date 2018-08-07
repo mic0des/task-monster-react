@@ -124,11 +124,11 @@ renderName(taskName){
 }
 
   render() {
-    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress, taskMonster, deadline } = this.props
+    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress, taskMonster, deadline, finished } = this.props
     let daysLeft = Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))
     return (
       <div>              
-        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} taskProgress={this.state.percent} />  
+        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} finished={finished} taskProgress={this.state.percent} />  
         <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle id="scroll-dialog-title">{this.renderName(taskName)}</DialogTitle>
           <DialogContent>

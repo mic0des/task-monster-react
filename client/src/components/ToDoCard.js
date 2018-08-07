@@ -42,7 +42,7 @@ class ToDoCard extends React.Component {
   // }
 
 renderName(taskName){
-  if (this.props.taskProgress.finished === true) {
+  if (this.props.finished === true) {
     return taskName.concat(" ✓") 
   } else {
     return taskName

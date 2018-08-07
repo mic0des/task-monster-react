@@ -4,7 +4,8 @@ export default (state = {taskProgress: 50}, action) => {
 
     case 'TASK_PROGRESS':
       return Object.assign({}, state, {
-      	taskProgress: action.taskListPercent
+      	taskProgress: action.taskListPercent.percent,
+      	finished: action.taskListPercent.finished
       })   
 
     default: 

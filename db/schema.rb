@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180728223048) do
+ActiveRecord::Schema.define(version: 20180806184859) do
 
   create_table "monsters", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20180728223048) do
     t.integer "last_saved"
     t.datetime "deadline"
     t.integer "monster_id"
+    t.boolean "finished", default: false
     t.index ["monster_id"], name: "index_task_lists_on_monster_id"
     t.index ["user_id"], name: "index_task_lists_on_user_id"
   end

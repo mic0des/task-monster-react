@@ -48,14 +48,21 @@ class TaskCard extends React.Component {
     })
   }
 
+  enabled(task){
+    if (this.props.finished === true) {
+        return <FormControlLabel disabled control={<Checkbox checked={task.done} value={task.name} onChange={(e) => this.handleOnCheck(task.id, e)} />} label={task.name} />      
+      } else {
+        return <div><FormControlLabel control={<Checkbox checked={task.done} value={task.name} onChange={(e) => this.handleOnCheck(task.id, e)} />} label={task.name} />  
+          <button type="button" onClick={(e) => this.handleOnClick(task.id, e)} className="btn btn-danger" >
+              <span aria-hidden="true">&times;</span></button></div>       
+      }
+  }
+
   render() {
     const { task, removeTask, checkTask } = this.props;
     return (
       <div>
-        <FormControlLabel control={<Checkbox checked={task.done} value={task.name} onChange={(e) => this.handleOnCheck(task.id, e)} />} label={task.name} />
-          <button type="button" onClick={(e) => this.handleOnClick(task.id, e)} className="btn btn-danger" >
-              <span aria-hidden="true">&times;</span>
-          </button>
+        {this.enabled(task)}
       </div>
     )
   }  

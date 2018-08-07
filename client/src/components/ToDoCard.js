@@ -41,6 +41,14 @@ class ToDoCard extends React.Component {
   //  })
   // }
 
+renderName(taskName){
+  if (this.props.taskProgress.finished === true) {
+    return taskName.concat(" ✓") 
+  } else {
+    return taskName
+  }
+}
+
 render() {
   const { classes, handleClickOpen, taskProgress, taskName, taskMonster, monsterLevel } = this.props;
   return (
@@ -51,7 +59,7 @@ render() {
             Task Progress: {taskProgress}%
           </Typography>
           <Typography variant="headline" component="h2">
-            {taskName} 
+            {this.renderName(taskName)} 
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
             {taskMonster.nickname} Level {monsterLevel}

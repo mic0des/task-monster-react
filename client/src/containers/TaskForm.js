@@ -44,7 +44,11 @@ export class TaskForm extends Component {
     });
   }
 
-  render() {    
+  render() { 
+    if (this.props.finished === true) {
+      return <p>woohoo!</p>
+    } else {
+
     return (
       <Grid container spacing={24} alignItems="center" direction="row" justify="center">  
         <Grid item xs={9.5}>          
@@ -65,6 +69,7 @@ export class TaskForm extends Component {
       </Grid>
     );
   }
+}
 }
 
 export default connect(null, { addTask })(TaskForm);

@@ -27,7 +27,8 @@ class TaskModule extends React.Component {
       open: false,
       scroll: 'paper',
       percent: this.props.lastSaved,
-      monsterLevel: this.props.taskMonster.level
+      monsterLevel: this.props.taskMonster.level,
+      finished: this.props.finished
     };
   }
 
@@ -38,7 +39,7 @@ class TaskModule extends React.Component {
       url: `http://localhost:3001/task_lists/${taskListId}`
     }).done(function(data){
       console.log(data)
-      this.props.taskPercentCheck(data.last_saved)
+      this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished})
       data.tasks.map(e => this.props.addTask(e))
       this.setState({ open: true, scroll: 'paper' });
     }.bind(this)) 
@@ -57,7 +58,7 @@ class TaskModule extends React.Component {
       }
     }).done(function(data){
       console.log(data);
-      this.setState({ monsterLevel: data.level });
+      this.setState({ monsterLevel: data.level, finished: true });
     }.bind(this)) 
   }
 
@@ -69,12 +70,13 @@ class TaskModule extends React.Component {
       url: `http://localhost:3001/task_lists/${taskListId}`,
       data: {
         task: {
-          last_saved: (tasks.filter(task => task.done === true).length) / tasks.length * 100
+          last_saved: (tasks.filter(task => task.done === true).length) / tasks.length * 100,
+          finished: this.state.finished
         }
       }
     }).done(function(data) {
       console.log(data)
-      this.props.taskPercentCheck(data.last_saved)
+      this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished})
       this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level })
     }.bind(this))
   }
@@ -97,6 +99,30 @@ class TaskModule extends React.Component {
   //  })
   // }
 
+  renderForm(taskListId){
+    if (this.state.finished === true) {
+      return <p></p>
+    } else {
+      return <TaskForm finished={this.props.finished} taskListId={taskListId} />
+    }
+  }
+
+  renderDays(daysLeft){
+    if (this.state.finished === true) {
+      return <p style={{color: "#198a0dde"}}>{daysLeft} day(s) left</p>
+    } else {
+      return daysLeft < 10 ? <p style={{color: "#f14d4d"}}>{daysLeft} day(s) left</p> : <p>{daysLeft} day(s) left</p>    
+    }
+  }
+
+renderName(taskName){
+  if (this.props.taskProgress.finished === true) {
+    return taskName.concat(" ✓") 
+  } else {
+    return taskName
+  }
+}
+
   render() {
     const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress, taskMonster, deadline } = this.props
     let daysLeft = Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))
@@ -104,14 +130,13 @@ class TaskModule extends React.Component {
       <div>              
         <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} taskProgress={this.state.percent} />  
         <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
-          <DialogTitle id="scroll-dialog-title">{taskName}</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">{this.renderName(taskName)}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {daysLeft < 10 ? <p style={{color: "#f14d4d"}}>{daysLeft} day(s) left</p> : <p>{daysLeft} day(s) left</p> }
-              <Monster levelUp={this.levelUp} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
-              
-              <TaskForm taskListId={taskListId} />
-              <Tasks />
+              {this.renderDays(daysLeft)}
+              <Monster finished={this.state.finished} levelUp={this.levelUp} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
+              {this.renderForm(taskListId)}              
+              <Tasks finished={this.state.finished} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>

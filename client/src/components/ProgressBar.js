@@ -33,6 +33,10 @@ class ProgressBar extends Component {
       width: parseInt((((this.props.tasks.filter(task => task.done === true).length) / this.props.tasks.length) * 100),10) + "%"
     }
 
+    if (this.props.finished === true) {
+      return <p>CONGRATS! TASK FINISHED!</p>
+    } else {
+
     return (
       <div>
          <Grid style={{paddingTop: '0px'}} container spacing={24} alignItems="center" direction="row" justify="center">
@@ -46,6 +50,7 @@ class ProgressBar extends Component {
       </div>
     )
   }
+}
 }
 
 const mapStateToProps = state => {

@@ -1,6 +1,6 @@
 class TaskListsController < ApplicationController
 	def update 
-		TaskList.find(params["id"]).update(last_saved: params["task"]["last_saved"])
+		TaskList.find(params["id"]).update(last_saved: params["task"]["last_saved"], finished: params["task"]["finished"])
 		@task_list = TaskList.find(params["id"])
 		render :json => @task_list.to_json(:include => {:tasks => {:only => [:name, :done, :id]}}, :include => {:monster => {:only => [:level]}})
 	end

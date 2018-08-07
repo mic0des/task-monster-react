@@ -73,7 +73,9 @@ class TaskListForm extends React.Component {
           deadline: this.state.deadline
         }
       }
-    });
+    }).done(function(data){
+      window.location.assign("/")
+    }.bind(this));
   }
     // .done(function(data){
     //   window.location.reload();

@@ -13,7 +13,7 @@ class Navigation extends Component {
 
   signOut = event => {
     localStorage.removeItem("id_token")
-    window.location.reload();  
+    window.location.assign("/") 
   };
 
   componentWillMount(){

@@ -16,6 +16,8 @@ import { addTask } from '../actions/tasks';
 import { removeTask } from '../actions/tasks';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import SweetAlert from 'sweetalert-react';
+import 'sweetalert/dist/sweetalert.css';
 var $              = require('jquery');
 
 
@@ -115,16 +117,25 @@ class TaskModule extends React.Component {
     }
   }
 
-renderName(taskName){
-  if (this.props.taskProgress.finished === true) {
-    return taskName.concat(" ✓") 
-  } else {
-    return taskName
+  renderName(taskName){
+    if (this.props.taskProgress.finished === true) {
+      return taskName.concat(" ✓") 
+    } else {
+      return taskName
+    }
   }
-}
+
+  deleteTaskList(taskListId){
+    $.ajax({
+      method: "DELETE",
+      url: `http://localhost:3001/task_lists/${taskListId}`
+    }).done(function(data){
+      window.location.assign("/") 
+    }.bind(this))     
+  }
 
   render() {
-    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress, taskMonster, deadline, finished } = this.props
+    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress, taskMonster, deadline, finished, deleteTaskList } = this.props
     let daysLeft = Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))
     return (
       <div>              
@@ -140,7 +151,22 @@ renderName(taskName){
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">Pin</Button>
+            <Button onClick={() => this.setState({ show: true })} color="primary">Delete</Button>
+            <SweetAlert
+              show={this.state.show}
+              title="Trash this task?"
+              text="You can't undo this!"
+              showCancelButton
+              onConfirm={() => {
+                console.log('confirm'); 
+                this.deleteTaskList(taskListId);
+              }}
+              onCancel={() => {
+                console.log('cancel'); 
+                this.setState({ show: false });
+              }}
+              onClose={() => console.log('close')}
+            />
             <Button onMouseOver={(e) => this.handleSave(tasks, taskListId, taskProgress, e)} onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Close</Button>
           </DialogActions>
         </Dialog>

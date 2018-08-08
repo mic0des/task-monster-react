@@ -14,6 +14,11 @@ class TaskListsController < ApplicationController
 		# end	
 	end
 
+	def destroy
+		@task_list = TaskList.find(params["id"])
+		@task_list.delete
+	end
+
 	def create
 		@task_list = TaskList.create(name: params["taskList"]["name"], user_id: params["taskList"]["user_id"], last_saved: 0, monster_id: params["taskList"]["monster"], deadline: params["taskList"]["deadline"])
 	end

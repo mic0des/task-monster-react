@@ -15,7 +15,8 @@ export default class About extends Component {
 		}
 	}
 
-	toTop(){
+	toTop(e){
+		e.preventDefault()
 		window.scrollTo({
     		behavior: "smooth",
     		top: 0
@@ -158,7 +159,7 @@ export default class About extends Component {
 						<Grid item xs={8}>	
 							<Typography style={{color: "#fec536"}} variant="subheading">Using Calendar View, you can view your deadlines clearly for effective prioritizing, or export to Google Calendar!</Typography>
 						</Grid>
-						<a href="" style={{opacity}} onClick={this.toTop} id="return-to-top"><i className="fa fa-arrow-up fa-2x"></i></a>
+						<a href="" style={{opacity}} onClick={(e) => {this.toTop(e)}} id="return-to-top"><i className="fa fa-arrow-up fa-2x"></i></a>
 					</Grid>
 				</Grid>
 
@@ -174,7 +175,7 @@ export default class About extends Component {
 					</Grid>
 			
 					<Grid item xs={6}>
-						<h2><Typography style={{textAlign: "center", fontWeight: "700", color: "#3f51b5"}} variant="display2">So... Ready to get stuff done, AND collect digital pets on the blockchain?</Typography></h2>		
+						<h2><Typography style={{textAlign: "center", fontWeight: "700", color: "#3f51b5"}} variant="display2">So... Ready to get stuff done and collect digital pets on the blockchain?</Typography></h2>		
 					</Grid>
 
 					<Grid item xs={3}>
@@ -182,7 +183,7 @@ export default class About extends Component {
 
 				</Grid>
 			
-				<br />
+				<br/>
 			
 				<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
 					<Grid item xs={4}>
@@ -198,6 +199,17 @@ export default class About extends Component {
 					</Grid>
 				</Grid>
 
+				<br/>
+				<br/>
+				<br/>
+
+				<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
+					<Grid container spacing={6} alignItems="left" direction="row" justify="flex-start">
+						<Grid item xs={2}><a onClick={(e) => {e.preventDefault()}} style={{color: "#4054b2", marginLeft: "1em", textDecoration: "none"}} href=""><p style={{marginLeft: "1em"}}>Code of Conduct</p></a></Grid>
+						<Grid item xs={2}><a onClick={(e) => {e.preventDefault()}} style={{color: "#4054b2", marginLeft: "1em", textDecoration: "none"}} href=""><p>Press Coverage</p></a></Grid>
+						<Grid item xs={2}><a onClick={(e) => {e.preventDefault()}} style={{color: "#4054b2", marginLeft: "1em", textDecoration: "none"}} href=""><p>Contact</p></a></Grid>
+					</Grid>
+				</Grid>
 			</div>
 		)
 	}

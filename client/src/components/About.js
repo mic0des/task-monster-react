@@ -175,7 +175,7 @@ export default class About extends Component {
 					</Grid>
 			
 					<Grid item xs={6}>
-						<h2><Typography style={{textAlign: "center", fontWeight: "700", color: "#3f51b5"}} variant="display2">So... Ready to get stuff done and collect digital pets on the blockchain?</Typography></h2>		
+						<h2><Typography style={{textAlign: "center", fontWeight: "700", color: "#4A4A4A"}} variant="display2">So... Ready to get stuff done and collect digital pets on the blockchain?</Typography></h2>		
 					</Grid>
 
 					<Grid item xs={3}>
@@ -189,8 +189,8 @@ export default class About extends Component {
 					<Grid item xs={4}>
 					</Grid>
 					<Grid item xs={4}>
-        				<Button style={{width: "100%"}}variant="outlined" size="large" color="primary">
-          					<Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signup" exact>
+        				<Button style={{width: "100%"}} variant="contained" size="large" color="primary">
+          					<Link style={{textDecoration: "none", color: "#fff"}} to="/signup" exact>
           						SIGN UP NOW!
           					</Link>
         				</Button>
@@ -199,6 +199,7 @@ export default class About extends Component {
 					</Grid>
 				</Grid>
 
+				<br/>
 				<br/>
 				<br/>
 				<br/>

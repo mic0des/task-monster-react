@@ -74,6 +74,7 @@ import Paper from '@material-ui/core/Paper';
 import TaskModule from './components/TaskModule';
 import Navigation from './components/Navigation';
 import TaskLists from './components/TaskLists';
+import About from './components/About';
 import './App.css';
 import SignUpForm from './components/auth/SignUpForm';
 import SignInForm from './components/auth/SignInForm';
@@ -113,7 +114,7 @@ class App extends Component {
     if (this.props.auth.isAuthenticated === true) {
       return <Route exact path="/" render={()=>< TaskLists taskLists={this.state.taskLists} />} />
     } else {
-      return <Route exact path="/" component={SignInForm} />
+      return <Route exact path="/" component={About} />
     }
   }
 
@@ -139,6 +140,12 @@ class App extends Component {
   render() {
     // just defines the routes
     return (
+      // <Router>
+      // <div>
+      // <Navigation user={this.parseJwt(localStorage.id_token).user_id}/>
+      // <About />
+      // </div>
+      // </Router>
       <Router>
           <div>
           <Navigation user={this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : 'guest'} />
@@ -146,6 +153,7 @@ class App extends Component {
           <br/>
           {this.homePage()}
           <Route exact path="/signup" component={SignUpForm} />
+          <Route exact path="/signin" component={SignInForm} />
           <Route exact path="/newtask" render={()=>< TaskListForm taskLists={this.state.taskLists} />} />
           <Route exact path="/calendar" render={()=>< Calendar taskLists={this.state.taskLists} />} />
           </div>

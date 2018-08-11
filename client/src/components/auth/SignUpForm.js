@@ -115,7 +115,7 @@ class SignUpForm extends React.Component {
           <Grid item xs={9.5}>
           <br/>         
             <Button className="nav">
-              <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/" exact>Sign In Instead</Link>
+              <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signin" exact>Sign In Instead</Link>
             </Button>          
           </Grid>
         </Grid>

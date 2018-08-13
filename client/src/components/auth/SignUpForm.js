@@ -78,7 +78,7 @@ class SignUpForm extends React.Component {
         this.props.loginError(data)
       } else {
         this.props.receiveLogin(data.auth_token) 
-        window.location.reload();       
+        window.location.assign("/");       
       }
     }.bind(this))
   }

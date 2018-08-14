@@ -160,7 +160,7 @@ export default class About extends Component {
 						<Grid item xs={8}>	
 							<Typography style={{color: "#fec536"}} variant="subheading">Using Calendar View, you can view your deadlines clearly for effective prioritizing, or export to Google Calendar!</Typography>
 						</Grid>
-						<a href="" style={{opacity}} onClick={(e) => {this.toTop(e)}} id="return-to-top"><i className="fa fa-arrow-up fa-2x"></i></a>
+						<a href="" style={{opacity: `${opacity}`, zIndex: "10000000"}} onClick={(e) => {this.toTop(e)}} id="return-to-top"><i className="fa fa-arrow-up fa-2x"></i></a>
 					</Grid>
 				</Grid>
 
@@ -204,8 +204,6 @@ export default class About extends Component {
 				<br/>
 				<br/>
 				<br/>
-
-				<Footer />
 
 			</div>
 		)

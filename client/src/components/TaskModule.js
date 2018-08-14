@@ -111,7 +111,9 @@ class TaskModule extends React.Component {
 
   renderDays(daysLeft){
     if (this.state.finished === true) {
-      return <p style={{color: "#198a0dde"}}>{daysLeft} day(s) left</p>
+      return <p style={{color: "#2cc07d"}}><span style={{fontWeight: "bold"}}>Finished on time</span> ...  monster is happy!</p>
+    } else if (daysLeft <= 0) {
+      return <p style={{color: "#f14d4d"}}><span style={{fontWeight: "bold"}}>Missed Deadline</span> ... Finish all tasks to revive KO'd monster!</p>      
     } else {
       return daysLeft < 10 ? <p style={{color: "#f14d4d"}}>{daysLeft} day(s) left</p> : <p>{daysLeft} day(s) left</p>    
     }
@@ -119,7 +121,7 @@ class TaskModule extends React.Component {
 
   renderName(taskName){
     if (this.props.taskProgress.finished === true) {
-      return taskName.concat(" ✓") 
+      return taskName.concat(" ✔") 
     } else {
       return taskName
     }
@@ -145,7 +147,7 @@ class TaskModule extends React.Component {
           <DialogContent>
             <DialogContentText>
               {this.renderDays(daysLeft)}
-              <Monster finished={this.state.finished} levelUp={this.levelUp} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
+              <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={this.levelUp} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
               {this.renderForm(taskListId)}              
               <Tasks finished={this.state.finished} />
             </DialogContentText>

@@ -82,6 +82,7 @@ import TaskListForm from './components/TaskListForm';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar';
+import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 var $            = require('jquery');
 
@@ -156,6 +157,8 @@ class App extends Component {
           <Route exact path="/signin" component={SignInForm} />
           <Route exact path="/newtask" render={()=>< TaskListForm taskLists={this.state.taskLists} />} />
           <Route exact path="/calendar" render={()=>< Calendar taskLists={this.state.taskLists} />} />
+          <br/>         
+          <Footer />
           </div>
       </Router>
     );

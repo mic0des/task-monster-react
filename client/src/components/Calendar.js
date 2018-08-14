@@ -3,8 +3,9 @@ import { render } from 'react-dom'
 import moment from 'moment'
 import TaskModule from './TaskModule';
 import Button from '@material-ui/core/Button';
+import Footer from './Footer';
+import BigCalendar from 'react-big-calendar';
 
-import BigCalendar from 'react-big-calendar'
 BigCalendar.momentLocalizer(moment)
 
 export default class Calendar extends React.Component {
@@ -59,7 +60,6 @@ export default class Calendar extends React.Component {
         style={{height: '420px'}}
         events={this.state.events}
       />
-      <br/>
       </div>
     )
   }

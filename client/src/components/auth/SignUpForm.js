@@ -28,7 +28,8 @@ class SignUpForm extends React.Component {
       password: "",
       password_confirmation: "",
       name: "",
-      showPassword: false
+      showPassword: false, 
+      error: [""]
     }
   }
 
@@ -50,11 +51,11 @@ class SignUpForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { email, password, password_confirmation, name } = this.state;
+    const { email, password, password_confirmation, name, error } = this.state;
 
-    if (!email || !password || !password_confirmation || !name) {
-      return;
-    }
+    // if (!email || !password || !password_confirmation || !name) {
+    //   this.setState({error: [""]})
+    // }
 
     $.ajax({
       method: "POST",
@@ -76,6 +77,8 @@ class SignUpForm extends React.Component {
       localStorage.setItem('id_token', data.auth_token)
       if (!localStorage.id_token || localStorage.id_token === "undefined") {
         this.props.loginError(data)
+        this.setState({error: Object.entries(data)})
+        console.log(Object.entries(data))
       } else {
         this.props.receiveLogin(data.auth_token) 
         window.location.assign("/");       
@@ -103,17 +106,24 @@ class SignUpForm extends React.Component {
         <div>
           <TextField style={{width: "14em"}} id="password_confirmation" className="password_confirmation" name="password_confirmation" placeholder="Confirm Password" type="password" value={this.state.password_confirmation} onChange={this.handleChange} margin="normal" />
         </div>
-
         <br/>
-
         <div>
           <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Sign Up</Button>
         </div>        
       </form>
       </Grid>
+      <br/>
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-          <Grid item xs={9.5}>
-          <br/>         
+          <Grid item xs={5}>
+          </Grid>
+          <Grid item xs={2}>
+            {this.state.error.map(error => <p style={{color: "#e70b28", textAlign: "left", fontWeight: "light"}}>{error[0] === "password_confirmation" ? "password confirmation" : error[0]} {error[1]}</p>)}
+          </Grid>
+          <Grid item xs={5}>
+          </Grid>
+        </Grid>
+        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+          <Grid item xs={9.5}>        
             <Button className="nav">
               <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signin" exact>Sign In Instead</Link>
             </Button>          

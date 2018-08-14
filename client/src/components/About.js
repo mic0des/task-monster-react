@@ -4,6 +4,7 @@ import SignInForm from './auth/SignInForm';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import Footer from './Footer'
 
 export default class About extends Component {
 
@@ -204,13 +205,8 @@ export default class About extends Component {
 				<br/>
 				<br/>
 
-				<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
-					<Grid container spacing={6} alignItems="left" direction="row" justify="flex-start">
-						<Grid item xs={2}><a onClick={(e) => {e.preventDefault()}} style={{color: "#4054b2", marginLeft: "1em", textDecoration: "none"}} href=""><p style={{marginLeft: "1em"}}>Code of Conduct</p></a></Grid>
-						<Grid item xs={2}><a onClick={(e) => {e.preventDefault()}} style={{color: "#4054b2", marginLeft: "1em", textDecoration: "none"}} href=""><p>Press Coverage</p></a></Grid>
-						<Grid item xs={2}><a onClick={(e) => {e.preventDefault()}} style={{color: "#4054b2", marginLeft: "1em", textDecoration: "none"}} href=""><p>Contact</p></a></Grid>
-					</Grid>
-				</Grid>
+				<Footer />
+
 			</div>
 		)
 	}

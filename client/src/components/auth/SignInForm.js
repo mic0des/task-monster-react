@@ -23,7 +23,8 @@ class SignInForm extends React.Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: [""]
     }
   }
 
@@ -39,10 +40,6 @@ class SignInForm extends React.Component {
     event.preventDefault();
     const { email, password } = this.state;
 
-    if (!email || !password) {
-      return;
-    }
-
     $.ajax({
       method: "POST",
       url: "http://localhost:3001/auth_user",
@@ -57,23 +54,14 @@ class SignInForm extends React.Component {
       localStorage.setItem('id_token', data.auth_token)
       if (!localStorage.id_token || localStorage.id_token === "undefined") {
         this.props.loginError(data.errors)
+        this.setState({error: Object.entries(data)})
+        console.log(data)
       } else {
         this.props.receiveLogin(data.auth_token);
         window.location.assign("/");         
       }
-      // window.reload();
     }.bind(this));
   }
-  //   .done(data => {
-  //     localStorage.setItem('id_token', data.auth_token)
-  //     if (!localStorage.id_token || localStorage.id_token === "undefined") {
-  //       this.store.dispatch(loginError(data.errors))
-  //     } else {
-  //       receiveLogin(data.auth_token)       
-  //     }
-  //     console.log(data)
-  //   })
-  // }
 
   render() {
     return (
@@ -95,12 +83,19 @@ class SignInForm extends React.Component {
         </Grid>
         <br />
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-          <Grid item xs={9.5}>
+          <Grid item xs={4}>
+          </Grid>
+          <Grid item xs={4}>
+            {this.state.error.map(error => <p style={{color: "#e70b28", textAlign: "center", fontWeight: "light"}}>{error[1]}</p>)}
+          </Grid>
+          <Grid item xs={4}>
+          </Grid>
+        </Grid>
+        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
             <div><p>No account?  
             <Button className="nav">
               <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signup" exact>Sign Up</Link>
             </Button></p></div>
-          </Grid>
         </Grid>
       </div>
     );

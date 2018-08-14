@@ -53,13 +53,12 @@ export default class Calendar extends React.Component {
   render () {
     return (
       <div>
-      <Button onClick={this.downloadIcsFile} variant="outlined" color="primary">Export .ICS to Google Calendar</Button>
-      <br/>
-      <br/>
       <BigCalendar
         style={{height: '420px'}}
         events={this.state.events}
       />
+      <br/>
+      <Button style={{float: "right", zIndex: "10000000"}} onClick={this.downloadIcsFile} variant="outlined" color="primary">Export .ICS to Google Calendar</Button>
       </div>
     )
   }

@@ -67,10 +67,11 @@ export default class About extends Component {
 					<br/>
 					<br/>
 					<br/>
+					<br/>
 
-					<Grid style={{margin: "0 auto"}} item xs={1}>
-						<div style={{margin: "1.5em"}} onClick={this.toAbout} className="arrow bounce">
-  							<a className="down fa fa-arrow-down fa-2x" href="#"></a>
+					<Grid style={{zIndex: "10000000", margin: "0 auto"}} item xs={1}>
+						<div style={{zIndex: "10000000", marginTop: ".98em"}} onClick={this.toAbout} className="arrow bounce">
+  							<a style={{zIndex: "10000000"}} className="down fa fa-arrow-down fa-2x" href="#"></a>
 						</div>
 					</Grid>
 				</Grid>

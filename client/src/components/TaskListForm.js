@@ -85,9 +85,9 @@ class TaskListForm extends React.Component {
     return (
       <div>
       <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-      <form className="newTaskList">
+      <form style={{width: "11em"}} className="newTaskList">
       <div>
-        <img src="/documents-flat.png" alt="new task" height="168" width="168"/>
+        <img src="/documents-flat.png" alt="new task" height="100" width="100" style={{display: "block", margin: "0 auto"}}/>
       </div>
         <div>
           <TextField  autoComplete="off" id="name" className="name" name="name" placeholder="Name your new list" value={this.state.name} onChange={this.handleChange} margin="normal" />

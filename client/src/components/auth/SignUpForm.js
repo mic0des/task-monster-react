@@ -53,10 +53,6 @@ class SignUpForm extends React.Component {
     event.preventDefault();
     const { email, password, password_confirmation, name, error } = this.state;
 
-    // if (!email || !password || !password_confirmation || !name) {
-    //   this.setState({error: [""]})
-    // }
-
     $.ajax({
       method: "POST",
       url: "http://localhost:3001/users.json",
@@ -66,13 +62,9 @@ class SignUpForm extends React.Component {
           email: this.state.email,
           password: this.state.password,
           password_confirmation: this.state.password_confirmation
-          // name: this.state.name
         }
       }
     })
-    // .done(function(data){
-    //   window.location.reload();
-    // }.bind(this));
     .done(function(data){
       localStorage.setItem('id_token', data.auth_token)
       if (!localStorage.id_token || localStorage.id_token === "undefined") {
@@ -148,18 +140,3 @@ const mapDispatchToProps = (dispatch) => {
 };
  
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
-
-// const mapStateToProps = (state) => {
-//   return {
-//     items: state.user
-//   };
-// };
-
-// const mapDispatchToProps = () => {
-//   return {
-//     loginError: loginError,
-//     receiveLogin: receiveLogin
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

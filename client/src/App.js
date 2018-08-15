@@ -113,7 +113,7 @@ class App extends Component {
 
   homePage() {
     if (this.props.auth.isAuthenticated === true) {
-      return <Route exact path="/" render={()=>< TaskLists taskLists={this.state.taskLists} />} />
+      return <Route exact path="/" render={()=>< TaskLists style={{height: "65%"}} taskLists={this.state.taskLists} />} />
     } else {
       return <Route exact path="/" component={About} />
     }

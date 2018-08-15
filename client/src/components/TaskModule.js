@@ -111,11 +111,11 @@ class TaskModule extends React.Component {
 
   renderDays(daysLeft){
     if (this.state.finished === true) {
-      return <p style={{color: "#2cc07d"}}><span style={{fontWeight: "bold"}}>Finished on time</span> ...  monster is happy!</p>
+      return <p style={{color: "#2cc07d", marginTop: "0", marginBottom: "4px"}}><span style={{fontWeight: "bold"}}>Finished on time</span> ...  monster is happy!</p>
     } else if (daysLeft <= 0) {
-      return <p style={{color: "#f14d4d"}}><span style={{fontWeight: "bold"}}>Missed Deadline</span> ... Finish all tasks to revive KO'd monster!</p>      
+      return <p style={{color: "#f14d4d", margin: "0", marginBottom: "4px"}}><span style={{fontWeight: "bold"}}>Missed Deadline</span> ... Finish all tasks to revive KO'd monster!</p>      
     } else {
-      return daysLeft < 10 ? <p style={{color: "#f14d4d"}}>{daysLeft} day(s) left</p> : <p>{daysLeft} day(s) left</p>    
+      return daysLeft < 10 ? <p style={{color: "#f14d4d", margin: "0", marginBottom: "4px"}}>{daysLeft} day(s) left</p> : <p style={{margin: "0", marginBottom: "4px"}}>{daysLeft} day(s) left</p>    
     }
   }
 
@@ -142,8 +142,8 @@ class TaskModule extends React.Component {
     return (
       <div>              
         <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} finished={finished} taskProgress={this.state.percent} />  
-        <Dialog open={this.state.open} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
-          <DialogTitle id="scroll-dialog-title">{this.renderName(taskName)}</DialogTitle>
+        <Dialog open={this.state.open} style={{height: "94%"}} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
+          <DialogTitle style={{padding: "20px 24px 20px"}} id="scroll-dialog-title">{this.renderName(taskName)}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               {this.renderDays(daysLeft)}

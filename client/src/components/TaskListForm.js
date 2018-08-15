@@ -29,13 +29,14 @@ class TaskListForm extends React.Component {
       last_saved: 0,
       monster: "",
       deadline: "",
-      monsters: props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster })
+      monsters: props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster })
     }
   }
 
+
   componentWillReceiveProps(nextprops) {
     this.setState({
-     monsters: nextprops.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster })
+     monsters: nextprops.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster })
       }) 
     }
 

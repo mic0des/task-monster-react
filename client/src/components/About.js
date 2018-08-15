@@ -4,17 +4,12 @@ import SignInForm from './auth/SignInForm';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Footer from './Footer'
+import Footer from './Footer';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { scrollPage } from '../actions/page';
 
-export default class About extends Component {
-
-	constructor(){
-		super()
-
-		this.state = {
-			currentScrollHeight: 0
-		}
-	}
+class About extends Component {
 
 	toTop(e){
 		e.preventDefault()
@@ -34,8 +29,8 @@ export default class About extends Component {
 	componentDidMount () {      
    		window.onscroll =()=>{
     		const newScrollHeight = Math.ceil(window.scrollY / 50) *50;
-    			if (this.state.currentScrollHeight != newScrollHeight){
-        		this.setState({currentScrollHeight: newScrollHeight})
+    			if (this.props.page.currentScrollHeight != newScrollHeight){
+        		this.props.scrollPage(newScrollHeight);
     		}
   		}
 	}
@@ -210,3 +205,17 @@ export default class About extends Component {
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+  return {
+    page: state.page
+  };
+};
+ 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    scrollPage: scrollPage
+  }, dispatch);
+};
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(About);

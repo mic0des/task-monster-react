@@ -95,12 +95,6 @@ class TaskModule extends React.Component {
     document.body.style.overflow = 'auto';
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //  this.setState({
-  //    percent: nextProps.lastSaved
-  //  })
-  // }
-
   renderForm(taskListId){
     if (this.state.finished === true) {
       return <p></p>
@@ -145,7 +139,7 @@ class TaskModule extends React.Component {
         <Dialog open={this.state.open} style={{height: "94%"}} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle style={{padding: "20px 24px 20px"}} id="scroll-dialog-title">{this.renderName(taskName)}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{marginTop: "-2px"}}>
               {this.renderDays(daysLeft)}
               <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={this.levelUp} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
               {this.renderForm(taskListId)}              

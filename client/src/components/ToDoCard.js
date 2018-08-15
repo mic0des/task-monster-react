@@ -26,20 +26,6 @@ const styles = {
 };
 
 class ToDoCard extends React.Component {
-  constructor(props) {
-    super(props);
- 
-    this.state = {
-      percent: props.taskProgress,
-      monsterLevel: props.monsterLevel
-    };
-  }
-
-  // componentWillReceiveProps(nextProps) {
-  //  this.setState({
-  //    percent: nextProps.taskProgress
-  //  })
-  // }
 
 renderName(taskName){
   if (this.props.finished === true) {
@@ -86,4 +72,3 @@ const mapStateToProps = state => {
 }
 
 export default withStyles(styles)(ToDoCard);
-// export default connect(mapStateToProps)(ToDoCard);

@@ -7,33 +7,16 @@ import { connect } from 'react-redux';
 var $         = require('jquery');
 
 class Navigation extends Component {
-  state = {
-    gravatar: ''
-  };
 
   signOut = event => {
     localStorage.removeItem("id_token")
     window.location.assign("/") 
   };
 
-  componentWillMount(){
-    if (this.props.auth.isAuthenticated === true) {
-        $.ajax({
-        method: "GET",
-        url: `http://localhost:3001/users/${this.props.user}`
-        }).done(function(data){
-          console.log(data)
-          this.setState({
-            gravatar: data.gravatar_url_small
-          })
-        }.bind(this))      
-    }      
-  }
-
   renderNav(){
     if (this.props.auth.isAuthenticated === true) {
       return <Grid style={{padding: "20px", marginTop: "30px"}} item xs={4}>
-        <Avatar alt="avatar" src={this.state.gravatar} className="avatar" />
+        <Avatar alt="avatar" src={this.props.auth.gravatar} className="avatar" />
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/" exact>Tasks</Link>
         </Button>

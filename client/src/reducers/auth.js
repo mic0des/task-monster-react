@@ -1,7 +1,8 @@
 export default (state = {
     isFetching: false,
     isAuthenticated: !localStorage.id_token || localStorage.id_token === "undefined" ? false : true,
-    id_token: !localStorage.id_token || localStorage.id_token === "undefined" ? '' : localStorage.id_token
+    id_token: !localStorage.id_token || localStorage.id_token === "undefined" ? '' : localStorage.id_token,
+    gravatar: !localStorage.gravatar || localStorage.gravatar === "undefined" ? '' : localStorage.gravatar
   }, action) => {
 
   switch (action.type) {
@@ -18,7 +19,8 @@ export default (state = {
         isFetching: false,
         isAuthenticated: true,
         errorMessage: '',
-        id_token: action.id_token
+        id_token: action.id_token,
+        gravatar: action.gravatar
       })
 
     case 'LOGIN_FAILURE':
@@ -26,6 +28,7 @@ export default (state = {
         isFetching: false,
         isAuthenticated: false,
         id_token: '',
+        gravatar: '',
         errorMessage: action
       })
 

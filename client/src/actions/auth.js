@@ -12,7 +12,8 @@ export const receiveLogin = user => {
     type: 'LOGIN_SUCCESS',
     isFetching: false,
     isAuthenticated: true,
-    id_token: user
+    id_token: user.auth_token,
+    gravatar: user.user.gravatar
   }
 }
 

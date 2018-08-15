@@ -14,30 +14,6 @@ const styles = theme => ({
 });
 
 class Monster extends React.Component {
-  constructor(props) {
-    super(props);
- 
-    this.state = {
-      monsterLevel: props.taskMonster.level
-    };
-  }
-
-  // levelUp = event => {
-  //   event.preventDefault()
-  //   console.log("Level up!")
-  //   $.ajax({
-  //     method: "PATCH",
-  //     url: `http://localhost:3001/monsters/${this.props.taskMonster.id}`,
-  //     data: {
-  //       monster: {
-  //         level: this.props.taskMonster.level + 1
-  //       }
-  //     }
-  //   }).done(function(data){
-  //     console.log(data);
-  //     this.setState({ monsterLevel: data.level });
-  //   }.bind(this)) 
-  // }
 
   monsterState(baseUrl, happyUrl, koUrl, taskMonster, daysLeft) {
     if (this.props.finished === true) {

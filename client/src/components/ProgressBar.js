@@ -5,24 +5,11 @@ import Button from '@material-ui/core/Button';
 
 class ProgressBar extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      progress: this.props.tasks.filter(task => task.done === true).length
-    };
-  }
-
   componentWillReceiveProps(nextprops) {
     this.setState({
       progress: nextprops.tasks.filter(task => task.done === true).length,
     })
   }
-  
-  // eventHandler() {
-  //   this.setState({
-  //     progress: this.props.tasks.filter(task => task.done === true).length
-  //   });
-  // }
 
   tasksChecked() {
     this.props.tasks.filter(task => task.done === true).length;
@@ -48,9 +35,8 @@ class ProgressBar extends Component {
           </Grid>
         </Grid>
       </div>
-    )
+    )}
   }
-}
 }
 
 const mapStateToProps = state => {

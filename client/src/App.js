@@ -20,6 +20,9 @@ import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
+import Eth from 'ethjs-query';
+import EthContract from 'ethjs-contract';
+import * as contractUtils from './utils/ContractInfo';
 var $            = require('jquery');
 
 class App extends Component {
@@ -54,6 +57,18 @@ class App extends Component {
           })
         }.bind(this))      
     }      
+  }
+
+  startApp(web3) {
+    const eth = new Eth(web3.currentProvider);
+    const contract = new EthContract(eth);
+
+    this.initContracts(contract);
+  }
+
+  initContracts(contract) {
+    const TaskMonsters = contract(contractUtils.abi);
+    let taskMonstersInstance = TaskMonsters.at('0x8d65dbae6455943fbb8b9edddea6e6c844d91215')
   }
 
   homePage() {

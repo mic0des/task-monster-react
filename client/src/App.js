@@ -18,6 +18,8 @@ import { connect } from 'react-redux';
 import Calendar from './components/Calendar';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import SweetAlert from 'sweetalert-react';
+import 'sweetalert/dist/sweetalert.css';
 var $            = require('jquery');
 
 class App extends Component {
@@ -32,6 +34,15 @@ class App extends Component {
   }
 
   componentWillMount(){
+    if (typeof web3 !== 'undefined') {
+      // startApp(web3);
+      console.log('loaded!');
+    } else {
+      // Warn the user that they need to get a web3 browser
+      // Or install MetaMask, maybe with a nice graphic.
+      alert('Please download MetaMask to use this dApp');
+    }
+
     if (this.props.auth.isAuthenticated === true) {
         $.ajax({
         method: "GET",

@@ -59,18 +59,6 @@ class App extends Component {
     }      
   }
 
-  startApp(web3) {
-    const eth = new Eth(web3.currentProvider);
-    const contract = new EthContract(eth);
-
-    this.initContracts(contract);
-  }
-
-  initContracts(contract) {
-    const TaskMonsters = contract(contractUtils.abi);
-    let taskMonstersInstance = TaskMonsters.at('0x8d65dbae6455943fbb8b9edddea6e6c844d91215')
-  }
-
   homePage() {
     if (this.props.auth.isAuthenticated === true) {
       return <Route exact path="/" render={()=>< TaskLists style={{height: "65%"}} taskLists={this.state.taskLists} />} />

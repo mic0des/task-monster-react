@@ -33,8 +33,10 @@ class TaskListForm extends React.Component {
       user_id: this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : "",
       last_saved: 0,
       monster: "",
+      newMonsterGender: Math.floor(Math.random() * 2) === 1 ? "♂" : "♀",
       deadline: "",
-      monsters: props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster }),
+      newMonsterName: "",
+      monsters: this.props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.id !== arr[index-1].id : monster }),
       loadingNewMonster: false,
       eventResult: ''
     }
@@ -92,10 +94,12 @@ class TaskListForm extends React.Component {
       }
     }).done(function(data){
       window.location.assign("/")
+      this.setState({monsters: this.props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.id !== arr[index-1].id : monster })})
     }.bind(this));
   }
 
   startApp = web3 => {
+    debugger
     const eth = new Eth(web3.currentProvider);
     const contract = new EthContract(eth);
 
@@ -119,12 +123,26 @@ class TaskListForm extends React.Component {
   }
 
   hatchMonster(){
-    debugger
-    if (parseInt(Math.floor(parseInt((parseInt(createKeccakHash('keccak256').update(localStorage.id_token.concat(this.state.name)).digest('hex'), 16))).toString().split("e")[0], 10) % 2 != 0) % 2 != 0) {
-      this.setState({monster: "Schrodinger"})
+
+    if (parseInt(Math.floor(parseInt((parseInt(createKeccakHash('keccak256').update(localStorage.id_token.concat(this.state.name)).digest('hex'), 16))).toString().split("e")[0], 10)) % 2 != 0) {
+      this.setState({newMonsterName: "Schrodinger"})
     } else {
-      this.setState({monster: "Leaflet"})
+      this.setState({newMonsterName: "Leaflet"})
     }
+
+    $.ajax({
+      method: "POST",
+      url: "http://localhost:3001/monsters",
+      data: {
+        monster: {
+          gender: this.state.newMonsterGender,
+          user_id: this.state.user_id,
+          nickname: this.state.newMonsterName,
+        }
+      }
+    }).done(function(data){
+      this.setState({monster: data.id})
+    }.bind(this));
   }
 
   checkMonsterBirth(txHash) {
@@ -216,7 +234,7 @@ class TaskListForm extends React.Component {
     if (this.state.name === '') {
       alert('Name your task first!')
     } else {
-      let gender = Math.floor(Math.random() * 2) === 1 ? "♂" : "♀"
+      // let gender = Math.floor(Math.random() * 2) === 1 ? "♂" : "♀"
       // 0 is male, 1 is female
       let combined = localStorage.id_token.concat(this.state.name)
       monsterBorn.watch(function(error, result){
@@ -226,7 +244,7 @@ class TaskListForm extends React.Component {
         this.setState({eventResult: result})
       }
       }.bind(this));
-      taskMonsterInstance.newMonster(gender, combined, {from: window.web3.eth.accounts[0]})
+      taskMonsterInstance.newMonster(this.state.newMonsterGender, combined, {from: window.web3.eth.accounts[0]})
       .then(function(txHash) {
         this.setState({loadingNewMonster: true})
         // let url = `https://api-kovan.etherscan.io/api?module=transaction&action=gettxreceiptstatus&txhash=${txHash}&apikey=AMCQSDTDGMUA685YDSA7GWFRW1FIBCGGDW.json`;
@@ -244,7 +262,7 @@ class TaskListForm extends React.Component {
     } else if (this.state.loadingNewMonster === true && this.state.monster === '') {
       return <img src="/Egg.gif" alt="" style={{display: "block", margin: "0 auto"}} height="80px" width="80px"/>
     } else {
-      return this.state.monster === 'Schrodinger' ? <img src="/Schrodinger-Normal.gif" alt="" style={{display: "block", margin: "0 auto"}} height="55px" width="70.25px"/> : <img src="/Leaflet-Normal.gif" alt="" style={{display: "block", margin: "0 auto"}} height="55px" width="70.25px" />
+      return this.state.newMonsterName === 'Schrodinger' ? <img src="/Schrodinger-Normal.gif" alt="" style={{display: "block", margin: "0 auto"}} height="55px" width="70.25px"/> : <img src="/Leaflet-Normal.gif" alt="" style={{display: "block", margin: "0 auto"}} height="55px" width="70.25px" />
     }
   }
 
@@ -268,7 +286,7 @@ class TaskListForm extends React.Component {
                 </div>
               </div>
     } else if (this.state.loadingNewMonster === true && this.state.monster !== '') {
-      return <p style={{color: "#36BF7F"}}>{this.state.monster} hatched!</p>
+      return <p style={{color: "#36BF7F"}}>New {this.state.newMonsterName} hatched!</p>
     } else if (this.state.loadingNewMonster === true && this.state.monster === '') {
       return <p style={{color: "#3f51b5"}}>Hatching new monster...</p>
     }

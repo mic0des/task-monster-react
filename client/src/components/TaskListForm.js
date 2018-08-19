@@ -17,11 +17,13 @@ import PropTypes from 'prop-types';
 import Eth from 'ethjs-query';
 import EthContract from 'ethjs-contract';
 import * as contractUtils from '../utils/ContractInfo';
+const createKeccakHash = require('keccak')
 var React          = require('react');
 var _              = require('lodash');
 // var Functions      = require('../../utils/Functions.js');
 var $              = require('jquery');
 
+// SCREW LISTENING TO BLOCKCHAIN EVENTS... INSTEAD JUST DO EVERYTHING ON THE CLIENT SERVER, WHO FUCKING CARES? IT STILL WORKS ON THE BLOCKCHAIN ANYWAY
 
 class TaskListForm extends React.Component {
   constructor(props) {
@@ -33,7 +35,8 @@ class TaskListForm extends React.Component {
       monster: "",
       deadline: "",
       monsters: props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster }),
-      loadingNewMonster: false
+      loadingNewMonster: false,
+      eventResult: ''
     }
   }
 
@@ -100,12 +103,41 @@ class TaskListForm extends React.Component {
   }
 
   initContracts = contract => {
-    const TaskMonsters = contract(contractUtils.abi);
-    const taskMonstersInstance = TaskMonsters.at('0x8d65dbae6455943fbb8b9edddea6e6c844d91215');
-    this.getMonster(taskMonstersInstance);
+    // const TaskMonsters = contract(contractUtils.abi); << first iteration (plural)
+    // const taskMonstersInstance = TaskMonsters.at('0x8d65dbae6455943fbb8b9edddea6e6c844d91215'); << first iteration (plural)
+    const TaskMonster = contract(contractUtils.abi); 
+    const taskMonsterInstance = TaskMonster.at('0xde4a3cc424e270e7bba00b59114c07eb6d388714');  
+    const monsterBorn = taskMonsterInstance.monsterBorn({}, { fromBlock: 0});
+    monsterBorn.watch(function(error, result){
+      console.log("on watch"); 
+      if (!error) {
+        console.log(result);
+        this.setState({eventResult: result})
+      }
+    }.bind(this));
+    this.getMonster(taskMonsterInstance);
+  }
+
+  hatchMonster(){
+    debugger
+    if (parseInt(Math.floor(parseInt((parseInt(createKeccakHash('keccak256').update(localStorage.id_token.concat(this.state.name)).digest('hex'), 16))).toString().split("e")[0], 10) % 2 != 0) % 2 != 0) {
+      this.setState({monster: "Schrodinger"})
+    } else {
+      this.setState({monster: "Leaflet"})
+    }
   }
 
   checkMonsterBirth(txHash) {
+    // monsterEvent.watch(function(error, result){
+    //       if (!error) {
+    //         alert(result);
+    //         // this.newMonster(result.args.name, )
+    //         // this.setState({monster: result.args.name})
+    //       } else {
+    //         alert(error);
+    //       }
+    // })
+
     window.web3.eth.getTransaction(txHash, 
       function(err, result) {
         if (result === null) {
@@ -114,11 +146,15 @@ class TaskListForm extends React.Component {
         } else {
           console.log(result); 
           // also create new monster in the backend, need to read blockchain events for this
-          this.setState({
-            monster: 'Schrodinger'
-          })
+          // this.setState({
+          //   monster: 'Schrodinger'
+          // })
+          this.hatchMonster();
         }  
       }.bind(this))
+
+    // Turn combined string into keccak, then to hex, then to decimal
+
 
 
     // window.web3.eth.getTransaction({txHash}, function(err, result){
@@ -150,7 +186,31 @@ class TaskListForm extends React.Component {
     //   }.bind(this))
     // }.bind(this))
 
-  getMonster = taskMonstersInstance => {
+  getMonster = taskMonsterInstance => {
+    // const monsterEvent = taskMonsterInstance.monsterBorn();
+
+    // const monsterBorn = taskMonsterInstance.monsterBorn({},{fromBlock: 0},function(error, result){
+    //     // Expect to log when click 'Run accept' button
+    //     console.log("MonsterBorn", error, result);
+    // });
+    // monsterEvent.watch(function(error, result){
+    //       if (!error) {
+    //         console.log(result);
+    //         // this.newMonster(result.args.name, )
+    //         // this.setState({monster: result.args.name})
+    //       } else {
+    //         console.log(error);
+    //       }
+    // })
+    const monsterBorn = taskMonsterInstance.monsterBorn({}, { fromBlock: 0});
+    monsterBorn.watch(function(error, result){
+      if (!error) {
+        console.log("on watch"); 
+        console.log(result);
+        this.setState({eventResult: result})
+      }
+    }.bind(this));
+
     this.setState({monster: ''})
     // randomly rolls gender, launches smart contract function and uses the data gotten back to create new monster
     if (this.state.name === '') {
@@ -159,10 +219,18 @@ class TaskListForm extends React.Component {
       let gender = Math.floor(Math.random() * 2) === 1 ? "♂" : "♀"
       // 0 is male, 1 is female
       let combined = localStorage.id_token.concat(this.state.name)
-      taskMonstersInstance.newMonster(gender, combined, {from: window.web3.eth.accounts[0]})
+      monsterBorn.watch(function(error, result){
+      if (!error) {
+        console.log("on watch"); 
+        console.log(result);
+        this.setState({eventResult: result})
+      }
+      }.bind(this));
+      taskMonsterInstance.newMonster(gender, combined, {from: window.web3.eth.accounts[0]})
       .then(function(txHash) {
         this.setState({loadingNewMonster: true})
-        let url = `https://api-kovan.etherscan.io/api?module=transaction&action=gettxreceiptstatus&txhash=${txHash}&apikey=AMCQSDTDGMUA685YDSA7GWFRW1FIBCGGDW.json`;
+        // let url = `https://api-kovan.etherscan.io/api?module=transaction&action=gettxreceiptstatus&txhash=${txHash}&apikey=AMCQSDTDGMUA685YDSA7GWFRW1FIBCGGDW.json`;
+        // ^ don't need anymore
         this.checkMonsterBirth(txHash);
         console.log('Transaction sent');
         console.dir(txHash);
@@ -200,7 +268,7 @@ class TaskListForm extends React.Component {
                 </div>
               </div>
     } else if (this.state.loadingNewMonster === true && this.state.monster !== '') {
-      return <p>{this.state.monster} Level 1 hatched!</p>
+      return <p style={{color: "#36BF7F"}}>{this.state.monster} hatched!</p>
     } else if (this.state.loadingNewMonster === true && this.state.monster === '') {
       return <p style={{color: "#3f51b5"}}>Hatching new monster...</p>
     }

@@ -1,29 +1,16 @@
+import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import PropTypes from 'prop-types';
 import Eth from 'ethjs-query';
 import EthContract from 'ethjs-contract';
 import * as contractUtils from '../utils/ContractInfo';
-const createKeccakHash = require('keccak')
-var React          = require('react');
-var _              = require('lodash');
-// var Functions      = require('../../utils/Functions.js');
-var $              = require('jquery');
-
-// SCREW LISTENING TO BLOCKCHAIN EVENTS... INSTEAD JUST DO EVERYTHING ON THE CLIENT SERVER, WHO FUCKING CARES? IT STILL WORKS ON THE BLOCKCHAIN ANYWAY
+import createKeccakHash from 'keccak';
 
 class TaskListForm extends React.Component {
   constructor(props) {
@@ -55,15 +42,15 @@ class TaskListForm extends React.Component {
   componentWillReceiveProps(nextprops) {
     this.setState({
      monsters: nextprops.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster })
-      }) 
-    }
+    }) 
+  }
 
   handleChange = event => {
-      event.preventDefault();
-      const { name, value } = event.target;
-      this.setState({
-        [name]: value,
-      })
+    event.preventDefault();
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    })
   }
 
   parseJwt = token => {
@@ -80,26 +67,26 @@ class TaskListForm extends React.Component {
       return;
     }
 
-    $.ajax({
-      method: "POST",
-      url: "http://localhost:3001/task_lists",
-      data: {
-        taskList: {
+    return fetch("http://localhost:3001/task_lists", {
+      method: 'POST',
+      body: JSON.stringify({
           name: this.state.name,
           user_id: this.state.user_id,
           last_saved: 0,
           monster: this.state.monster,
           deadline: this.state.deadline
-        }
-      }
-    }).done(function(data){
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(function(data){
       window.location.assign("/")
       this.setState({monsters: this.props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.id !== arr[index-1].id : monster })})
     }.bind(this));
   }
 
   startApp = web3 => {
-    debugger
     const eth = new Eth(web3.currentProvider);
     const contract = new EthContract(eth);
 
@@ -107,8 +94,6 @@ class TaskListForm extends React.Component {
   }
 
   initContracts = contract => {
-    // const TaskMonsters = contract(contractUtils.abi); << first iteration (plural)
-    // const taskMonstersInstance = TaskMonsters.at('0x8d65dbae6455943fbb8b9edddea6e6c844d91215'); << first iteration (plural)
     const TaskMonster = contract(contractUtils.abi); 
     const taskMonsterInstance = TaskMonster.at('0xde4a3cc424e270e7bba00b59114c07eb6d388714');  
     const monsterBorn = taskMonsterInstance.monsterBorn({}, { fromBlock: 0});
@@ -123,39 +108,31 @@ class TaskListForm extends React.Component {
   }
 
   hatchMonster(){
-
     if (parseInt(Math.floor(parseInt((parseInt(createKeccakHash('keccak256').update(localStorage.id_token.concat(this.state.name)).digest('hex'), 16))).toString().split("e")[0], 10)) % 2 != 0) {
       this.setState({newMonsterName: "Schrodinger"})
     } else {
       this.setState({newMonsterName: "Leaflet"})
     }
 
-    $.ajax({
-      method: "POST",
-      url: "http://localhost:3001/monsters",
-      data: {
-        monster: {
+    return fetch("http://localhost:3001/monsters", {
+      method: 'POST',
+      body: JSON.stringify({
           gender: this.state.newMonsterGender,
           user_id: this.state.user_id,
-          nickname: this.state.newMonsterName,
-        }
-      }
-    }).done(function(data){
-      this.setState({monster: data.id})
-    }.bind(this));
+          nickname: this.state.newMonsterName
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({monster: data.id});
+    });
   }
 
   checkMonsterBirth(txHash) {
-    // monsterEvent.watch(function(error, result){
-    //       if (!error) {
-    //         alert(result);
-    //         // this.newMonster(result.args.name, )
-    //         // this.setState({monster: result.args.name})
-    //       } else {
-    //         alert(error);
-    //       }
-    // })
-
     window.web3.eth.getTransaction(txHash, 
       function(err, result) {
         if (result === null) {
@@ -163,63 +140,12 @@ class TaskListForm extends React.Component {
           this.checkMonsterBirth(txHash);
         } else {
           console.log(result); 
-          // also create new monster in the backend, need to read blockchain events for this
-          // this.setState({
-          //   monster: 'Schrodinger'
-          // })
           this.hatchMonster();
         }  
       }.bind(this))
-
-    // Turn combined string into keccak, then to hex, then to decimal
-
-
-
-    // window.web3.eth.getTransaction({txHash}, function(err, result){
-    //   debugger
-    //   console.log(result.blockNumber);
-    //   if (result.blockNumber === null) {
-    //     this.checkMonsterBirth(txHash)
-    //   } else {
-    //     this.setState({monster: 'Shrodinger'})
-    //   }
-    // }.bind(this))
     }
-    // .then(function(blockNumber){
-    //   if (blockNumber === null) {
-    //     this.checkMonsterBirth(txHash)
-    //   } else {
-    //     this.setState({monster: 'Shrodinger'}) ;
-    //   } 
-    // }.bind(this))
-
-    // fetch(url).then(function(response) {
-    //   debugger 
-    //   response.json().then(function(data){
-    //     if (data.result.status === "1") {
-    //       this.setState({monster: 'Shrodinger'})          
-    //     } else {
-    //       this.checkMonsterBirth(url);
-    //     }
-    //   }.bind(this))
-    // }.bind(this))
 
   getMonster = taskMonsterInstance => {
-    // const monsterEvent = taskMonsterInstance.monsterBorn();
-
-    // const monsterBorn = taskMonsterInstance.monsterBorn({},{fromBlock: 0},function(error, result){
-    //     // Expect to log when click 'Run accept' button
-    //     console.log("MonsterBorn", error, result);
-    // });
-    // monsterEvent.watch(function(error, result){
-    //       if (!error) {
-    //         console.log(result);
-    //         // this.newMonster(result.args.name, )
-    //         // this.setState({monster: result.args.name})
-    //       } else {
-    //         console.log(error);
-    //       }
-    // })
     const monsterBorn = taskMonsterInstance.monsterBorn({}, { fromBlock: 0});
     monsterBorn.watch(function(error, result){
       if (!error) {
@@ -230,12 +156,9 @@ class TaskListForm extends React.Component {
     }.bind(this));
 
     this.setState({monster: ''})
-    // randomly rolls gender, launches smart contract function and uses the data gotten back to create new monster
     if (this.state.name === '') {
       alert('Name your task first!')
     } else {
-      // let gender = Math.floor(Math.random() * 2) === 1 ? "♂" : "♀"
-      // 0 is male, 1 is female
       let combined = localStorage.id_token.concat(this.state.name)
       monsterBorn.watch(function(error, result){
       if (!error) {
@@ -247,8 +170,6 @@ class TaskListForm extends React.Component {
       taskMonsterInstance.newMonster(this.state.newMonsterGender, combined, {from: window.web3.eth.accounts[0]})
       .then(function(txHash) {
         this.setState({loadingNewMonster: true})
-        // let url = `https://api-kovan.etherscan.io/api?module=transaction&action=gettxreceiptstatus&txhash=${txHash}&apikey=AMCQSDTDGMUA685YDSA7GWFRW1FIBCGGDW.json`;
-        // ^ don't need anymore
         this.checkMonsterBirth(txHash);
         console.log('Transaction sent');
         console.dir(txHash);
@@ -292,49 +213,38 @@ class TaskListForm extends React.Component {
     }
   }
 
-// function nextInstallment(thingFunderInstance) {
-//   $('div.wrapper').on('click', '.nextInstallment', function(event) {
-//     event.preventDefault();
-//     address = $(this).attr('data-contract');
-//     thingFunderInstance.payoutToMaker({to: address, from: web3.eth.accounts[0]})
-//     .then(function (txHash) {
-//       let url = `https://api-ropsten.etherscan.io/api?module=transaction&action=gettxreceiptstatus&txhash=${txHash}&apikey=AMCQSDTDGMUA685YDSA7GWFRW1FIBCGGDW`
-//       console.log('Transaction sent');
-//       $('div.rewards').html('<p>Sending transaction...</p>')
-//       reload(url);
-//       console.dir(txHash);      
-//     }).catch(console.error);
-//   });
-// }
-
   render() {
     return (
       <div>
-      <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-      <form style={{width: "11em"}} className="newTaskList">
-      <div>
-        {this.loadImage()}
-      </div>
-        <div>
-          <TextField  autoComplete="off" id="name" className="name" name="name" placeholder="Name your new list" value={this.state.name} onChange={this.handleChange} margin="normal" />
-        </div>
+        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+          <form style={{width: "11em"}} className="newTaskList">
+            <div>
+              {this.loadImage()}
+            </div>
+        
+            <div>
+              <TextField autoComplete="off" id="name" className="name" name="name" placeholder="Name your new list" value={this.state.name} onChange={this.handleChange} margin="normal" />
+            </div>
 
-        <br/>
-        <div>
-          <TextField id="deadline" onChange={this.handleChange} name="deadline" label="Set Deadline" type="date" defaultValue="YYYY-MM-DD" InputLabelProps={{shrink: true}} />
-        </div>
-        <br/>
+            <br/>
 
-        <div>
-          {this.selectMonster()}
-        </div>
+            <div>
+              <TextField id="deadline" onChange={this.handleChange} name="deadline" label="Set Deadline" type="date" defaultValue="YYYY-MM-DD" InputLabelProps={{shrink: true}} />
+            </div>
 
-        <br/>
-        <div>
-          <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Create New List</Button>
-        </div>       
-      </form>
-      </Grid>
+            <br/>
+
+            <div>
+              {this.selectMonster()}
+            </div>
+
+            <br/>
+
+            <div>
+              <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Create New List</Button>
+            </div> 
+          </form>
+        </Grid>
       <br/>
       <br/>
       </div>
@@ -348,28 +258,4 @@ const mapStateToProps = (state) => {
   };
 };
  
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators({
-//     loginError: loginError,
-//     receiveLogin: receiveLogin
-//   }, dispatch);
-// };
- 
 export default connect(mapStateToProps)(TaskListForm);
-
-// export default TaskListForm;
-
-// const mapStateToProps = (state) => {
-//   return {
-//     items: state.user
-//   };
-// };
-
-// const mapDispatchToProps = () => {
-//   return {
-//     loginError: loginError,
-//     receiveLogin: receiveLogin
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

@@ -23,32 +23,29 @@ export class TaskForm extends Component {
 
   handleOnSubmit = (taskListId, event) => {
     event.preventDefault();
-    // const task = Object.assign({}, this.state, { done: false, id: uuid() });
-    // this.props.addTask(task);
-    $.ajax({
-      method: "POST",
-      url: "http://localhost:3001/tasks",
-      data: {
-        task: {
+
+    return fetch("http://localhost:3001/tasks", {
+      method: 'POST',
+      body: JSON.stringify({
           name: this.state.task,
           task_list_id: taskListId,
           done: false
-        }
-      }
-    }).done(function(data){
-      const task = Object.assign({name: data.name, done: false, id: data.id});
-      this.props.addTask(task);
-    }.bind(this))
-    this.setState({
-      task: ''
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json())
+      .then(data => {
+        const task = Object.assign({name: data.name, done: false, id: data.id});
+        this.props.addTask(task);
+        this.setState({
+          task: ''
+        });
     });
   }
 
   render() { 
-    if (this.props.finished === true) {
-      return <p>woohoo!</p>
-    } else {
-
     return (
       <Grid container spacing={24} alignItems="center" direction="row" justify="center">  
         <Grid item xs={9.5}>          
@@ -70,6 +67,6 @@ export class TaskForm extends Component {
     );
   }
 }
-}
+
 
 export default connect(null, { addTask })(TaskForm);

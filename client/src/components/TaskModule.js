@@ -18,7 +18,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
-var $              = require('jquery');
 
 
 class TaskModule extends React.Component {
@@ -34,53 +33,60 @@ class TaskModule extends React.Component {
     };
   }
 
-
   handleClickOpen = taskListId => () => {
-    $.ajax({
-      method: "GET",
-      url: `http://localhost:3001/task_lists/${taskListId}`
-    }).done(function(data){
-      console.log(data)
-      this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished})
-      data.tasks.map(e => this.props.addTask(e))
-      this.setState({ open: true, scroll: 'paper' });
-    }.bind(this)) 
+    return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
+        data.tasks.map(e => this.props.addTask(e));
+        this.setState({ open: true, scroll: 'paper' });
+    });
   };
 
   levelUp = event => {
     event.preventDefault()
-    console.log("Level up!")
-    $.ajax({
-      method: "PATCH",
-      url: `http://localhost:3001/monsters/${this.props.taskMonster.id}`,
-      data: {
-        monster: {
+    console.log("Level up!") 
+    return fetch(`http://localhost:3001/monsters/${this.props.taskMonster.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
           level: this.props.taskMonster.level + 1
-        }
-      }
-    }).done(function(data){
-      console.log(data);
-      this.setState({ monsterLevel: data.level, finished: true });
-    }.bind(this)) 
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({monsterLevel: data.level, finished: true});
+    });   
   }
 
   handleSave = function(tasks, taskListId, taskProgress, e) {
     e.preventDefault();
 
-    $.ajax({
-      method: "PATCH",
-      url: `http://localhost:3001/task_lists/${taskListId}`,
-      data: {
-        task: {
+    return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
           last_saved: (tasks.filter(task => task.done === true).length) / tasks.length * 100,
           finished: this.state.finished
-        }
-      }
-    }).done(function(data) {
-      console.log(data)
-      this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished})
-      this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level })
-    }.bind(this))
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
+        this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level });
+    });  
   }
 
   handleClose = function(tasks, taskListId, taskProgress, e) {
@@ -121,13 +127,14 @@ class TaskModule extends React.Component {
     }
   }
 
-  deleteTaskList(taskListId){
-    $.ajax({
-      method: "DELETE",
-      url: `http://localhost:3001/task_lists/${taskListId}`
-    }).done(function(data){
-      window.location.assign("/") 
-    }.bind(this))     
+  deleteTaskList(taskListId){ 
+    return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => window.location.assign("/"))     
   }
 
   render() {

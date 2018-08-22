@@ -40,27 +40,31 @@ class SignInForm extends React.Component {
     event.preventDefault();
     const { email, password } = this.state;
 
-    $.ajax({
-      method: "POST",
-      url: "http://localhost:3001/auth_user",
-      data: {
-        user: {
+    return fetch("http://localhost:3001/auth_user", {
+      method: 'POST',
+      body: JSON.stringify({
           email: this.state.email,
           password: this.state.password
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem('id_token', data.auth_token);
+        if (!localStorage.id_token || localStorage.id_token === "undefined") {
+          this.props.loginError(data.errors)
+          this.setState({error: Object.entries(data)})
+          console.log(data)
+        } else {
+          console.log(data)
+          localStorage.setItem('gravatar', data.user.gravatar);
+          this.props.receiveLogin(data);
+          window.location.assign("/");         
         }
-      }
-    })
-    .done(function(data){
-      localStorage.setItem('id_token', data.auth_token)
-      if (!localStorage.id_token || localStorage.id_token === "undefined") {
-        this.props.loginError(data.errors)
-        this.setState({error: Object.entries(data)})
-        console.log(data)
-      } else {
-        this.props.receiveLogin(data.auth_token);
-        window.location.assign("/");         
-      }
-    }.bind(this));
+    });
   }
 
   render() {

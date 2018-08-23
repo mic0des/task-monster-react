@@ -1,21 +1,12 @@
-import MenuItem from '@material-ui/core/MenuItem';
+import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { loginError } from '../../actions/auth';
 import { receiveLogin } from '../../actions/auth';
 import { bindActionCreators } from 'redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-var React          = require('react');
-var Functions      = require('../../utils/Functions.js');
-var $              = require('jquery');
  
 class SignInForm extends React.Component {
   constructor(props) {

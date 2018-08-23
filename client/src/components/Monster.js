@@ -5,7 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ProgressBar from './ProgressBar';
-var $              = require('jquery');
 
 const styles = theme => ({
   root: {
@@ -28,14 +27,14 @@ class Monster extends React.Component {
 	render() {
 		const { classes, taskMonster, tasks, levelUp, monsterLevel, daysLeft } = this.props;
 		const baseUrl = `/${taskMonster.nickname}-Normal.gif`;
-    const happyUrl = `/${taskMonster.nickname}-Happy.gif`;
-    const koUrl = `/${taskMonster.nickname}-KO.png`;
+    	const happyUrl = `/${taskMonster.nickname}-Happy.gif`;
+    	const koUrl = `/${taskMonster.nickname}-KO.png`;
 
 		return (
 			<div className={classes.root} >
 				<Grid container spacing={24} alignItems="center" direction="row" justify="center">
 					<Grid item xs={2}>
-            {this.monsterState(baseUrl, happyUrl, koUrl, taskMonster, daysLeft)}
+            			{this.monsterState(baseUrl, happyUrl, koUrl, taskMonster, daysLeft)}
 					</Grid>
 					<Grid item xs={7}>				
 						<ul className="stats">

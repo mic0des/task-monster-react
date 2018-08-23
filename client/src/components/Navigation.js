@@ -9,7 +9,8 @@ var $         = require('jquery');
 class Navigation extends Component {
 
   signOut = event => {
-    localStorage.removeItem("id_token")
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("gravatar");
     window.location.assign("/") 
   };
 

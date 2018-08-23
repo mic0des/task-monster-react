@@ -4,7 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-var $         = require('jquery');
 
 class Navigation extends Component {
 

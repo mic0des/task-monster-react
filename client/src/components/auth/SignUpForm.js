@@ -53,29 +53,31 @@ class SignUpForm extends React.Component {
     event.preventDefault();
     const { email, password, password_confirmation, name, error } = this.state;
 
-    $.ajax({
-      method: "POST",
-      url: "http://localhost:3001/users.json",
-      data: {
-        user: {
+    return fetch("http://localhost:3001/users.json", {
+      method: 'POST',
+      body: JSON.stringify({
           username: this.state.name,
           email: this.state.email,
           password: this.state.password,
           password_confirmation: this.state.password_confirmation
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem('id_token', data.auth_token)
+        if (!localStorage.id_token || localStorage.id_token === "undefined") {
+          this.props.loginError(data)
+          this.setState({error: Object.entries(data)})
+          console.log(Object.entries(data))
+        } else {
+          this.props.receiveLogin(data) 
+          window.location.assign("/");       
         }
-      }
-    })
-    .done(function(data){
-      localStorage.setItem('id_token', data.auth_token)
-      if (!localStorage.id_token || localStorage.id_token === "undefined") {
-        this.props.loginError(data)
-        this.setState({error: Object.entries(data)})
-        console.log(Object.entries(data))
-      } else {
-        this.props.receiveLogin(data.auth_token) 
-        window.location.assign("/");       
-      }
-    }.bind(this))
+    });
   }
 
   render() {

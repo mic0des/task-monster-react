@@ -15,9 +15,7 @@ class TaskLists extends React.Component {
   render() {
     if (this.props.taskLists.length === 0) {
     return (
-      <div>
-        <img width="800px" height="80px" style={{marginTop: "3%", marginLeft: "13%"}} src="/First-Task.png" alt=""/>
-      </div>
+      <p style={{textAlign: "center"}}>Nothing to do yet...</p>
       )
     } else {
     return (

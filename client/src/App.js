@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import TaskForm from './containers/TaskForm';
-import Tasks from './containers/Tasks';
+import TaskForm from './components/TaskForm';
+import Tasks from './components/Tasks';
 import Monster from './components/Monster';
 import ProgressBar from './components/ProgressBar';
 import Grid from '@material-ui/core/Grid';

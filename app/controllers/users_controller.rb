@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	def create 
 		# Parameters: {"user"=>{"email"=>"test@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "name"=>"test", "provider"=>"email"}}
-		@new_user = User.create(email: params["user"]["email"], password: params["user"]["password"], password_confirmation: params["user"]["password_confirmation"], username: params["user"]["name"])
+		@new_user = User.create(email: params["email"], password: params["password"], password_confirmation: params["password_confirmation"], username: params["name"])
 		if @new_user.errors.size > 0
 			render json: @new_user.errors
 		else 

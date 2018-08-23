@@ -1,6 +1,6 @@
 class TaskListsController < ApplicationController
 	def update 
-		TaskList.find(params["id"]).update(last_saved: params["task"]["last_saved"], finished: params["task"]["finished"])
+		TaskList.find(params["id"]).update(last_saved: params["last_saved"], finished: params["finished"])
 		@task_list = TaskList.find(params["id"])
 		render :json => @task_list.to_json(:include => {:tasks => {:only => [:name, :done, :id]}}, :include => {:monster => {:only => [:level]}})
 	end
@@ -20,7 +20,8 @@ class TaskListsController < ApplicationController
 	end
 
 	def create
-		@task_list = TaskList.create(name: params["taskList"]["name"], user_id: params["taskList"]["user_id"], last_saved: 0, monster_id: params["taskList"]["monster"], deadline: params["taskList"]["deadline"])
+		@task_list = TaskList.create(name: params["name"], user_id: params["user_id"], last_saved: 0, monster_id: params["monster"], deadline: params["deadline"])
+		redner :json => @task_list
 	end
 
 	def index 

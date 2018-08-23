@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
 	def create 
-		@new_task = Task.create(name: params["task"]["name"], done: params["task"]["done"], task_list_id: params["task"]["task_list_id"])
+		@new_task = Task.create(name: params["name"], done: params["done"], task_list_id: params["task_list_id"])
 		render json: @new_task
 	end
 

@@ -23,7 +23,6 @@ class TaskListForm extends React.Component {
       newMonsterGender: Math.floor(Math.random() * 2) === 1 ? "♂" : "♀",
       deadline: "",
       newMonsterName: "",
-      monsters: this.props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.id !== arr[index-1].id : monster }),
       loadingNewMonster: false,
       eventResult: ''
     }
@@ -37,12 +36,6 @@ class TaskListForm extends React.Component {
       // Or install MetaMask, maybe with a nice graphic.
       alert('Please download MetaMask to use this dApp');
     }      
-  }
-
-  componentWillReceiveProps(nextprops) {
-    this.setState({
-     monsters: nextprops.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.name !== arr[index-1].name : monster })
-    }) 
   }
 
   handleChange = event => {
@@ -195,7 +188,7 @@ class TaskListForm extends React.Component {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    {this.state.monsters.map(monster => <MenuItem value={monster.id}>{monster.name} Level {monster.level}</MenuItem>)}
+                    {this.props.taskLists.lists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.id !== arr[index-1].id : monster }).map(monster => <MenuItem value={monster.id}>{monster.name} Level {monster.level}</MenuItem>)}
                   </Select>
                 <FormHelperText>Select Existing Monster</FormHelperText>
                 </FormControl>
@@ -254,7 +247,8 @@ class TaskListForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    taskLists: state.taskLists
   };
 };
  

@@ -13,7 +13,6 @@ class Navigation extends Component {
   signOut = event => {
     localStorage.removeItem("id_token");
     localStorage.removeItem("gravatar");
-    // window.location.assign("/") 
     this.props.logout();
     this.props.history.push('/');
   };

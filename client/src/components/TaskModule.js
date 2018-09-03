@@ -10,6 +10,7 @@ import Tasks from './Tasks';
 import Monster from './Monster';
 import ToDoCard from './ToDoCard';
 import { taskPercentCheck } from '../actions/taskProgress';
+import { fetchTaskLists } from '../actions/taskLists';
 import { addTask } from '../actions/tasks';
 import { removeTask } from '../actions/tasks';
 import { bindActionCreators } from 'redux';
@@ -31,6 +32,12 @@ class TaskModule extends React.Component {
     };
   }
 
+  parseJwt = token => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64))
+  }
+
   handleClickOpen = taskListId => () => {
     return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
       method: 'GET',
@@ -47,7 +54,7 @@ class TaskModule extends React.Component {
     });
   };
 
-  levelUp = event => {
+  levelUp = (tasks, taskListId, taskProgress, event) => {
     event.preventDefault()
     console.log("Level up!") 
     return fetch(`http://localhost:3001/monsters/${this.props.taskMonster.id}`, {
@@ -63,6 +70,9 @@ class TaskModule extends React.Component {
       .then(data => {
         console.log(data);
         this.setState({monsterLevel: data.level, finished: true});
+        let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
+        this.props.fetchTaskLists(url)
+        this.handleSave(tasks, taskListId, taskProgress, event)
     });   
   }
 
@@ -83,6 +93,8 @@ class TaskModule extends React.Component {
       .then(data => {
         console.log(data);
         this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
+        let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
+        this.props.fetchTaskLists(url)
         this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level });
     });  
   }
@@ -146,7 +158,7 @@ class TaskModule extends React.Component {
           <DialogContent>
             <DialogContentText style={{marginTop: "-2px"}}>
               {this.renderDays(daysLeft)}
-              <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={this.levelUp} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
+              <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={(e) => this.levelUp(tasks, taskListId, taskProgress, e)} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
               {this.renderForm(taskListId)}              
               <Tasks finished={this.state.finished} />
             </DialogContentText>
@@ -187,6 +199,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     taskPercentCheck: taskPercentCheck,
     addTask: addTask,
+    fetchTaskLists: fetchTaskLists,
     removeTask: removeTask
   }, dispatch);
 };

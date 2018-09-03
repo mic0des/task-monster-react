@@ -74,8 +74,7 @@ class TaskListForm extends React.Component {
       },
       credentials: 'same-origin'
     }).then(function(data){
-      window.location.assign("/")
-      this.setState({monsters: this.props.taskLists.map(taskList => ({name: taskList.monster.nickname, level: taskList.monster.level, id: taskList.monster.id})).sort(function(a, b) { return a.id - b.id }).filter(function(monster, index, arr) { return arr[index-1] ? monster.id !== arr[index-1].id : monster })})
+      window.location.assign("/");
     }.bind(this));
   }
 

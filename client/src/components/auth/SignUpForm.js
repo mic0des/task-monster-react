@@ -6,7 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { loginError } from '../../actions/auth';
 import { receiveLogin } from '../../actions/auth';
+import { fetchTaskLists } from '../../actions/taskLists';
 import { bindActionCreators } from 'redux';
+import history from '../../history';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class SignUpForm extends React.Component {
@@ -28,6 +30,12 @@ class SignUpForm extends React.Component {
       this.setState({
         [name]: value,
       })
+  }
+
+  parseJwt = token => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64))
   }
 
   handleMouseDownPassword = event => {
@@ -59,8 +67,10 @@ class SignUpForm extends React.Component {
           this.setState({error: Object.entries(data)})
           console.log(Object.entries(data))
         } else {
-          this.props.receiveLogin(data) 
-          window.location.assign("/");       
+          // window.location.assign("/");
+          localStorage.setItem('gravatar', data.user.gravatar);
+          this.props.receiveLogin(data);   
+          this.props.history.push("/");         
         }
     });
   }
@@ -122,7 +132,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     loginError: loginError,
-    receiveLogin: receiveLogin
+    receiveLogin: receiveLogin,
+    fetchTaskLists: fetchTaskLists
   }, dispatch);
 };
  

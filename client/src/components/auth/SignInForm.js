@@ -61,10 +61,9 @@ class SignInForm extends React.Component {
           console.log(data)
           localStorage.setItem('gravatar', data.user.gravatar);
           this.props.receiveLogin(data);
-          // window.location.assign("/"); 
           let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
           this.props.fetchTaskLists(url);     
-          history.push("/");      
+          !!this.props.history ? this.props.history.push('/') : history.push('/');    
         }
     });
   }

@@ -12,7 +12,7 @@ export default (state = {lists: [], loading: false}, action) => {
       	{}, {lists: action.tasks}, {loading: false}
       )
 
-    case 'LOGOUT':
+    case 'LOGOUT_SUCCESS':
     	return Object.assign({}, {lists: []}, {loading: true})
 
     default: 

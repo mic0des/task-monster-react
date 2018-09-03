@@ -46,15 +46,7 @@ class App extends Component {
       // Or install MetaMask, maybe with a nice graphic.
       alert('Please download MetaMask to use this dApp');
     }
-    if (this.props.auth.isAuthenticated === true) {
-        // fetch(`http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`)
-        // .then(res => res.json())
-        // .then(json => { 
-        //   console.log(json);
-        //   this.setState({
-        //     taskLists: json.map(e => e)
-        //   })
-        // });   
+    if (this.props.auth.isAuthenticated === true) { 
         let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
         this.props.fetchTaskLists(url)
     } 

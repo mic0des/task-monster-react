@@ -67,7 +67,6 @@ class SignUpForm extends React.Component {
           this.setState({error: Object.entries(data)})
           console.log(Object.entries(data))
         } else {
-          // window.location.assign("/");
           localStorage.setItem('gravatar', data.user.gravatar);
           this.props.receiveLogin(data);   
           this.props.history.push("/");         

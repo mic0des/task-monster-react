@@ -1,9 +1,6 @@
-import React from 'react'
-import { render } from 'react-dom'
-import moment from 'moment'
-import TaskModule from './TaskModule';
+import React from 'react';
+import moment from 'moment';
 import Button from '@material-ui/core/Button';
-import Footer from './Footer';
 import BigCalendar from 'react-big-calendar';
 
 BigCalendar.momentLocalizer(moment)
@@ -50,7 +47,7 @@ export default class Calendar extends React.Component {
     window.open("https://calendar.google.com/calendar/r/settings/export")
   }
 
-  render () {
+  render() {
     return (
       <div>
       <BigCalendar

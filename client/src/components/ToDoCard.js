@@ -64,11 +64,4 @@ ToDoCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
-  return ({
-    tasks: state.tasks,
-    taskProgress: state.taskProgress
-  })
-}
-
 export default withStyles(styles)(ToDoCard);

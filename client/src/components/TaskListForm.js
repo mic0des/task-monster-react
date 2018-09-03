@@ -108,7 +108,7 @@ class TaskListForm extends React.Component {
   }
 
   hatchMonster(){
-    if (parseInt(Math.floor(parseInt((parseInt(createKeccakHash('keccak256').update(localStorage.id_token.concat(this.state.name)).digest('hex'), 16))).toString().split("e")[0], 10)) % 2 != 0) {
+    if (parseInt(Math.floor(parseInt((parseInt(createKeccakHash('keccak256').update(localStorage.id_token.concat(this.state.name)).digest('hex'), 16))).toString().split("e")[0], 10)) % 2 !== 0) {
       this.setState({newMonsterName: "Schrodinger"})
     } else {
       this.setState({newMonsterName: "Leaflet"})

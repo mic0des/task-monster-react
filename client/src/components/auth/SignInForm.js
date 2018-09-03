@@ -8,9 +8,9 @@ import { receiveLogin } from '../../actions/auth';
 import { fetchTaskLists } from '../../actions/taskLists';
 import { bindActionCreators } from 'redux';
 import history from '../../history';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
  
-class SignInForm extends React.Component {
+class SignInForm extends Component {
   constructor(props) {
     super(props);
 
@@ -37,7 +37,6 @@ class SignInForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { email, password } = this.state;
 
     return fetch("http://localhost:3001/auth_user", {
       method: 'POST',
@@ -91,7 +90,7 @@ class SignInForm extends React.Component {
           <Grid item xs={4}>
           </Grid>
           <Grid item xs={4}>
-            {this.state.error.map(error => <p style={{color: "#e70b28", textAlign: "center", fontWeight: "light"}}>{error[1]}</p>)}
+            {this.state.error.map((error, i) => <p key={i} style={{color: "#e70b28", textAlign: "center", fontWeight: "light"}}>{error[1]}</p>)}
           </Grid>
           <Grid item xs={4}>
           </Grid>

@@ -4,7 +4,6 @@ import SignInForm from './auth/SignInForm';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Footer from './Footer';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { scrollPage } from '../actions/page';
@@ -26,10 +25,10 @@ class About extends Component {
 		})
 	}
 
-	componentDidMount () {      
+	componentDidMount() {      
    		window.onscroll =()=>{
     		const newScrollHeight = Math.ceil(window.scrollY / 50) *50;
-    			if (this.props.page.currentScrollHeight != newScrollHeight){
+    			if (this.props.page.currentScrollHeight !== newScrollHeight){
         		this.props.scrollPage(newScrollHeight);
     		}
   		}
@@ -41,7 +40,7 @@ class About extends Component {
 			<div>
 				<Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">					
 					<Grid item xs={6}>
-						<img style={{margin: "1.5em 16.5em 0.5em"}} src="/Egg.gif" height="80px" width="80px" alt=""/>
+						<img alt="egg" style={{margin: "1.5em 16.5em 0.5em"}} src="/Egg.gif" height="80px" width="80px" />
 						<SignInForm />
 					</Grid>
 					<Grid item xs={6}>
@@ -51,10 +50,10 @@ class About extends Component {
 					 		<h3><Typography style={{fontWeight: "700", color: "#3f51b5"}} variant="headline">Powered by the Ξthereum blockchain. ♦</Typography></h3>
 					 		<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
 					 		<Grid item xs={6}>
-					 		<img src="/Schrodinger-Normal.gif" height="110px" width="140.50px"/>
+					 		<img alt="cat monster" src="/Schrodinger-Normal.gif" height="110px" width="140.50px"/>
 					 		</Grid>
 					 		<Grid item xs={6}>
-					 		<img src="/Leaflet-Happy.gif" height="130px" width="140.50px" style={{marginLeft: "-9em", marginTop: "0.2em"}} />
+					 		<img alt="leaf monster" src="/Leaflet-Happy.gif" height="130px" width="140.50px" style={{marginLeft: "-9em", marginTop: "0.2em"}} />
 					 		</Grid>	
 					 		</Grid>
 					</Grid>

@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'sweetalert/dist/sweetalert.css';
-import TaskForm from './components/TaskForm';
-import Tasks from './components/Tasks';
-import Monster from './components/Monster';
-import ProgressBar from './components/ProgressBar';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import TaskModule from './components/TaskModule';
 import Navigation from './components/Navigation';
 import TaskLists from './components/TaskLists';
 import About from './components/About';
@@ -18,12 +11,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar';
 import Footer from './components/Footer';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import SweetAlert from 'sweetalert-react';
+import { Router, Route } from 'react-router-dom';
 import history from './history';
-import Eth from 'ethjs-query';
-import EthContract from 'ethjs-contract';
-import * as contractUtils from './utils/ContractInfo';
 import { fetchTaskLists } from './actions/taskLists';
 
 class App extends Component {

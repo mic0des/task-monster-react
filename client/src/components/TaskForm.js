@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import uuid from 'uuid';
 import { connect } from 'react-redux';
 import { addTask } from '../actions/tasks';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-var $              = require('jquery');
 
 export class TaskForm extends Component {
 

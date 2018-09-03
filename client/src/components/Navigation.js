@@ -4,8 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import { logout } from '../actions/auth';
 import { bindActionCreators } from 'redux';
-import history from '../history';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Navigation extends Component {

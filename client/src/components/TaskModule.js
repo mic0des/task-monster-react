@@ -8,9 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TaskForm from './TaskForm';
 import Tasks from './Tasks';
 import Monster from './Monster';
-import ProgressBar from './ProgressBar';
 import ToDoCard from './ToDoCard';
-import Grid from '@material-ui/core/Grid';
 import { taskPercentCheck } from '../actions/taskProgress';
 import { addTask } from '../actions/tasks';
 import { removeTask } from '../actions/tasks';
@@ -138,7 +136,7 @@ class TaskModule extends React.Component {
   }
 
   render() {
-    const { tasks, taskPercentCheck, taskLists, taskListId, taskName, lastSaved, taskProgress, taskMonster, deadline, finished, deleteTaskList } = this.props
+    const { tasks, taskListId, taskName, taskProgress, taskMonster, deadline, finished } = this.props
     let daysLeft = Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))
     return (
       <div>              

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
@@ -8,10 +7,9 @@ import { loginError } from '../../actions/auth';
 import { receiveLogin } from '../../actions/auth';
 import { fetchTaskLists } from '../../actions/taskLists';
 import { bindActionCreators } from 'redux';
-import history from '../../history';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-class SignUpForm extends React.Component {
+class SignUpForm extends Component {
   constructor(props) {
     super(props);
 
@@ -44,7 +42,6 @@ class SignUpForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { email, password, password_confirmation, name, error } = this.state;
 
     return fetch("http://localhost:3001/users.json", {
       method: 'POST',

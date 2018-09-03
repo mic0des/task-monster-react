@@ -79,7 +79,7 @@ class App extends Component {
           <Route exact path="/signup" component={SignUpForm} />
           <Route exact path="/signin" component={SignInForm} />
           <Route exact path="/newtask" render={()=>< TaskListForm taskLists={this.state.taskLists} />} />
-          <Route exact path="/calendar" render={()=>< Calendar taskLists={this.state.taskLists} />} />
+          <Route exact path="/calendar" render={()=>< Calendar taskLists={this.props.taskLists.lists} />} />
           <br/>         
           <Footer />
           </div>

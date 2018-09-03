@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180806184859) do
+ActiveRecord::Schema.define(version: 20180815191242) do
 
   create_table "monsters", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20180806184859) do
     t.string "type"
     t.integer "user_id"
     t.string "species"
+    t.boolean "dead", default: false
     t.index ["user_id"], name: "index_monsters_on_user_id"
   end
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import TaskCard from '../components/TaskCard';
+import TaskCard from './TaskCard';
 import { removeTask } from '../actions/tasks';
 import { checkTask } from '../actions/tasks';
 import Grid from '@material-ui/core/Grid';
-import Footer from '../components/Footer';
+import Footer from './Footer';
 
 class Tasks extends Component {
 

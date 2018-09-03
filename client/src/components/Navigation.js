@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
+import { logout } from '../actions/auth';
+import { bindActionCreators } from 'redux';
+import history from '../history';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Navigation extends Component {
@@ -10,7 +13,9 @@ class Navigation extends Component {
   signOut = event => {
     localStorage.removeItem("id_token");
     localStorage.removeItem("gravatar");
-    window.location.assign("/") 
+    // window.location.assign("/") 
+    this.props.logout();
+    this.props.history.push('/');
   };
 
   renderNav(){
@@ -65,4 +70,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Navigation);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    logout: logout
+  }, dispatch);
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navigation));

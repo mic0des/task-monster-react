@@ -24,6 +24,7 @@ import history from './history';
 import Eth from 'ethjs-query';
 import EthContract from 'ethjs-contract';
 import * as contractUtils from './utils/ContractInfo';
+import { fetchTaskLists } from './actions/taskLists';
 
 class App extends Component {
   state = {
@@ -45,23 +46,23 @@ class App extends Component {
       // Or install MetaMask, maybe with a nice graphic.
       alert('Please download MetaMask to use this dApp');
     }
-
     if (this.props.auth.isAuthenticated === true) {
-
-        fetch(`http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`)
-        .then(res => res.json())
-        .then(json => { 
-          console.log(json);
-          this.setState({
-            taskLists: json.map(e => e)
-          })
-        });   
+        // fetch(`http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`)
+        // .then(res => res.json())
+        // .then(json => { 
+        //   console.log(json);
+        //   this.setState({
+        //     taskLists: json.map(e => e)
+        //   })
+        // });   
+        let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
+        this.props.fetchTaskLists(url)
     } 
   }
 
   homePage = () => {
     if (this.props.auth.isAuthenticated === true) {
-      return <Route exact path="/" render={()=>< TaskLists style={{height: "65%"}} taskLists={this.state.taskLists} />} />
+      return <Route exact path="/" render={()=>< TaskLists style={{height: "65%"}} taskLists={this.props.taskLists.lists} />} />
     } else {
       return <Route exact path="/" component={About} />
     }
@@ -89,8 +90,15 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return ({
-    auth: state.auth
+    auth: state.auth,
+    taskLists: state.taskLists
   })
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    fetchTaskLists: fetchTaskLists
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

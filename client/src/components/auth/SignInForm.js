@@ -5,7 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { loginError } from '../../actions/auth';
 import { receiveLogin } from '../../actions/auth';
+import { fetchTaskLists } from '../../actions/taskLists';
 import { bindActionCreators } from 'redux';
+import history from '../../history';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
  
 class SignInForm extends React.Component {
@@ -25,6 +27,12 @@ class SignInForm extends React.Component {
     this.setState({
       [name]: value,
     })
+  }
+
+  parseJwt = token => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64))
   }
 
   handleSubmit = event => {
@@ -53,7 +61,10 @@ class SignInForm extends React.Component {
           console.log(data)
           localStorage.setItem('gravatar', data.user.gravatar);
           this.props.receiveLogin(data);
-          window.location.assign("/");         
+          // window.location.assign("/"); 
+          let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
+          this.props.fetchTaskLists(url);     
+          history.push("/");      
         }
     });
   }
@@ -106,7 +117,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     loginError: loginError,
-    receiveLogin: receiveLogin
+    receiveLogin: receiveLogin,
+    fetchTaskLists: fetchTaskLists
   }, dispatch);
 };
  

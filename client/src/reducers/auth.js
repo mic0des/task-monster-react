@@ -34,8 +34,10 @@ export default (state = {
 
     case 'LOGOUT_SUCCESS':
       return Object.assign({}, state, {
-        isFetching: true,
-        isAuthenticated: false
+        isFetching: false,
+        isAuthenticated: false,
+        id_token: '',
+        gravatar: ''
       })
 
     default:

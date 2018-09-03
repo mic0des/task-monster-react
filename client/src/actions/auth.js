@@ -17,6 +17,14 @@ export const receiveLogin = user => {
   }
 }
 
+export const logout = () => {
+  return {
+    type: 'LOGOUT_SUCCESS',
+    isFetching: false,
+    isAuthenticated: false
+  }
+}
+
 export const loginError = message => {
   return {
     type: 'LOGIN_FAILURE',

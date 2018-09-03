@@ -16,6 +16,7 @@ class TaskListsController < ApplicationController
 
 	def destroy
 		@task_list = TaskList.find(params["id"])
+		@task_list.tasks.each {|task| task.delete}
 		@task_list.delete
 	end
 

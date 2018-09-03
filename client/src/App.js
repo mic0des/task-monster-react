@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './App.css';
+import 'sweetalert/dist/sweetalert.css';
 import TaskForm from './components/TaskForm';
 import Tasks from './components/Tasks';
 import Monster from './components/Monster';
@@ -9,7 +11,6 @@ import TaskModule from './components/TaskModule';
 import Navigation from './components/Navigation';
 import TaskLists from './components/TaskLists';
 import About from './components/About';
-import './App.css';
 import SignUpForm from './components/auth/SignUpForm';
 import SignInForm from './components/auth/SignInForm';
 import TaskListForm from './components/TaskListForm';
@@ -19,11 +20,10 @@ import Calendar from './components/Calendar';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import SweetAlert from 'sweetalert-react';
-import 'sweetalert/dist/sweetalert.css';
+import history from './history';
 import Eth from 'ethjs-query';
 import EthContract from 'ethjs-contract';
 import * as contractUtils from './utils/ContractInfo';
-var $            = require('jquery');
 
 class App extends Component {
   state = {
@@ -36,7 +36,7 @@ class App extends Component {
     return JSON.parse(window.atob(base64))
   }
 
-  componentWillMount(){
+  componentWillMount = () => {
     if (typeof web3 !== 'undefined') {
       // startApp(web3);
       console.log('loaded!');
@@ -47,19 +47,19 @@ class App extends Component {
     }
 
     if (this.props.auth.isAuthenticated === true) {
-        $.ajax({
-        method: "GET",
-        url: `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
-        }).done(function(data){
-          console.log(data)
+
+        fetch(`http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`)
+        .then(res => res.json())
+        .then(json => { 
+          console.log(json);
           this.setState({
-            taskLists: data.map(e => e)
+            taskLists: json.map(e => e)
           })
-        }.bind(this))      
-    }      
+        });   
+    } 
   }
 
-  homePage() {
+  homePage = () => {
     if (this.props.auth.isAuthenticated === true) {
       return <Route exact path="/" render={()=>< TaskLists style={{height: "65%"}} taskLists={this.state.taskLists} />} />
     } else {
@@ -70,9 +70,9 @@ class App extends Component {
   render() {
     // just defines the routes
     return (
-      <Router>
+      <Router history={history}>
           <div>
-          <Navigation user={this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : 'guest'} />
+          <Navigation homePage={this.homePage} user={this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : 'guest'} />
           <br/>
           {this.homePage()}
           <Route exact path="/signup" component={SignUpForm} />

@@ -1,15 +1,5 @@
-var Functions = {
-  getMetaContent: function(name) {
-    var metas = document.getElementsByTagName('meta');
- 
-    for (var i=0; i<metas.length; i++) {
-      if (metas[i].getAttribute("name") == name) {
-        return metas[i].getAttribute("content");
-      }
-    }
- 
-    return "";
-  }
+export const parseJwt = token => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64))
 }
- 
-module.exports = Functions;

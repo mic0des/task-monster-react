@@ -8,6 +8,7 @@ import { receiveLogin } from '../../actions/auth';
 import { fetchTaskLists } from '../../actions/taskLists';
 import { bindActionCreators } from 'redux';
 import history from '../../history';
+import { parseJwt } from '../../utils/Functions';
 import { Link } from 'react-router-dom';
  
 class SignInForm extends Component {
@@ -27,12 +28,6 @@ class SignInForm extends Component {
     this.setState({
       [name]: value,
     })
-  }
-
-  parseJwt = token => {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64))
   }
 
   handleSubmit = event => {
@@ -60,7 +55,7 @@ class SignInForm extends Component {
           console.log(data)
           localStorage.setItem('gravatar', data.user.gravatar);
           this.props.receiveLogin(data);
-          let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
+          let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
           this.props.fetchTaskLists(url);     
           !!this.props.history ? this.props.history.push('/') : history.push('/');    
         }

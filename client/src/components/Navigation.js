@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
@@ -7,19 +7,19 @@ import { bindActionCreators } from 'redux';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-class Navigation extends Component {
+const Navigation = (props) => {
 
-  signOut = event => {
+  const signOut = event => {
     localStorage.removeItem("id_token");
     localStorage.removeItem("gravatar");
-    this.props.logout();
-    this.props.history.push('/');
+    props.logout();
+    props.history.push('/');
   };
 
-  renderNav(){
-    if (this.props.auth.isAuthenticated === true) {
+  const renderNav = () => {
+    if (props.auth.isAuthenticated === true) {
       return <Grid style={{padding: "20px", marginTop: "30px"}} item xs={4}>
-        <Avatar alt="avatar" src={this.props.auth.gravatar} className="avatar" />
+        <Avatar alt="avatar" src={props.auth.gravatar} className="avatar" />
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/" exact>Tasks</Link>
         </Button>
@@ -29,7 +29,7 @@ class Navigation extends Component {
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/calendar" exact>Calendar</Link>
         </Button>
-        <Button className="nav" onClick={this.signOut}>Log Out</Button>
+        <Button className="nav" onClick={signOut}>Log Out</Button>
       </Grid>            
     } else {
       return <Grid style={{padding: "20px", marginTop: "30px"}} item xs={3}>
@@ -46,20 +46,19 @@ class Navigation extends Component {
     }
   }
 
-  render() {
-    return (
-        <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-          <Grid item xs={4}>
-            <div className="row title justify-content-center" style={{ paddingTop: '12px' }}>
-              <h1 className="title" >Task Monster</h1>
-            </div>
-          </Grid>
-          <Grid style={{padding: "30px"}} item xs={3}>
-          </Grid>
-          {this.renderNav()}
-        </Grid>
-    );
-  }
+  return (
+    <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+      <Grid item xs={4}>
+        <div className="row title justify-content-center" style={{ paddingTop: '12px' }}>
+          <h1 className="title" >Task Monster</h1>
+        </div>
+      </Grid>
+      <Grid style={{padding: "30px"}} item xs={3}>
+      </Grid>
+      {renderNav()}
+    </Grid>
+  );
+
 }
 
 const mapStateToProps = (state) => {

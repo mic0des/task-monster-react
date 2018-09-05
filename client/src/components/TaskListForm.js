@@ -11,13 +11,14 @@ import Eth from 'ethjs-query';
 import EthContract from 'ethjs-contract';
 import * as contractUtils from '../utils/ContractInfo';
 import createKeccakHash from 'keccak';
+import { parseJwt } from '../utils/Functions';
 
 class TaskListForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      user_id: this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : "",
+      user_id: this.props.auth.isAuthenticated === true ? parseJwt(localStorage.id_token).user_id : "",
       last_saved: 0,
       monster: "",
       newMonsterGender: Math.floor(Math.random() * 2) === 1 ? "♂" : "♀",
@@ -44,12 +45,6 @@ class TaskListForm extends React.Component {
     this.setState({
       [name]: value,
     })
-  }
-
-  parseJwt = token => {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64))
   }
 
   handleSubmit = event => {

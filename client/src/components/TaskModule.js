@@ -17,6 +17,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
+import { parseJwt } from '../utils/Functions';
 
 
 class TaskModule extends React.Component {
@@ -30,12 +31,6 @@ class TaskModule extends React.Component {
       monsterLevel: this.props.taskMonster.level,
       finished: this.props.finished
     };
-  }
-
-  parseJwt = token => {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64))
   }
 
   handleClickOpen = taskListId => () => {
@@ -70,7 +65,7 @@ class TaskModule extends React.Component {
       .then(data => {
         console.log(data);
         this.setState({monsterLevel: data.level, finished: true});
-        let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
+        let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
         this.props.fetchTaskLists(url)
         this.handleSave(tasks, taskListId, taskProgress, event)
     });   
@@ -93,7 +88,7 @@ class TaskModule extends React.Component {
       .then(data => {
         console.log(data);
         this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
-        let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
+        let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
         this.props.fetchTaskLists(url)
         this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level });
     });  
@@ -180,7 +175,7 @@ class TaskModule extends React.Component {
               }}
               onClose={() => console.log('close')}
             />
-            <Button onMouseOver={(e) => this.handleSave(tasks, taskListId, taskProgress, e)} onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Close</Button>
+            <Button onMouseOver={(e) => this.handleSave(tasks, taskListId, taskProgress, e)} onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Save & Close</Button>
           </DialogActions>
         </Dialog>
       </div>      

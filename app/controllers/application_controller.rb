@@ -1,14 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
- # 	before_action :configure_permitted_parameters, if: :devise_controller?
-
- # 	def configure_permitted_parameters
- #  		devise_parameter_sanitizer.for(:sign_up) << :name
- #  		devise_parameter_sanitizer.for(:sign_up) << :provider
- #  		devise_parameter_sanitizer.for(:sign_up) << :uid
-	# end
-
-after_action :cors_set_access_control_headers
+  after_action :cors_set_access_control_headers
 
 def cors_set_access_control_headers
   response.headers['Access-Control-Allow-Origin'] = '*'

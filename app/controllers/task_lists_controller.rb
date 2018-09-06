@@ -8,10 +8,6 @@ class TaskListsController < ApplicationController
 	def show 
 		@task_list = TaskList.find(params["id"])
 		render :json => @task_list.to_json(:include => {:tasks => {:only => [:name, :done, :id]}}) 
-
-		# respond_to do |f|
-		# 	f.json {render :json => @task_list.to_json(:include => {:tasks => {}})} 
-		# end	
 	end
 
 	def destroy
@@ -31,6 +27,7 @@ class TaskListsController < ApplicationController
 		else
 			@task_lists = TaskList.all 
 		end
-		render :json => @task_lists.to_json(:include => {:monster => {:only => [:nickname, :gender, :level, :id]}})
+		render :json => @task_lists.to_json(:include => {:monster => {:only => [:nickname, :gender, :level, :id]}, :tasks => {:only => [:name, :done, :id]}})
 	end
+
 end

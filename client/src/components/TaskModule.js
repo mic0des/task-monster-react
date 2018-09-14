@@ -44,7 +44,6 @@ class TaskModule extends Component {
       .then(data => {
         console.log(data);
         this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
-        data.tasks.map(e => this.props.addTask(e));
         this.setState({ open: true, scroll: 'paper' });
     });
   };
@@ -96,9 +95,6 @@ class TaskModule extends Component {
 
   handleClose = function(tasks, taskListId, taskProgress, e) {
     e.preventDefault();
-    tasks.forEach(element => 
-      this.props.removeTask(element.id)
-    );
     this.setState({...this.state, percent: taskProgress.taskProgress, open: false});
   };
 

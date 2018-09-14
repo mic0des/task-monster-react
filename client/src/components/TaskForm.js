@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addTask } from '../actions/tasks';
+import { addTask } from '../actions/taskLists';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
@@ -35,8 +35,9 @@ export class TaskForm extends Component {
       credentials: 'same-origin'
     }).then(response => response.json())
       .then(data => {
-        const task = Object.assign({name: data.name, done: false, id: data.id});
-        this.props.addTask(task);
+        const task = Object.assign({id: data.id, task_list_id: data.task_list_id, name: data.name, done: false});
+        this.props.addTask(data.task_list_id, task);
+        debugger
         this.setState({
           task: ''
         });

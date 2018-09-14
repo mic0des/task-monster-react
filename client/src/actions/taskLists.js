@@ -14,3 +14,11 @@ export const checkTask = (taskListId, taskId) => {
     taskId: taskId
   }
 }
+
+export const addTask = (taskListId, task) => {
+  return {
+    type: 'ADD_TASK',
+    taskListId: taskListId,
+    task: task
+  }
+}

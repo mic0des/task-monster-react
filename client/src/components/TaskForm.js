@@ -37,7 +37,6 @@ export class TaskForm extends Component {
       .then(data => {
         const task = Object.assign({id: data.id, task_list_id: data.task_list_id, name: data.name, done: false});
         this.props.addTask(data.task_list_id, task);
-        debugger
         this.setState({
           task: ''
         });

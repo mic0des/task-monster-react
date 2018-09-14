@@ -6,3 +6,11 @@ export const fetchTaskLists = url => {
             .then(tasks => dispatch({type: 'FETCH_TASKLISTS', tasks}));
   };
 }
+
+export const checkTask = (taskListId, taskId) => {
+  return {
+    type: 'CHECK_TASK',
+    taskListId: taskListId,
+    taskId: taskId
+  }
+}

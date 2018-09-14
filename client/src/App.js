@@ -11,20 +11,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar';
 import Footer from './components/Footer';
+import { parseJwt } from './utils/Functions';
 import { Router, Route } from 'react-router-dom';
 import history from './history';
 import { fetchTaskLists } from './actions/taskLists';
 
 class App extends Component {
-  state = {
-    taskLists: []
-  };
-
-  parseJwt = token => {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64))
-  }
 
   componentWillMount = () => {
     if (typeof web3 !== 'undefined') {
@@ -36,7 +28,7 @@ class App extends Component {
       alert('Please download MetaMask to use this dApp');
     }
     if (this.props.auth.isAuthenticated === true) { 
-        let url = `http://localhost:3001/users/${this.parseJwt(localStorage.id_token).user_id}/task_lists`
+        let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
         this.props.fetchTaskLists(url)
     } 
   }
@@ -54,12 +46,12 @@ class App extends Component {
     return (
       <Router history={history}>
           <div>
-          <Navigation homePage={this.homePage} user={this.props.auth.isAuthenticated === true ? this.parseJwt(localStorage.id_token).user_id : 'guest'} />
+          <Navigation homePage={this.homePage} user={this.props.auth.isAuthenticated === true ? parseJwt(localStorage.id_token).user_id : 'guest'} />
           <br/>
           {this.homePage()}
           <Route exact path="/signup" component={SignUpForm} />
           <Route exact path="/signin" component={SignInForm} />
-          <Route exact path="/newtask" render={()=>< TaskListForm taskLists={this.state.taskLists} />} />
+          <Route exact path="/newtask" component={TaskListForm} />
           <Route exact path="/calendar" render={()=>< Calendar taskLists={this.props.taskLists.lists} />} />
           <br/>         
           <Footer />

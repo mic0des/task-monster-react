@@ -29,7 +29,7 @@ const ToDoCard = props => {
             {renderName(taskName)} 
           </Typography>
           <Typography color="textSecondary">
-            {taskMonster.nickname} Level {monsterLevel}
+            {taskMonster.nickname} Level {taskMonster.level}
           </Typography>
         </CardContent>
         <CardActions>

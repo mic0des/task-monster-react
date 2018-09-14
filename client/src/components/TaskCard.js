@@ -13,18 +13,18 @@ const TaskCard = (props) => {
     })
   }
 
-  const handleOnCheck = (id, event) => {
-    props.checkTask(id);
-    return fetch(`http://localhost:3001/tasks/${id}`, {
+  const handleOnCheck = (taskListId, taskId, event) => {
+    props.checkTask(taskListId, taskId);
+    return fetch(`http://localhost:3001/tasks/${taskId}`, {
       method: 'PATCH'
     });
   }
 
   const enabled = task => {
     if (props.finished === true) {
-        return <FormControlLabel disabled control={<Checkbox checked={task.done} value={task.name} onChange={(e) => handleOnCheck(task.id, e)} />} label={task.name} />      
+        return <FormControlLabel disabled control={<Checkbox checked={task.done} value={task.name} onChange={(e) => handleOnCheck(task.task_list_id, task.id, e)} />} label={task.name} />      
       } else {
-        return <div><FormControlLabel control={<Checkbox checked={task.done} value={task.name} onChange={(e) => handleOnCheck(task.id, e)} />} label={task.name} />  
+        return <div><FormControlLabel control={<Checkbox checked={task.done} value={task.name} onChange={(e) => handleOnCheck(task.task_list_id, task.id, e)} />} label={task.name} />  
           <button type="button" onClick={(e) => handleOnClick(task.id, e)} className="btn btn-danger" >
               <span aria-hidden="true">&times;</span></button></div>       
       }

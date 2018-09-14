@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -20,7 +20,7 @@ import 'sweetalert/dist/sweetalert.css';
 import { parseJwt } from '../utils/Functions';
 
 
-class TaskModule extends React.Component {
+class TaskModule extends Component {
   constructor(props) {
     super(props);
  
@@ -143,7 +143,7 @@ class TaskModule extends React.Component {
   }
 
   render() {
-    const { tasks, taskListId, taskName, taskProgress, taskMonster, deadline, finished } = this.props
+    const { tasks, taskListId, taskName, taskProgress, taskMonster, deadline, finished, taskKey } = this.props
     let daysLeft = Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))
     return (
       <div>              
@@ -155,7 +155,7 @@ class TaskModule extends React.Component {
               {this.renderDays(daysLeft)}
               <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={(e) => this.levelUp(tasks, taskListId, taskProgress, e)} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
               {this.renderForm(taskListId)}              
-              <Tasks finished={this.state.finished} />
+              <Tasks taskKey={taskKey} finished={this.state.finished} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -183,10 +183,11 @@ class TaskModule extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps)  => {
   return ({
-    tasks: state.tasks,
-    taskProgress: state.taskProgress
+    tasks: state.taskLists.lists[ownProps.taskKey].tasks,
+    taskProgress: state.taskProgress,
+    taskLists: state.taskLists
   })
 }
  

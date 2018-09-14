@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TaskCard from './TaskCard';
 import { removeTask } from '../actions/tasks';
-import { checkTask } from '../actions/tasks';
+import { checkTask } from '../actions/taskLists';
 import Grid from '@material-ui/core/Grid';
 import Footer from './Footer';
 
@@ -23,9 +23,10 @@ const Tasks = (props) => {
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return ({
-    tasks: state.tasks
+    // tasks: state.tasks
+    tasks: state.taskLists.lists[ownProps.taskKey].tasks
   })
 }
 

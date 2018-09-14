@@ -27,7 +27,7 @@ class TaskListsController < ApplicationController
 		else
 			@task_lists = TaskList.all 
 		end
-		render :json => @task_lists.to_json(:include => {:monster => {:only => [:nickname, :gender, :level, :id]}, :tasks => {:only => [:name, :done, :id]}})
+		render :json => @task_lists.to_json(:include => {:monster => {:only => [:nickname, :gender, :level, :id]}, :tasks => {:only => [:name, :done, :id, :task_list_id]}})
 	end
 
 end

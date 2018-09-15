@@ -31,8 +31,12 @@ export default (state = {lists: [], loading: false}, action) => {
       return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false}) 
 
     case 'UPDATE_TASKLISTS':
-      // debugger
       return Object.assign({}, {lists: state.lists.map(list => list.id === action.taskListId ? action.updatedTaskList : list)}, {loading: false})
+
+    case 'UPDATE_MONSTER':
+      taskList.monster.level = action.monsterLevel;
+      taskList.finished = true;
+      return Object.assign({}, {lists: state.lists.map(list => list.id === action.taskListId ? taskList : list)}, {loading: false})
 
     default: 
       return state;

@@ -9,12 +9,12 @@ import TaskForm from './TaskForm';
 import Tasks from './Tasks';
 import Monster from './Monster';
 import ToDoCard from './ToDoCard';
-// import { taskPercentCheck } from '../actions/taskProgress';
 import { fetchTaskLists } from '../actions/taskLists';
 import { addTask } from '../actions/tasks';
 import { removeTask } from '../actions/tasks';
 import { bindActionCreators } from 'redux';
-import { updateTaskLists } from '../actions/taskLists'
+import { updateTaskLists } from '../actions/taskLists';
+import { updateMonster } from '../actions/taskLists';
 import { connect } from 'react-redux';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
@@ -65,20 +65,19 @@ class TaskModule extends Component {
       .then(data => {
         console.log(data);
         this.setState({monsterLevel: data.level, finished: true});
-        let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
-        this.props.fetchTaskLists(url)
-        this.handleSave(tasks, taskListId, taskProgress, event)
+        this.props.updateMonster(taskListId, data.level)
+        this.handleSave(tasks, taskListId, taskProgress, true)
     });   
   }
 
-  handleSave = function(tasks, taskListId, taskProgress) {
+  handleSave = function(tasks, taskListId, taskProgress, finished) {
+    const updatedFinished = finished ? finished : this.state.finished
     const percentage = (tasks.filter(task => task.done === true).length) / tasks.length * 100
-    // debugger
     return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
       method: 'PATCH',
       body: JSON.stringify({
-          last_saved: percentage
-          // finished: percentage === 100 ? true : false
+          last_saved: percentage,
+          finished: updatedFinished
       }), 
       headers: {
         'Content-Type': 'application/json'
@@ -87,9 +86,6 @@ class TaskModule extends Component {
     }).then(response => response.json())
       .then(data => {
         console.log(data);
-        // this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
-        // let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
-        // this.props.fetchTaskLists(url)
         this.props.updateTaskLists(taskListId, data)
         this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level });
     });  
@@ -192,7 +188,7 @@ const mapStateToProps = (state, ownProps)  => {
  
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    // taskPercentCheck: taskPercentCheck,
+    updateMonster: updateMonster,
     addTask: addTask,
     fetchTaskLists: fetchTaskLists,
     updateTaskLists: updateTaskLists,

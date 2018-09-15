@@ -2,7 +2,7 @@ class TaskListsController < ApplicationController
 	def update 
 		TaskList.find(params["id"]).update(last_saved: params["last_saved"], finished: params["finished"])
 		@task_list = TaskList.find(params["id"])
-		render :json => @task_list.to_json(:include => {:tasks => {:only => [:name, :done, :id]}}, :include => {:monster => {:only => [:level]}})
+		render :json => @task_list.to_json(:include => {:tasks => {:only => [:name, :done, :id]}}, :include => {:monster => {:only => [:nickname, :gender, :level, :id]}, :tasks => {:only => [:name, :done, :id, :task_list_id]}})
 	end
 
 	def show 

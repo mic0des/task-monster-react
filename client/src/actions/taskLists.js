@@ -30,3 +30,11 @@ export const removeTask = (taskListId, taskId) => {
     taskId: taskId
   }
 }
+
+export const updateTaskLists = (taskListId, data) => {
+	return {
+		type: 'UPDATE_TASKLISTS',
+		taskListId: taskListId,
+		updatedTaskList: data
+	}
+}

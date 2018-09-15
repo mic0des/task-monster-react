@@ -30,6 +30,10 @@ export default (state = {lists: [], loading: false}, action) => {
       taskList.tasks = taskList.tasks.filter(task => task.id !== action.taskId);
       return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false}) 
 
+    case 'UPDATE_TASKLISTS':
+      // debugger
+      return Object.assign({}, {lists: state.lists.map(list => list.id === action.taskListId ? action.updatedTaskList : list)}, {loading: false})
+
     default: 
       return state;
   }

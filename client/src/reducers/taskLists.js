@@ -1,6 +1,7 @@
 export default (state = {lists: [], loading: false}, action) => {
 
   const taskList = state.lists.find(taskList => taskList.id === action.taskListId);
+  const task = action.task 
 
   switch (action.type) {
 
@@ -22,8 +23,11 @@ export default (state = {lists: [], loading: false}, action) => {
       return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false})
 
     case 'ADD_TASK':
-      const task = action.task;
       taskList.tasks = taskList.tasks.concat(action.task)
+      return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false}) 
+
+    case 'REMOVE_TASK':
+      taskList.tasks = taskList.tasks.filter(task => task.id !== action.taskId);
       return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false}) 
 
     default: 

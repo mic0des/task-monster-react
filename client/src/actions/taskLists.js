@@ -22,3 +22,11 @@ export const addTask = (taskListId, task) => {
     task: task
   }
 }
+
+export const removeTask = (taskListId, taskId) => {
+  return {
+    type: 'REMOVE_TASK',
+    taskListId: taskListId,
+    taskId: taskId
+  }
+}

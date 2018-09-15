@@ -4,12 +4,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const TaskCard = (props) => {
 
-  const handleOnClick = (id, event) => {
+  const handleOnClick = (taskListId, taskId, event) => {
     event.preventDefault();
-    return fetch(`http://localhost:3001/tasks/${id}`, {
+    return fetch(`http://localhost:3001/tasks/${taskId}`, {
       method: 'delete'
     }).then(response => {
-      props.removeTask(id)      
+      props.removeTask(taskListId, taskId)     
     })
   }
 
@@ -25,7 +25,7 @@ const TaskCard = (props) => {
         return <FormControlLabel disabled control={<Checkbox checked={task.done} value={task.name} onChange={(e) => handleOnCheck(task.task_list_id, task.id, e)} />} label={task.name} />      
       } else {
         return <div><FormControlLabel control={<Checkbox checked={task.done} value={task.name} onChange={(e) => handleOnCheck(task.task_list_id, task.id, e)} />} label={task.name} />  
-          <button type="button" onClick={(e) => handleOnClick(task.id, e)} className="btn btn-danger" >
+          <button type="button" onClick={(e) => handleOnClick(task.task_list_id, task.id, e)} className="btn btn-danger" >
               <span aria-hidden="true">&times;</span></button></div>       
       }
   }

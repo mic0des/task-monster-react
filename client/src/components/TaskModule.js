@@ -87,7 +87,7 @@ class TaskModule extends Component {
       .then(data => {
         console.log(data);
         this.props.updateTaskLists(taskListId, data)
-        this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level });
+        this.setState({...this.state, monsterLevel: data.monster.level });
     });  
   }
 
@@ -120,7 +120,7 @@ class TaskModule extends Component {
   }
 
   renderName(taskName){
-    if (this.props.taskProgress.finished === true) {
+    if (!!this.props.taskProgress && this.props.taskProgress.finished === true) {
       return taskName.concat(" ✔") 
     } else {
       return taskName

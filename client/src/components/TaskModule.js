@@ -9,11 +9,12 @@ import TaskForm from './TaskForm';
 import Tasks from './Tasks';
 import Monster from './Monster';
 import ToDoCard from './ToDoCard';
-import { taskPercentCheck } from '../actions/taskProgress';
+// import { taskPercentCheck } from '../actions/taskProgress';
 import { fetchTaskLists } from '../actions/taskLists';
 import { addTask } from '../actions/tasks';
 import { removeTask } from '../actions/tasks';
 import { bindActionCreators } from 'redux';
+import { updateTaskLists } from '../actions/taskLists'
 import { connect } from 'react-redux';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
@@ -43,7 +44,7 @@ class TaskModule extends Component {
     }).then(response => response.json())
       .then(data => {
         console.log(data);
-        this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
+        // this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
         this.setState({ open: true, scroll: 'paper' });
     });
   };
@@ -70,14 +71,14 @@ class TaskModule extends Component {
     });   
   }
 
-  handleSave = function(tasks, taskListId, taskProgress, e) {
-    e.preventDefault();
-
+  handleSave = function(tasks, taskListId, taskProgress) {
+    const percentage = (tasks.filter(task => task.done === true).length) / tasks.length * 100
+    // debugger
     return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
       method: 'PATCH',
       body: JSON.stringify({
-          last_saved: (tasks.filter(task => task.done === true).length) / tasks.length * 100,
-          finished: this.state.finished
+          last_saved: percentage
+          // finished: percentage === 100 ? true : false
       }), 
       headers: {
         'Content-Type': 'application/json'
@@ -86,16 +87,18 @@ class TaskModule extends Component {
     }).then(response => response.json())
       .then(data => {
         console.log(data);
-        this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
-        let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
-        this.props.fetchTaskLists(url)
+        // this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
+        // let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
+        // this.props.fetchTaskLists(url)
+        this.props.updateTaskLists(taskListId, data)
         this.setState({...this.state, percent: taskProgress.taskProgress, monsterLevel: data.monster.level });
     });  
   }
 
   handleClose = function(tasks, taskListId, taskProgress, e) {
     e.preventDefault();
-    this.setState({...this.state, percent: taskProgress.taskProgress, open: false});
+    this.handleSave(tasks, taskListId, taskProgress)
+    this.setState({...this.state, open: false});
   };
 
   componentWillMount(){
@@ -143,7 +146,7 @@ class TaskModule extends Component {
     let daysLeft = Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))
     return (
       <div>              
-        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} finished={finished} taskProgress={this.state.percent} />  
+        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} finished={finished} taskProgress={taskProgress} />  
         <Dialog open={this.state.open} style={{height: "94%"}} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle style={{padding: "20px 24px 20px"}} id="scroll-dialog-title">{this.renderName(taskName)}</DialogTitle>
           <DialogContent>
@@ -151,7 +154,7 @@ class TaskModule extends Component {
               {this.renderDays(daysLeft)}
               <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={(e) => this.levelUp(tasks, taskListId, taskProgress, e)} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
               {this.renderForm(taskListId)}              
-              <Tasks taskKey={taskKey} finished={this.state.finished} />
+              <Tasks handleSave={(e) => this.handleSave(tasks, taskListId, taskProgress)} taskKey={taskKey} finished={this.state.finished} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -171,7 +174,7 @@ class TaskModule extends Component {
               }}
               onClose={() => console.log('close')}
             />
-            <Button onMouseOver={(e) => this.handleSave(tasks, taskListId, taskProgress, e)} onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Save & Close</Button>
+            <Button onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Save & Close</Button>
           </DialogActions>
         </Dialog>
       </div>      
@@ -182,16 +185,17 @@ class TaskModule extends Component {
 const mapStateToProps = (state, ownProps)  => {
   return ({
     tasks: state.taskLists.lists[ownProps.taskKey].tasks,
-    taskProgress: state.taskProgress,
+    taskProgress: state.taskLists.lists[ownProps.taskKey].last_saved,
     taskLists: state.taskLists
   })
 }
  
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    taskPercentCheck: taskPercentCheck,
+    // taskPercentCheck: taskPercentCheck,
     addTask: addTask,
     fetchTaskLists: fetchTaskLists,
+    updateTaskLists: updateTaskLists,
     removeTask: removeTask
   }, dispatch);
 };

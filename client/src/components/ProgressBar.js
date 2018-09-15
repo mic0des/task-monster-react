@@ -29,8 +29,7 @@ const ProgressBar = (props) => {
 
 const mapStateToProps = state => {
   return ({
-    tasks: state.tasks,
-    taskProgress: state.taskProgress
+    // taskProgress: state.taskProgress
   })
 }
 

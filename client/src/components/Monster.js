@@ -30,7 +30,7 @@ const Monster = ({classes, taskMonster, tasks, levelUp, monsterLevel, daysLeft, 
 						<li style={{listStyleType: "none", fontFamily: "Roboto"}}><h3>{taskMonster.nickname} {taskMonster.gender} Level {monsterLevel}</h3></li>
 					</ul>					
 				</Grid> 
-				<ProgressBar levelUp={levelUp} finished={finished} taskMonster={taskMonster} lastSaved={tasks.taskProgress} />
+				<ProgressBar levelUp={levelUp} finished={finished} tasks={tasks} taskMonster={taskMonster} lastSaved={tasks.taskProgress} />
 			</Grid>
 		</div>
 	)

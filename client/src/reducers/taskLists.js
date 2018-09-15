@@ -38,6 +38,10 @@ export default (state = {lists: [], loading: false}, action) => {
       taskList.finished = true;
       return Object.assign({}, {lists: state.lists.map(list => list.id === action.taskListId ? taskList : list)}, {loading: false})
 
+    case 'ADD_TASKLIST':
+      debugger
+      return Object.assign({}, {lists: state.lists.concat(action.taskList)}, {loading: false})      
+
     default: 
       return state;
   }

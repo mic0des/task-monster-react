@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import FormControl from '@material-ui/core/FormControl';
+import { addTaskList } from '../actions/taskLists';
+import { bindActionCreators } from 'redux';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Eth from 'ethjs-query';
@@ -68,10 +70,27 @@ class TaskListForm extends React.Component {
         'Content-Type': 'application/json'
       },
       credentials: 'same-origin'
-    }).then(function(data){
-      window.location.assign("/");
-    }.bind(this));
-  }
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        debugger
+        this.props.addTaskList(data);
+        this.props.history.push('/');
+      })           
+    }
+
+    // }).then(response => response.json())
+    //   .then(data => {
+    //     const task = Object.assign({id: data.id, task_list_id: data.task_list_id, name: data.name, done: false});
+    //     this.props.addTask(data.task_list_id, task);
+    //     this.setState({
+    //       task: ''
+    //     });
+    // });
+
+// window.location.assign("/");
+  // this.props.addTaskList(data)
+
 
   startApp = web3 => {
     const eth = new Eth(web3.currentProvider);
@@ -245,5 +264,11 @@ const mapStateToProps = (state) => {
     taskLists: state.taskLists
   };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    addTaskList: addTaskList
+  }, dispatch);
+};
  
-export default connect(mapStateToProps)(TaskListForm);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskListForm);

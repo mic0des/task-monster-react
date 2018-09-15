@@ -46,3 +46,10 @@ export const updateMonster = (taskListId, level) => {
     monsterLevel: level
   }
 }
+
+export const addTaskList = (data) => {
+  return {
+    type: 'ADD_TASKLIST',
+    taskList: data
+  }
+}

@@ -53,3 +53,10 @@ export const addTaskList = (data) => {
     taskList: data
   }
 }
+
+export const deleteTaskList = (taskListId) => {
+  return {
+    type: 'DELETE_TASKLIST',
+    taskListId: taskListId
+  }
+}

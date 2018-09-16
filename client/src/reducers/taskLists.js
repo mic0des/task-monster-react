@@ -39,8 +39,11 @@ export default (state = {lists: [], loading: false}, action) => {
       return Object.assign({}, {lists: state.lists.map(list => list.id === action.taskListId ? taskList : list)}, {loading: false})
 
     case 'ADD_TASKLIST':
-      debugger
-      return Object.assign({}, {lists: state.lists.concat(action.taskList)}, {loading: false})      
+      return Object.assign({}, {lists: state.lists.concat(action.taskList)}, {loading: false}) 
+
+    case 'DELETE_TASKLIST':
+      // debugger
+      return Object.assign({}, {lists: state.lists.filter(list => list.id !== action.taskListId)}, {loading: false})
 
     default: 
       return state;

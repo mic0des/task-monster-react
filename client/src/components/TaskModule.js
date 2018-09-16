@@ -14,12 +14,15 @@ import { addTask } from '../actions/tasks';
 import { removeTask } from '../actions/tasks';
 import { bindActionCreators } from 'redux';
 import { updateTaskLists } from '../actions/taskLists';
+import { deleteTaskList } from '../actions/taskLists';
 import { updateMonster } from '../actions/taskLists';
 import { connect } from 'react-redux';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
 import { parseJwt } from '../utils/Functions';
-
+import history from '../history';
+import { compose } from 'redux';
+import { withRouter } from 'react-router';
 
 class TaskModule extends Component {
   constructor(props) {
@@ -127,14 +130,18 @@ class TaskModule extends Component {
     }
   }
 
-  deleteTaskList(taskListId){ 
+  deleteTaskList = taskListId => { 
     return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       },
       credentials: 'same-origin'
-    }).then(response => window.location.assign("/"))     
+    }).then(response => {
+      // debugger
+      this.props.deleteTaskList(taskListId);
+      // window.location.assign("/")
+    }).then(response => this.props.history.push('/'))     
   }
 
   render() {
@@ -163,6 +170,7 @@ class TaskModule extends Component {
               onConfirm={() => {
                 console.log('confirm'); 
                 this.deleteTaskList(taskListId);
+                this.setState({show: false})
               }}
               onCancel={() => {
                 console.log('cancel'); 
@@ -188,6 +196,7 @@ const mapStateToProps = (state, ownProps)  => {
  
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    deleteTaskList: deleteTaskList,
     updateMonster: updateMonster,
     addTask: addTask,
     fetchTaskLists: fetchTaskLists,
@@ -196,4 +205,6 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskModule);
+const enhance = compose(withRouter, connect(mapStateToProps, mapDispatchToProps))
+
+export default enhance(TaskModule);

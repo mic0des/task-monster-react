@@ -24,10 +24,13 @@ export const addTask = (taskListId, task) => {
 }
 
 export const removeTask = (taskListId, taskId) => {
-  return {
-    type: 'REMOVE_TASK',
-    taskListId: taskListId,
-    taskId: taskId
+  return (dispatch) => {
+    dispatch({type: 'REMOVE_TASK'});
+    return fetch(`http://localhost:3001/tasks/${taskId}`, {
+      method: 'delete'
+    }).then(response => {
+      dispatch({type: 'REMOVE_TASK_SUCCESS', taskListId, taskId})
+    })
   }
 }
 

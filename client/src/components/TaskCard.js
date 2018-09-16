@@ -6,11 +6,7 @@ const TaskCard = (props) => {
 
   const handleOnClick = (taskListId, taskId, event) => {
     event.preventDefault();
-    return fetch(`http://localhost:3001/tasks/${taskId}`, {
-      method: 'delete'
-    }).then(response => {
-      props.removeTask(taskListId, taskId)     
-    })
+    props.removeTask(taskListId, taskId);
   }
 
   const handleOnCheck = (taskListId, taskId, event) => {

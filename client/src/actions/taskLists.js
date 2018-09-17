@@ -18,14 +18,6 @@ export const checkTask = (taskListId, taskId) => {
   }
 }
 
-// export const addTask = (taskListId, task) => {
-//   return {
-//     type: 'ADD_TASK',
-//     taskListId: taskListId,
-//     task: task
-//   }
-// }
-
 export const addTask = (taskListId, task) => {
   return (dispatch) => {
     dispatch({type: 'ADDING_TASK'});
@@ -75,10 +67,33 @@ export const updateMonster = (taskListId, level) => {
   }
 }
 
-export const addTaskList = (data) => {
-  return {
-    type: 'ADD_TASKLIST',
-    taskList: data
+// export const addTaskList = (data) => {
+//   return {
+//     type: 'ADD_TASKLIST',
+//     taskList: data
+//   }
+// }
+
+export const addTaskList = (name, userId, monster, deadline) => {
+  return (dispatch) => {
+    dispatch({type: 'ADDING_TASKLIST'});
+    return fetch("http://localhost:3001/task_lists", {
+      method: 'POST',
+      body: JSON.stringify({
+          name: name,
+          user_id: userId,
+          last_saved: 0,
+          monster: monster,
+          deadline: deadline
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(res => res.json())
+      .then(data => {
+        dispatch({type: 'ADD_TASKLIST', taskList: data})
+      })
   }
 }
 

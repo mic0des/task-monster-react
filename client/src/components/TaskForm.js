@@ -22,26 +22,6 @@ export class TaskForm extends Component {
   handleOnSubmit = (taskListId, task, event) => {
     event.preventDefault();
     this.props.addTask(taskListId, task);
-
-    // return fetch("http://localhost:3001/tasks", {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //       name: this.state.task,
-    //       task_list_id: taskListId,
-    //       done: false
-    //   }), 
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   credentials: 'same-origin'
-    // }).then(response => response.json())
-    //   .then(data => {
-    //     const task = Object.assign({id: data.id, task_list_id: data.task_list_id, name: data.name, done: false});
-    //     this.props.addTask(data.task_list_id, task);
-    //     this.setState({
-    //       task: ''
-    //     });
-    // });
   }
 
   render() { 

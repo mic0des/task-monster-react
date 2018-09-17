@@ -49,7 +49,7 @@ class TaskListForm extends React.Component {
     })
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     const { name, deadline, monster, user_id } = this.state;
 
@@ -57,39 +57,10 @@ class TaskListForm extends React.Component {
       return;
     }
 
-    return fetch("http://localhost:3001/task_lists", {
-      method: 'POST',
-      body: JSON.stringify({
-          name: this.state.name,
-          user_id: this.state.user_id,
-          last_saved: 0,
-          monster: this.state.monster,
-          deadline: this.state.deadline
-      }), 
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    }).then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.props.addTaskList(data);
-        this.props.history.push('/');
-      })           
-    }
+    this.props.addTaskList(this.state.name, this.state.user_id, this.state.monster, this.state.deadline);
+    this.props.history.push('/');
 
-    // }).then(response => response.json())
-    //   .then(data => {
-    //     const task = Object.assign({id: data.id, task_list_id: data.task_list_id, name: data.name, done: false});
-    //     this.props.addTask(data.task_list_id, task);
-    //     this.setState({
-    //       task: ''
-    //     });
-    // });
-
-// window.location.assign("/");
-  // this.props.addTaskList(data)
-
+  }
 
   startApp = web3 => {
     const eth = new Eth(web3.currentProvider);

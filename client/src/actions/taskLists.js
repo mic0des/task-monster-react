@@ -8,18 +8,43 @@ export const fetchTaskLists = url => {
 }
 
 export const checkTask = (taskListId, taskId) => {
-  return {
-    type: 'CHECK_TASK',
-    taskListId: taskListId,
-    taskId: taskId
+  return (dispatch) => {
+    dispatch({type: 'CHECKING_TASK'});
+    return fetch(`http://localhost:3001/tasks/${taskId}`, {
+      method: 'PATCH'
+    }).then(response => {
+      dispatch({type: 'CHECK_TASK', taskListId, taskId})
+    })
   }
 }
 
+// export const addTask = (taskListId, task) => {
+//   return {
+//     type: 'ADD_TASK',
+//     taskListId: taskListId,
+//     task: task
+//   }
+// }
+
 export const addTask = (taskListId, task) => {
-  return {
-    type: 'ADD_TASK',
-    taskListId: taskListId,
-    task: task
+  return (dispatch) => {
+    dispatch({type: 'ADDING_TASK'});
+    return fetch("http://localhost:3001/tasks", {
+      method: 'POST',
+      body: JSON.stringify({
+          name: task,
+          task_list_id: taskListId,
+          done: false
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(res => res.json())
+      .then(data => {
+        const task = Object.assign({id: data.id, task_list_id: data.task_list_id, name: data.name, done: false});
+        dispatch({type: 'ADD_TASK', taskListId, task});
+      })
   }
 }
 

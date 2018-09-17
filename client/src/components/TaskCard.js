@@ -11,13 +11,6 @@ const TaskCard = (props) => {
 
   const handleOnCheck = (taskListId, taskId, event) => {
     props.checkTask(taskListId, taskId);
-    return fetch(`http://localhost:3001/tasks/${taskId}`, {
-      method: 'PATCH'
-    })
-    // .then(response => {
-    //   props.handleSave();
-    // })
-
   }
 
   const enabled = task => {

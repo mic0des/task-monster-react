@@ -38,39 +38,38 @@ class TaskModule extends Component {
   }
 
   handleClickOpen = taskListId => () => {
-    return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    }).then(response => response.json())
-      .then(data => {
-        console.log(data);
+    // return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   credentials: 'same-origin'
+    // }).then(response => response.json())
+    //   .then(data => {
+    //     console.log(data);
         // this.props.taskPercentCheck({percent: data.last_saved, finished: data.finished});
         this.setState({ open: true, scroll: 'paper' });
-    });
-  };
+    };
+  
 
-  levelUp = (tasks, taskListId, taskProgress, event) => {
-    event.preventDefault()
-    console.log("Level up!") 
-    return fetch(`http://localhost:3001/monsters/${this.props.taskMonster.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-          level: this.props.taskMonster.level + 1
-      }), 
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    }).then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState({monsterLevel: data.level, finished: true});
-        this.props.updateMonster(taskListId, data.level)
-        this.handleSave(tasks, taskListId, taskProgress, true)
-    });   
+  levelUp = (monsterId, tasks, taskListId, taskProgress, monsterLevel, event) => {
+    event.preventDefault();
+    // console.log("Level up!") 
+    // return fetch(`http://localhost:3001/monsters/${this.props.taskMonster.id}`, {
+    //   method: 'PATCH',
+    //   body: JSON.stringify({
+    //       level: this.props.taskMonster.level + 1
+    //   }), 
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   credentials: 'same-origin'
+    // }).then(response => response.json())
+    //   .then(data => {
+    //     console.log(data);
+        this.setState({monsterLevel: monsterLevel, finished: true});
+        this.props.updateMonster(monsterLevel, monsterId, taskListId);
+        // this.handleSave(tasks, taskListId, taskProgress, true);  
   }
 
   handleSave = function(tasks, taskListId, taskProgress, finished) {
@@ -155,7 +154,7 @@ class TaskModule extends Component {
           <DialogContent>
             <DialogContentText style={{marginTop: "-2px"}}>
               {this.renderDays(daysLeft)}
-              <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={(e) => this.levelUp(tasks, taskListId, taskProgress, e)} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
+              <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={(e) => this.levelUp(taskMonster.id, tasks, taskListId, taskProgress, taskMonster.level + 1, e)} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
               {this.renderForm(taskListId)}              
               <Tasks handleSave={(e) => this.handleSave(tasks, taskListId, taskProgress)} taskKey={taskKey} finished={this.state.finished} />
             </DialogContentText>

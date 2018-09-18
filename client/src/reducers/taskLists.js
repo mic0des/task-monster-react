@@ -42,6 +42,9 @@ export default (state = {lists: [], loading: false}, action) => {
     case 'UPDATE_TASKLISTS':
       return Object.assign({}, {lists: state.lists.map(list => list.id === action.taskListId ? action.updatedTaskList : list)}, {loading: false})
 
+    case 'UPDATING_MONSTER':
+      return Object.assign({}, state, {loading: true})
+
     case 'UPDATE_MONSTER':
       taskList.monster.level = action.monsterLevel;
       taskList.finished = true;

@@ -59,20 +59,53 @@ export const updateTaskLists = (taskListId, data) => {
 	}
 }
 
-export const updateMonster = (taskListId, level) => {
-  return {
-    type: 'UPDATE_MONSTER',
-    taskListId: taskListId,
-    monsterLevel: level
+// export const updateMonster = (taskListId, level) => {
+//   return {
+//     type: 'UPDATE_MONSTER',
+//     taskListId: taskListId,
+//     monsterLevel: level
+//   }
+// }
+
+export const updateMonster = (monsterLevel, monsterId, taskListId) => {
+  return (dispatch) => {
+    dispatch({type: 'UPDATING_MONSTER'});
+    return fetch(`http://localhost:3001/monsters/${monsterId}`, { 
+      method: 'PATCH',
+      body: JSON.stringify({
+          level: monsterLevel
+      }), 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(res => res.json())
+      .then(data => {
+        dispatch({type: 'UPDATE_MONSTER', taskListId})
+      }); 
   }
 }
 
-// export const addTaskList = (data) => {
-//   return {
-//     type: 'ADD_TASKLIST',
-//     taskList: data
-//   }
-// }
+  // levelUp = (tasks, taskListId, taskProgress, event) => {
+  //   event.preventDefault()
+  //   console.log("Level up!") 
+  //   return fetch(`http://localhost:3001/monsters/${this.props.taskMonster.id}`, {
+  //     method: 'PATCH',
+  //     body: JSON.stringify({
+  //         level: this.props.taskMonster.level + 1
+  //     }), 
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     credentials: 'same-origin'
+  //   }).then(response => response.json())
+  //     .then(data => {
+  //       console.log(data);
+  //       this.setState({monsterLevel: data.level, finished: true});
+  //       this.props.updateMonster(taskListId, data.level)
+  //       this.handleSave(tasks, taskListId, taskProgress, true)
+  //   });   
+  // }
 
 export const addTaskList = (name, userId, monster, deadline) => {
   return (dispatch) => {

@@ -37,7 +37,10 @@ export default (state = {lists: [], loading: false}, action) => {
 
     case 'REMOVE_TASK_SUCCESS':
       taskList.tasks = taskList.tasks.filter(task => task.id !== action.taskId);
-      return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false})     
+      return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false}) 
+
+    case 'UPDATING_TASKLISTS':
+      return Object.assign({}, state, {loading: true})    
 
     case 'UPDATE_TASKLISTS':
       return Object.assign({}, {lists: state.lists.map(list => list.id === action.taskListId ? action.updatedTaskList : list)}, {loading: false})
@@ -56,8 +59,10 @@ export default (state = {lists: [], loading: false}, action) => {
     case 'ADD_TASKLIST':
       return Object.assign({}, {lists: state.lists.concat(action.taskList)}, {loading: false}) 
 
+    case 'DELETING_TASKLIST':
+      return Object.assign({}, state, {loading: true})      
+
     case 'DELETE_TASKLIST':
-      // debugger
       return Object.assign({}, {lists: state.lists.filter(list => list.id !== action.taskListId)}, {loading: false})
 
     default: 

@@ -48,30 +48,16 @@ class TaskModule extends Component {
     this.props.updateMonster(monsterLevel, monsterId, taskListId);
   }
 
-  handleSave = function(tasks, taskListId, taskProgress, finished) {
-    const updatedFinished = finished ? finished : this.state.finished
+  handleSave = function(tasks, taskListId, taskProgress, finished, monsterLevel) {
+    const updatedFinished = finished ? finished : this.state.finished;
     const percentage = (tasks.filter(task => task.done === true).length) / tasks.length * 100
-    return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-          last_saved: percentage,
-          finished: updatedFinished
-      }), 
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    }).then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.props.updateTaskLists(taskListId, data)
-        this.setState({...this.state, monsterLevel: data.monster.level });
-    });  
-  }
+    this.props.updateTaskLists(taskListId, percentage, updatedFinished);
+    this.setState({...this.state, monsterLevel: monsterLevel });
+  } 
 
-  handleClose = function(tasks, taskListId, taskProgress, e) {
+  handleClose = function(tasks, taskListId, taskProgress, finished, monsterLevel, e) {
     e.preventDefault();
-    this.handleSave(tasks, taskListId, taskProgress)
+    this.handleSave(tasks, taskListId, taskProgress, finished, monsterLevel)
     this.setState({...this.state, open: false});
   };
 
@@ -106,17 +92,8 @@ class TaskModule extends Component {
   }
 
   deleteTaskList = taskListId => { 
-    return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    }).then(response => {
-      // debugger
-      this.props.deleteTaskList(taskListId);
-      // window.location.assign("/")
-    }).then(response => this.props.history.push('/'))     
+    this.props.deleteTaskList(taskListId);
+    this.props.history.push('/');   
   }
 
   render() {
@@ -125,14 +102,14 @@ class TaskModule extends Component {
     return (
       <div>              
         <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} finished={finished} taskProgress={taskProgress} />  
-        <Dialog open={this.state.open} style={{height: "94%"}} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
+        <Dialog open={this.state.open} style={{height: "94%"}} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, this.state.finished, this.state.monsterLevel, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle style={{padding: "20px 24px 20px"}} id="scroll-dialog-title">{this.renderName(taskName)}</DialogTitle>
           <DialogContent>
             <DialogContentText style={{marginTop: "-2px"}}>
               {this.renderDays(daysLeft)}
               <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={(e) => this.levelUp(taskMonster.id, tasks, taskListId, taskProgress, taskMonster.level + 1, e)} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
               {this.renderForm(taskListId)}              
-              <Tasks handleSave={(e) => this.handleSave(tasks, taskListId, taskProgress)} taskKey={taskKey} finished={this.state.finished} />
+              <Tasks handleSave={(e) => this.handleSave(tasks, taskListId, taskProgress, this.state.finished, this.state.monsterLevel)} taskKey={taskKey} finished={this.state.finished} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -153,7 +130,7 @@ class TaskModule extends Component {
               }}
               onClose={() => console.log('close')}
             />
-            <Button onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, e)} color="primary">Save & Close</Button>
+            <Button onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, this.state.finished, this.state.monsterLevel, e)} color="primary">Save & Close</Button>
           </DialogActions>
         </Dialog>
       </div>      

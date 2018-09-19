@@ -16,7 +16,6 @@ const TaskLists = (props) => {
       </Grid>
     )
   }
-
 } 
 
 const mapStateToProps = (state) => {

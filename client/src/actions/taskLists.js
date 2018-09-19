@@ -51,11 +51,23 @@ export const removeTask = (taskListId, taskId) => {
   }
 }
 
-export const updateTaskLists = (taskListId, data) => {
-	return {
-		type: 'UPDATE_TASKLISTS',
-		taskListId: taskListId,
-		updatedTaskList: data
+export const updateTaskLists = (taskListId, percentage, updatedFinished) => {
+	return (dispatch) => {
+    dispatch({type: 'UPDATING_TASKLISTS'});
+    return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+          last_saved: percentage,
+          finished: updatedFinished
+      }),  
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json())
+      .then(data => {
+        dispatch({type: 'UPDATE_TASKLISTS', taskListId, updatedTaskList: data})
+    });    
 	}
 }
 
@@ -76,7 +88,7 @@ export const updateMonster = (monsterLevel, monsterId, taskListId) => {
         dispatch({type: 'UPDATE_MONSTER', taskListId})
       }); 
   }
-}
+} 
 
 export const addTaskList = (name, userId, monster, deadline) => {
   return (dispatch) => {
@@ -102,8 +114,16 @@ export const addTaskList = (name, userId, monster, deadline) => {
 }
 
 export const deleteTaskList = (taskListId) => {
-  return {
-    type: 'DELETE_TASKLIST',
-    taskListId: taskListId
+  return (dispatch) => {
+    dispatch({type: 'DELETING_TASKLIST'});
+    return fetch(`http://localhost:3001/task_lists/${taskListId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(response => {
+      dispatch({type: 'DELETE_TASKLIST', taskListId: taskListId})
+    })
   }
 }

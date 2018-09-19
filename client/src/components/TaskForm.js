@@ -22,6 +22,7 @@ export class TaskForm extends Component {
   handleOnSubmit = (taskListId, task, event) => {
     event.preventDefault();
     this.props.addTask(taskListId, task);
+    this.setState({task: ''});
   }
 
   render() { 

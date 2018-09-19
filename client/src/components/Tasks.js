@@ -25,7 +25,6 @@ const Tasks = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
   return ({
-    // tasks: state.tasks
     tasks: state.taskLists.lists[ownProps.taskKey].tasks
   })
 }

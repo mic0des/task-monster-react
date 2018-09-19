@@ -1,6 +1,6 @@
 export const fetchTaskLists = url => {
   return (dispatch) => {
-    dispatch({type: 'LOADING_TASKLISTS'});
+    dispatch({type: 'FETCHING_TASKLISTS'});
     return fetch(url)
             .then(res => res.json())
             .then(tasks => dispatch({type: 'FETCH_TASKLISTS', tasks}));
@@ -42,11 +42,11 @@ export const addTask = (taskListId, task) => {
 
 export const removeTask = (taskListId, taskId) => {
   return (dispatch) => {
-    dispatch({type: 'REMOVE_TASK'});
+    dispatch({type: 'REMOVING_TASK'});
     return fetch(`http://localhost:3001/tasks/${taskId}`, {
       method: 'delete'
     }).then(response => {
-      dispatch({type: 'REMOVE_TASK_SUCCESS', taskListId, taskId})
+      dispatch({type: 'REMOVE_TASK', taskListId, taskId})
     })
   }
 }

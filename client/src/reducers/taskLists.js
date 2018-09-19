@@ -5,7 +5,7 @@ export default (state = {lists: [], loading: false}, action) => {
 
   switch (action.type) {
 
-    case 'LOADING_TASKLISTS':
+    case 'FETCHING_TASKLISTS':
       console.log(action);
       return Object.assign({}, state, {loading: true})
 
@@ -32,10 +32,10 @@ export default (state = {lists: [], loading: false}, action) => {
       taskList.tasks = taskList.tasks.concat(action.task)
       return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false}) 
 
-    case 'REMOVE_TASK':
+    case 'REMOVING_TASK':
       return Object.assign({}, state, {loading: true})
 
-    case 'REMOVE_TASK_SUCCESS':
+    case 'REMOVE_TASK':
       taskList.tasks = taskList.tasks.filter(task => task.id !== action.taskId);
       return Object.assign({}, {lists: state.lists.map(list => list.id === taskList.id ? taskList : list)}, {loading: false}) 
 
@@ -63,7 +63,7 @@ export default (state = {lists: [], loading: false}, action) => {
       return Object.assign({}, state, {loading: true})      
 
     case 'DELETE_TASKLIST':
-      return Object.assign({}, {lists: state.lists.filter(list => list.id !== action.taskListId)}, {loading: false})
+      return Object.assign({}, {lists: state.lists.filter(list => list.id !== action.taskListId)}, {loading: false})   
 
     default: 
       return state;

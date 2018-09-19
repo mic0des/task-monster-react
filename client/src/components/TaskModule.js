@@ -10,8 +10,6 @@ import Tasks from './Tasks';
 import Monster from './Monster';
 import ToDoCard from './ToDoCard';
 import { fetchTaskLists } from '../actions/taskLists';
-import { addTask } from '../actions/tasks';
-import { removeTask } from '../actions/tasks';
 import { bindActionCreators } from 'redux';
 import { updateTaskLists } from '../actions/taskLists';
 import { deleteTaskList } from '../actions/taskLists';
@@ -150,10 +148,8 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     deleteTaskList: deleteTaskList,
     updateMonster: updateMonster,
-    addTask: addTask,
     fetchTaskLists: fetchTaskLists,
-    updateTaskLists: updateTaskLists,
-    removeTask: removeTask
+    updateTaskLists: updateTaskLists
   }, dispatch);
 };
 

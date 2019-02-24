@@ -9,12 +9,12 @@ export default class Calendar extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      events: 
+      events:
         props.taskLists.map(taskList => ({
         start: taskList.deadline.split("T")[0],
         end: taskList.deadline.split("T")[0],
         title: taskList.name,
-        id: taskList.id, 
+        id: taskList.id,
         last_saved: taskList.last_saved,
         monster: taskList.monster
       }))
@@ -23,16 +23,16 @@ export default class Calendar extends React.Component {
 
   componentWillReceiveProps(nextprops) {
     this.setState({
-     events: 
+     events:
         nextprops.taskLists.map(taskList => ({
         start: taskList.deadline.split("T")[0],
         end: taskList.deadline.split("T")[0],
         title: taskList.name,
-        id: taskList.id, 
+        id: taskList.id,
         last_saved: taskList.last_saved,
         monster: taskList.monster
       }))
-      
+
     })
   }
 
@@ -55,7 +55,7 @@ export default class Calendar extends React.Component {
         events={this.state.events}
       />
       <br/>
-      <Button style={{float: "right", zIndex: "10000000"}} onClick={this.downloadIcsFile} variant="outlined" color="primary">Export .ICS to Google Calendar</Button>
+      <Button style={{float: "right", zIndex: "10000000"}} onClick={this.downloadIcsFile} className="calButton" variant="outlined" color="primary">Export .ICS to Google Calendar</Button>
       </div>
     )
   }

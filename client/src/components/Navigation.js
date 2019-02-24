@@ -30,7 +30,7 @@ const Navigation = (props) => {
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/calendar" exact>Calendar</Link>
         </Button>
         <Button className="nav" onClick={signOut}>Log Out</Button>
-      </Grid>            
+      </Grid>
     } else {
       return <Grid style={{padding: "20px", marginTop: "30px"}} item xs={3}>
         <Button className="nav">
@@ -42,12 +42,13 @@ const Navigation = (props) => {
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signup" exact>Sign Up</Link>
         </Button>
-      </Grid>              
+      </Grid>
     }
   }
 
   return (
-    <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+    <div className="wrapper">
+    <Grid className="navigationBar" container spacing={24} alignItems="center" direction="row" justify="center">
       <Grid item xs={4}>
         <div className="row title justify-content-center" style={{ paddingTop: '12px' }}>
           <h1 className="title" >Task Monster</h1>
@@ -57,6 +58,7 @@ const Navigation = (props) => {
       </Grid>
       {renderNav()}
     </Grid>
+    </div>
   );
 
 }

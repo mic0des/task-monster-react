@@ -6,7 +6,7 @@ import { store } from './store.js';
 
 ReactDOM.render(
   <Provider store={store}>
-  	<div>
+  	<div className="wrapper">
     	<App />
     </div>
   </Provider>,

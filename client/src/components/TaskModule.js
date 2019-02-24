@@ -38,7 +38,7 @@ class TaskModule extends Component {
   handleClickOpen = taskListId => () => {
     this.setState({ open: true, scroll: 'paper' });
   };
-  
+
 
   levelUp = (monsterId, tasks, taskListId, taskProgress, monsterLevel, event) => {
     event.preventDefault();
@@ -51,7 +51,7 @@ class TaskModule extends Component {
     const percentage = (tasks.filter(task => task.done === true).length) / tasks.length * 100
     this.props.updateTaskLists(taskListId, percentage, updatedFinished);
     this.setState({...this.state, monsterLevel: monsterLevel });
-  } 
+  }
 
   handleClose = function(tasks, taskListId, taskProgress, finished, monsterLevel, e) {
     e.preventDefault();
@@ -75,38 +75,38 @@ class TaskModule extends Component {
     if (this.state.finished === true) {
       return <p style={{color: "#2cc07d", marginTop: "0", marginBottom: "4px"}}><span style={{fontWeight: "bold"}}>Finished on time</span> ...  monster is happy!</p>
     } else if (daysLeft <= 0) {
-      return <p style={{color: "#f14d4d", margin: "0", marginBottom: "4px"}}><span style={{fontWeight: "bold"}}>Missed Deadline</span> ... Finish all tasks to revive KO'd monster!</p>      
+      return <p style={{color: "#f14d4d", margin: "0", marginBottom: "4px"}}><span style={{fontWeight: "bold"}}>Missed Deadline</span> ... Finish all tasks to revive KO'd monster!</p>
     } else {
-      return daysLeft < 10 ? <p style={{color: "#f14d4d", margin: "0", marginBottom: "4px"}}>{daysLeft} day(s) left</p> : <p style={{margin: "0", marginBottom: "4px"}}>{daysLeft} day(s) left</p>    
+      return daysLeft < 10 ? <p style={{color: "#f14d4d", margin: "0", marginBottom: "4px"}}>{daysLeft} day(s) left</p> : <p style={{margin: "0", marginBottom: "4px"}}>{daysLeft} day(s) left</p>
     }
   }
 
   renderName(taskName){
     if (!!this.props.taskProgress && this.props.taskProgress.finished === true) {
-      return taskName.concat(" ✔") 
+      return taskName.concat(" ✔")
     } else {
       return taskName
     }
   }
 
-  deleteTaskList = taskListId => { 
+  deleteTaskList = taskListId => {
     this.props.deleteTaskList(taskListId);
-    this.props.history.push('/');   
+    this.props.history.push('/');
   }
 
   render() {
     const { tasks, taskListId, taskName, taskProgress, taskMonster, deadline, finished, taskKey } = this.props
     let daysLeft = Math.ceil((new Date(deadline).getTime() - (new Date().getTime())) / (1000 * 3600 *24))
     return (
-      <div>              
-        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} finished={finished} taskProgress={taskProgress} />  
-        <Dialog open={this.state.open} style={{height: "94%"}} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, this.state.finished, this.state.monsterLevel, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
+      <div>
+        <ToDoCard handleClickOpen={this.handleClickOpen(taskListId)} monsterLevel={this.state.monsterLevel} taskMonster={taskMonster} taskName={taskName} taskListId={taskListId} finished={finished} taskProgress={taskProgress} />
+        <Dialog className="taskSheet" open={this.state.open} style={{height: "94%"}} onClose={(e) => this.handleClose(tasks, taskListId, taskProgress, this.state.finished, this.state.monsterLevel, e)} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
           <DialogTitle style={{padding: "20px 24px 20px"}} id="scroll-dialog-title">{this.renderName(taskName)}</DialogTitle>
-          <DialogContent>
+          <DialogContent className="taskSheet">
             <DialogContentText style={{marginTop: "-2px"}}>
               {this.renderDays(daysLeft)}
               <Monster daysLeft={daysLeft} finished={this.state.finished} levelUp={(e) => this.levelUp(taskMonster.id, tasks, taskListId, taskProgress, taskMonster.level + 1, e)} taskMonster={taskMonster} monsterLevel={this.state.monsterLevel} tasks={tasks} />
-              {this.renderForm(taskListId)}              
+              {this.renderForm(taskListId)}
               <Tasks handleSave={(e) => this.handleSave(tasks, taskListId, taskProgress, this.state.finished, this.state.monsterLevel)} taskKey={taskKey} finished={this.state.finished} />
             </DialogContentText>
           </DialogContent>
@@ -118,12 +118,12 @@ class TaskModule extends Component {
               text="You can't undo this!"
               showCancelButton
               onConfirm={() => {
-                console.log('confirm'); 
+                console.log('confirm');
                 this.deleteTaskList(taskListId);
                 this.setState({show: false})
               }}
               onCancel={() => {
-                console.log('cancel'); 
+                console.log('cancel');
                 this.setState({ show: false });
               }}
               onClose={() => console.log('close')}
@@ -131,7 +131,7 @@ class TaskModule extends Component {
             <Button onClick={(e) => this.handleClose(tasks, taskListId, taskProgress, this.state.finished, this.state.monsterLevel, e)} color="primary">Save & Close</Button>
           </DialogActions>
         </Dialog>
-      </div>      
+      </div>
     );
   }
 }

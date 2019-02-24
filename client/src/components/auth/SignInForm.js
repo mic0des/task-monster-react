@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import history from '../../history';
 import { parseJwt } from '../../utils/Functions';
 import { Link } from 'react-router-dom';
- 
+
 class SignInForm extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +38,7 @@ class SignInForm extends Component {
       body: JSON.stringify({
           email: this.state.email,
           password: this.state.password
-      }), 
+      }),
       headers: {
         'Content-Type': 'application/json'
       },
@@ -56,15 +56,15 @@ class SignInForm extends Component {
           localStorage.setItem('gravatar', data.user.gravatar);
           this.props.receiveLogin(data);
           let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
-          this.props.fetchTaskLists(url);     
-          !!this.props.history ? this.props.history.push('/') : history.push('/');    
+          this.props.fetchTaskLists(url);
+          !!this.props.history ? this.props.history.push('/') : history.push('/');
         }
     });
   }
 
   render() {
     return (
-      <div>
+      <div className="signInForm">
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
           <form className="signUp">
             <div>
@@ -76,7 +76,7 @@ class SignInForm extends Component {
             <br />
             <div>
               <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Log In</Button>
-            </div> 
+            </div>
           </form>
           <br />
         </Grid>
@@ -91,7 +91,7 @@ class SignInForm extends Component {
           </Grid>
         </Grid>
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-            <div><p>No account?  
+            <div><p>No account?
             <Button className="nav">
               <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signup" exact>Sign Up</Link>
             </Button></p></div>

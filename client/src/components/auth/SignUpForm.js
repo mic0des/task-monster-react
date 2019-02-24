@@ -44,7 +44,7 @@ class SignUpForm extends Component {
           email: this.state.email,
           password: this.state.password,
           password_confirmation: this.state.password_confirmation
-      }), 
+      }),
       headers: {
         'Content-Type': 'application/json'
       },
@@ -59,21 +59,21 @@ class SignUpForm extends Component {
           console.log(Object.entries(data))
         } else {
           localStorage.setItem('gravatar', data.user.gravatar);
-          this.props.receiveLogin(data);   
-          this.props.history.push("/");         
+          this.props.receiveLogin(data);
+          this.props.history.push("/");
         }
     });
   }
 
   render() {
     return (
-      <div>
+      <div className="signUpForm">
       <Grid container spacing={24} alignItems="center" direction="row" justify="center">
       <form className="signUp">
         <div>
           <TextField style={{width: "14em"}} autoComplete="off" id="username" className="username" name="name" placeholder="Username" value={this.state.name} onChange={this.handleChange} margin="normal" />
         </div>
- 
+
         <div>
           <TextField style={{width: "14em"}} id="email" className="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} margin="normal" />
         </div>
@@ -88,7 +88,7 @@ class SignUpForm extends Component {
         <br/>
         <div>
           <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Sign Up</Button>
-        </div>        
+        </div>
       </form>
       </Grid>
       <br/>
@@ -102,10 +102,10 @@ class SignUpForm extends Component {
           </Grid>
         </Grid>
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
-          <Grid item xs={9.5}>        
+          <Grid item xs={9.5}>
             <Button className="nav">
               <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signin" exact>Sign In Instead</Link>
-            </Button>          
+            </Button>
           </Grid>
         </Grid>
         </div>

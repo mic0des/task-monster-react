@@ -15,6 +15,8 @@ import { parseJwt } from './utils/Functions';
 import { Router, Route } from 'react-router-dom';
 import history from './history';
 import { fetchTaskLists } from './actions/taskLists';
+import SweetAlert from 'sweetalert-react';
+import 'sweetalert/dist/sweetalert.css';
 
 class App extends Component {
 
@@ -22,15 +24,22 @@ class App extends Component {
     if (typeof web3 !== 'undefined') {
       // startApp(web3);
       console.log('loaded!');
+      <SweetAlert
+        success
+        title="Woot!"
+        onConfirm={this.hideAlert}
+      >
+        I did it!
+      </SweetAlert>
     } else {
       // Warn the user that they need to get a web3 browser
       // Or install MetaMask, maybe with a nice graphic.
       alert('Please download MetaMask to use this dApp');
     }
-    if (this.props.auth.isAuthenticated === true) { 
+    if (this.props.auth.isAuthenticated === true) {
         let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
         this.props.fetchTaskLists(url)
-    } 
+    }
   }
 
   homePage = () => {
@@ -53,8 +62,7 @@ class App extends Component {
           <Route exact path="/signin" component={SignInForm} />
           <Route exact path="/newtask" component={TaskListForm} />
           <Route exact path="/calendar" render={()=>< Calendar taskLists={this.props.taskLists.lists} />} />
-          <br/>         
-          <Footer />
+          <br/>
           </div>
       </Router>
     );

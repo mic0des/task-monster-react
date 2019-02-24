@@ -25,16 +25,16 @@ export class TaskForm extends Component {
     this.setState({task: ''});
   }
 
-  render() { 
+  render() {
     return (
-      <Grid container spacing={24} alignItems="center" direction="row" justify="center">  
-        <Grid item xs={9.5}>          
+      <Grid container spacing={24} alignItems="center" direction="row" justify="center">
+        <Grid item xs={9.5}>
           <form className="form-horizontal" onSubmit={(e) => this.handleOnSubmit(this.props.taskListId, this.state.task, e)}>
             <TextField
               id="with-placeholder"
               autoComplete="off"
               placeholder="Add a to-do item..."
-              className="form-control"
+              className="form-control listForm"
               margin="normal"
               name="task"
               style={{width: "16em"}}

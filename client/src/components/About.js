@@ -25,7 +25,7 @@ class About extends Component {
 		})
 	}
 
-	componentDidMount() {      
+	componentDidMount() {
    		window.onscroll =()=>{
     		const newScrollHeight = Math.ceil(window.scrollY / 50) *50;
     			if (this.props.page.currentScrollHeight !== newScrollHeight){
@@ -37,10 +37,10 @@ class About extends Component {
 	render(){
 		const opacity = window.scrollY / 500
 		return (
-			<div>
-				<Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">					
-					<Grid item xs={6}>
-						<img alt="egg" style={{margin: "1.5em 16.5em 0.5em"}} src="/Egg.gif" height="80px" width="80px" />
+			<div className="loggedOut">
+				<Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">
+					<Grid item xs={6} style={{position: "relative"}}>
+						<img className="egg" alt="egg" src="/Egg.gif" height="80px" width="80px" />
 						<SignInForm />
 					</Grid>
 					<Grid item xs={6}>
@@ -54,7 +54,7 @@ class About extends Component {
 					 		</Grid>
 					 		<Grid item xs={6}>
 					 		<img alt="leaf monster" src="/Leaflet-Happy.gif" height="130px" width="140.50px" style={{marginLeft: "-9em", marginTop: "0.2em"}} />
-					 		</Grid>	
+					 		</Grid>
 					 		</Grid>
 					</Grid>
 
@@ -70,8 +70,8 @@ class About extends Component {
 					</Grid>
 				</Grid>
 
-				<Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">
-					<Grid item xs={6}>					
+				<Grid className="makeTo" container spacing={24} alignItems="center" direction="row" justify="flex-start">
+					<Grid item xs={6}>
 						<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
 							<Grid item xs={6}>
 								<img style={{margin: "1.5em 0.5em 0em 12.5em"}} src="/blue-clipboard.png" height="300px" width="300px" alt=""/>
@@ -85,9 +85,9 @@ class About extends Component {
 					 		</Grid>
 					 		<Grid item xs={4}>
 					 			<img src="/blue-seed.png" style={{marginTop: "2em"}} height="50px" width="50px" alt=""/>
-					 		</Grid>	
+					 		</Grid>
 						</Grid>
-						<Grid item xs={8}>	
+						<Grid item xs={8}>
 							<Typography style={{color: "#3bbbfa"}} variant="subheading">Organize your tasks into multiple lists, set deadlines, then check off to-do items to track your progress in real-time!</Typography>
 						</Grid>
 					</Grid>
@@ -99,7 +99,7 @@ class About extends Component {
 				<br/>
 
 				<Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">
-					<Grid item xs={6}>
+					<Grid className="checkOff" item xs={6}>
 					 	<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
 					 		<Grid item xs={3}>
 					 		</Grid>
@@ -107,21 +107,21 @@ class About extends Component {
 					 			<h2><Typography style={{fontWeight: "700", color: "#128678"}} variant="display2">Check off tasks, and watch your monsters grow!</Typography></h2>
 					 		</Grid>
 					 		<Grid item xs={1}>
-					 			<img src="/halloween.png" style={{marginTop: "5.5em", marginLeft: "-5em"}} height="50px" width="50px" alt=""/>
-					 		</Grid>	
+					 			<img src="/halloween.png" style={{marginTop: "5.5em", marginLeft: "0em"}} height="50px" width="50px" alt=""/>
+					 		</Grid>
 					 	</Grid>
 
-						<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">	
+						<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
 							<Grid item xs={3}>
-							</Grid>				 	
-							<Grid item xs={8}>	
+							</Grid>
+							<Grid className="" item xs={8}>
 								<Typography style={{color: "#1ec17b"}} variant="subheading">With every to-do item checked off, your monsters get stronger! Don't miss deadlines to keep your monsters healthy and happy!
 								</Typography>
 							</Grid>
 						</Grid>
 					</Grid>
 
-					<Grid item xs={6}>					
+					<Grid item xs={6}>
 						<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
 							<Grid item xs={6}>
 								<img style={{margin: "1.5em 0.5em 0em 3.5em"}} src="/checkmark.png" height="300px" width="300px" alt=""/>
@@ -136,7 +136,7 @@ class About extends Component {
 				<br/>
 
 				<Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">
-					<Grid item xs={6}>					
+					<Grid className="keepTrack" item xs={6}>
 						<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
 							<Grid item xs={6}>
 								<img style={{margin: "1.5em 0.5em 0em 12.5em"}} src="/calendar.png" height="300px" width="300px" alt=""/>
@@ -150,9 +150,9 @@ class About extends Component {
 					 		</Grid>
 					 		<Grid item xs={4}>
 					 			<img src="/fsm.png" style={{marginTop: "5em"}} height="50px" width="50px" alt=""/>
-					 		</Grid>	
+					 		</Grid>
 					 	</Grid>
-						<Grid item xs={8}>	
+						<Grid item xs={8}>
 							<Typography style={{color: "#fec536"}} variant="subheading">Using Calendar View, you can view your deadlines clearly for effective prioritizing, or export to Google Calendar!</Typography>
 						</Grid>
 						<a href="" style={{opacity: `${opacity}`, zIndex: "10000000"}} onClick={(e) => {this.toTop(e)}} id="return-to-top"><i className="fa fa-arrow-up fa-2x"></i></a>
@@ -169,18 +169,18 @@ class About extends Component {
 
 					<Grid item xs={3}>
 					</Grid>
-			
+
 					<Grid item xs={6}>
-						<h2><Typography style={{textAlign: "center", fontWeight: "700", color: "#4A4A4A"}} variant="display2">So... Ready to get stuff done and collect digital pets on the blockchain?</Typography></h2>		
+						<h2><Typography style={{textAlign: "center", fontWeight: "700", color: "#4A4A4A"}} variant="display2">So... Ready to get stuff done and collect digital pets on the blockchain?</Typography></h2>
 					</Grid>
 
 					<Grid item xs={3}>
-					</Grid> 
+					</Grid>
 
 				</Grid>
-			
+
 				<br/>
-			
+
 				<Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
 					<Grid item xs={4}>
 					</Grid>

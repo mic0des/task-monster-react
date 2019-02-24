@@ -6,8 +6,13 @@ import { logout } from '../actions/auth';
 import { bindActionCreators } from 'redux';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Menu from './Menu';
 
 const Navigation = (props) => {
+
+  const showSettings = (event) => {
+    event.preventDefault();
+  };
 
   const signOut = event => {
     localStorage.removeItem("id_token");
@@ -29,7 +34,14 @@ const Navigation = (props) => {
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/calendar" exact>Calendar</Link>
         </Button>
+        <Menu className="responsiveMenu" right width={'20%'} onClick={() => this.closeMenu()} customBurgerIcon={ <img src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png" width="128"/> }>
+          <a>Home</a>
+          <a>About</a>
+          <a>Contact</a>
+          <a>Settings</a>
+        </Menu>
         <Button className="nav" onClick={signOut}>Log Out</Button>
+
       </Grid>
     } else {
       return <Grid style={{padding: "20px", marginTop: "30px"}} item xs={3}>
@@ -42,6 +54,12 @@ const Navigation = (props) => {
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signup" exact>Sign Up</Link>
         </Button>
+        <Menu className="responsiveMenu" right width={'20%'} customBurgerIcon={ <img className="burger" src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png"  width="128"/> }>
+          <a>Home</a>
+          <a>About</a>
+          <a>Contact</a>
+          <a>Settings</a>
+        </Menu>
       </Grid>
     }
   }

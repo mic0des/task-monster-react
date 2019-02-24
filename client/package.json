@@ -11,9 +11,11 @@
     "js-sha3": "^0.8.0",
     "keccak": "^1.4.0",
     "react": "^16.4.1",
+    "react-burger-menu": "^2.6.5",
     "react-css-modules": "^4.7.7",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
+    "redux-burger-menu": "^0.2.8",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {

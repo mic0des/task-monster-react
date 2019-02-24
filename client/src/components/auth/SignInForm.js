@@ -92,7 +92,7 @@ class SignInForm extends Component {
         </Grid>
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
             <div><p>No account?
-            <Button className="nav">
+            <Button >
               <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signup" exact>Sign Up</Link>
             </Button></p></div>
         </Grid>

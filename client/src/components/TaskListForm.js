@@ -90,7 +90,7 @@ class TaskListForm extends React.Component {
       this.setState({newMonsterName: "Leaflet"})
     }
 
-    this.props.createMonster(this.state.newMonsterGender, this.state.user_id, this.state.newMonsterName)
+    // this.props.createMonster(this.state.newMonsterGender, this.state.user_id, this.state.newMonsterName)
 
     return fetch("http://localhost:3001/monsters", {
       method: 'POST',

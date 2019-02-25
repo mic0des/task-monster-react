@@ -1326,6 +1326,9 @@ div.arrow.bounce {
     width: 50%;
     top: -4em;
   }*/
+/*  .errorSection {
+    margin-left: 4em !important;
+  }*/
   .loggedOut {
     display: none;
   }

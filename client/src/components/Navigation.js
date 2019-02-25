@@ -23,7 +23,7 @@ const Navigation = (props) => {
 
   const renderNav = () => {
     if (props.auth.isAuthenticated === true) {
-      return <Grid style={{padding: "20px", marginTop: "30px"}} item xs={4}>
+      return <Grid style={{padding: "20px", marginTop: "-3px"}} item xs={4}>
         <Avatar alt="avatar" src={props.auth.gravatar} className="avatar" />
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/" exact>Tasks</Link>
@@ -34,17 +34,16 @@ const Navigation = (props) => {
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/calendar" exact>Calendar</Link>
         </Button>
-        <Menu className="responsiveMenu" right width={'20%'} onClick={() => this.closeMenu()} customBurgerIcon={ <img src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png" width="128"/> }>
-          <a>Home</a>
-          <a>About</a>
-          <a>Contact</a>
-          <a>Settings</a>
-        </Menu>
         <Button className="nav" onClick={signOut}>Log Out</Button>
-
+        <Menu className="responsiveMenu" right width={'20%'} onClick={() => this.closeMenu()} customBurgerIcon={ <img src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png" width="128"/> }>
+          <a>Tasks</a>
+          <a>New Task</a>
+          <a>📅</a>
+          <a>LogOut</a>
+        </Menu>
       </Grid>
     } else {
-      return <Grid style={{padding: "20px", marginTop: "30px"}} item xs={3}>
+      return <Grid style={{padding: "20px", marginTop: "-21px"}} item xs={3}>
         <Button className="nav">
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/" exact>About</Link>
         </Button>
@@ -55,10 +54,9 @@ const Navigation = (props) => {
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signup" exact>Sign Up</Link>
         </Button>
         <Menu className="responsiveMenu" right width={'20%'} customBurgerIcon={ <img className="burger" src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png"  width="128"/> }>
-          <a>Home</a>
           <a>About</a>
-          <a>Contact</a>
-          <a>Settings</a>
+          <a>Sign In</a>
+          <a>Sign Up</a>
         </Menu>
       </Grid>
     }

@@ -442,11 +442,21 @@ p {
   to { transform: rotate(360deg); }
 }
 
-.title {
+/*.title {
   font-family: 'Amatic SC', cursive;
   display:inline;
   font-size:1.9em;
   padding:.2em;
+}*/
+
+.title {
+    font-family: 'Amatic SC', cursive;
+    display: inline;
+    font-size: 1.9em;
+    padding: 0.2em;
+    left: -11px;
+    position: relative;
+    top: -10px;
 }
 
 .row {
@@ -1284,12 +1294,13 @@ a.down {
 }
 
 @media screen and (max-width: 442px) {
-  .bm-burger-button {
+/*  .bm-burger-button {
     display: block !important;
     position: relative !important;
-    left: 1.5em !important;
+    left: 4.5em !important;
     width: 50%;
-  }
+    top: -4em;
+  }*/
   .nav {
     display: none !important;
   }
@@ -1301,6 +1312,38 @@ a.down {
   }
   .footer {
     display: none !important;
+  }
+  .MuiAvatar-root-97.avatar {
+    display:none;
+  }
+  .bm-burger-button {
+    display: block !important;
+    position: relative !important;
+    left: 3.5em !important;
+    width: 50%;
+    top: -4em !important;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .bm-burger-button {
+    display: block !important;
+    position: relative !important;
+    left: 3.5em !important;
+    width: 50%;
+    top: -5em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .bm-burger-button {
+    left: 2.5em !important;
+  }
+}
+
+@media screen and (max-width: 384px) {
+  .bm-burger-button {
+    left: 1.5em !important;
   }
 }
 
@@ -1321,6 +1364,16 @@ a.down {
   }
   .MuiGrid-spacing-xs-24-24 > .MuiGrid-item-2 {
     margin-left: 7px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .bm-burger-button {
+    left: 1em !important;
+    top: 1.3em;
+  }
+  .avatar {
+    margin: -55px;
   }
 }
 
@@ -1382,7 +1435,7 @@ a.down {
 
 /* Color/shape of close button cross */
 .bm-cross {
-  background: #bdc3c7;
+  background: #000;
 }
 
 /*
@@ -1392,6 +1445,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu-wrap {
   position: fixed;
   height: 100%;
+  right: 21px;
 }
 
 /* General sidebar styles */
@@ -1400,6 +1454,9 @@ Note: Beware of modifying this element as it can break the animations - you shou
   background: #fff;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
+  -webkit-box-shadow: 10px 10px 5px -9px rgba(191,180,191,1);
+  -moz-box-shadow: 10px 10px 5px -9px rgba(191,180,191,1);
+  box-shadow: 10px 10px 5px -9px rgba(191,180,191,1);
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -1409,13 +1466,17 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Wrapper for item list */
 .bm-item-list {
-  color: #b8b7ad;
+  color: #000;
   padding: 0.8em;
 }
 
 /* Individual item */
 .bm-item {
   display: inline-block;
+  font-family: "Roboto";
+  padding-bottom: 1.1em;
+  left: -43px !important;
+  padding-left: 4px;
 }
 
 /* Styling of overlay */
@@ -1425,7 +1486,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 .responsiveMenu {
   position: fixed;
-  right: 0px;
+  right: 16px;
   z-index: 1100;
   width: 20%;
   height: 100%;

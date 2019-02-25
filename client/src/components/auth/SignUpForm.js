@@ -87,7 +87,7 @@ class SignUpForm extends Component {
         </div>
         <br/>
         <div>
-          <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Sign Up</Button>
+          <Button variant="contained" onClick={this.handleSubmit} color="primary" className="signUpButton">Sign Up</Button>
         </div>
       </form>
       </Grid>
@@ -103,7 +103,7 @@ class SignUpForm extends Component {
         </Grid>
         <Grid container spacing={24} alignItems="center" direction="row" justify="center">
           <Grid item xs={9.5}>
-            <Button className="nav">
+            <Button className="signUpButton">
               <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signin" exact>Sign In Instead</Link>
             </Button>
           </Grid>

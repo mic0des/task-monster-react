@@ -38,7 +38,7 @@ class TaskListForm extends React.Component {
       // Warn the user that they need to get a web3 browser
       // Or install MetaMask, maybe with a nice graphic.
       alert('Please download MetaMask to use this dApp');
-    }      
+    }
   }
 
   handleChange = event => {
@@ -70,11 +70,11 @@ class TaskListForm extends React.Component {
   }
 
   initContracts = contract => {
-    const TaskMonster = contract(contractUtils.abi); 
-    const taskMonsterInstance = TaskMonster.at('0xde4a3cc424e270e7bba00b59114c07eb6d388714');  
+    const TaskMonster = contract(contractUtils.abi);
+    const taskMonsterInstance = TaskMonster.at('0xde4a3cc424e270e7bba00b59114c07eb6d388714');
     const monsterBorn = taskMonsterInstance.monsterBorn({}, { fromBlock: 0});
     monsterBorn.watch(function(error, result){
-      console.log("on watch"); 
+      console.log("on watch");
       if (!error) {
         console.log(result);
         this.setState({eventResult: result})
@@ -98,7 +98,7 @@ class TaskListForm extends React.Component {
           gender: this.state.newMonsterGender,
           user_id: this.state.user_id,
           nickname: this.state.newMonsterName
-      }), 
+      }),
       headers: {
         'Content-Type': 'application/json'
       },
@@ -111,15 +111,15 @@ class TaskListForm extends React.Component {
   }
 
   checkMonsterBirth(txHash) {
-    window.web3.eth.getTransaction(txHash, 
+    window.web3.eth.getTransaction(txHash,
       function(err, result) {
         if (result === null) {
           console.log(result);
           this.checkMonsterBirth(txHash);
         } else {
-          console.log(result); 
+          console.log(result);
           this.hatchMonster();
-        }  
+        }
       }.bind(this))
     }
 
@@ -127,7 +127,7 @@ class TaskListForm extends React.Component {
     const monsterBorn = taskMonsterInstance.monsterBorn({}, { fromBlock: 0});
     monsterBorn.watch(function(error, result){
       if (!error) {
-        console.log("on watch"); 
+        console.log("on watch");
         console.log(result);
         this.setState({eventResult: result})
       }
@@ -140,7 +140,7 @@ class TaskListForm extends React.Component {
       let combined = localStorage.id_token.concat(this.state.name)
       monsterBorn.watch(function(error, result){
       if (!error) {
-        console.log("on watch"); 
+        console.log("on watch");
         console.log(result);
         this.setState({eventResult: result})
       }
@@ -181,7 +181,7 @@ class TaskListForm extends React.Component {
                 <p>or</p>
 
                 <div>
-                  <Button variant="contained" onClick={(e) => this.startApp(window.web3, e)} color="default" className="nav">Get New Monster</Button>
+                  <Button variant="contained" onClick={(e) => this.startApp(window.web3, e)} color="default" className="newMonButton">Get New Monster</Button>
                 </div>
               </div>
     } else if (this.state.loadingNewMonster === true && this.state.monster !== '') {
@@ -199,7 +199,7 @@ class TaskListForm extends React.Component {
             <div>
               {this.loadImage()}
             </div>
-        
+
             <div>
               <TextField autoComplete="off" id="name" className="name" name="name" placeholder="Name your new list" value={this.state.name} onChange={this.handleChange} margin="normal" />
             </div>
@@ -220,7 +220,7 @@ class TaskListForm extends React.Component {
 
             <div>
               <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Create New List</Button>
-            </div> 
+            </div>
           </form>
         </Grid>
       <br/>

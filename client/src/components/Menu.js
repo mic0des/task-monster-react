@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {slide as Menu} from 'react-burger-menu';
 import {decorator as reduxBurgerMenu} from 'redux-burger-menu';
+import Avatar from '@material-ui/core/Avatar';
 
 class Parent extends Component {
   constructor (props) {

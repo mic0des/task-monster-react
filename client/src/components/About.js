@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { scrollPage } from '../actions/page';
+import Footer from './Footer';
 
 class About extends Component {
 
@@ -37,6 +38,38 @@ class About extends Component {
 	render(){
 		const opacity = window.scrollY / 500
 		return (
+			<div>
+			<div className="loggedOutResponsive">
+
+					<h2 className="responsiveFirst"><Typography style={{fontWeight: "700", color: "#3f51b5"}} variant="display2">Stay productive,</Typography></h2>
+					 <h2 className="responsiveFirst"><Typography style={{fontWeight: "700", color: "#3f51b5"}} variant="display2">Make monster friends!</Typography></h2>
+					 <h3><Typography style={{fontWeight: "700", color: "#3f51b5"}} variant="headline">Powered by the Ξthereum blockchain. ♦</Typography></h3>
+					 <Grid container spacing={12} alignItems="center" direction="row" justify="flex-start">
+					 		<Grid item xs={6}>
+					 			<img alt="cat monster" src="/Schrodinger-Normal.gif" height="110px" width="140.50px"/>
+					 		</Grid>
+					 		<Grid item xs={6}>
+					 			<img className="leafMonster" alt="leaf monster" src="/Leaflet-Happy.gif" height="130px" width="140.50px" style={{marginLeft: "-9em", marginTop: "0.2em"}} />
+					 		</Grid>
+					 	</Grid>
+					 	<h2 className="responsiveHeading"><Typography className="responsiveOne" style={{fontWeight: "700", color: "#3f51b5"}} variant="display2">Make to-do lists, and track progress!</Typography></h2>
+					 	<img className="responsiveMon" src="/blue-seed.png" style={{marginTop: "2em"}} height="50px" width="50px" alt=""/>
+					 	<Typography style={{color: "#3bbbfa"}} variant="subheading">Organize your tasks into multiple lists, set deadlines, then check off to-do items to track your progress in real-time!</Typography>
+					 	<h2 className="responsiveHeading"><Typography style={{fontWeight: "700", color: "#128678"}} variant="display2">Check off tasks, and watch your monsters grow!</Typography></h2>
+					 	<img className="responsiveMon" src="/halloween.png" style={{marginTop: "5.5em", marginLeft: "0em"}} height="50px" width="50px" alt=""/>
+					 	<Typography style={{color: "#1ec17b"}} variant="subheading">With every to-do item checked off, your monsters get stronger! Don't miss deadlines to keep your monsters healthy and happy!</Typography>
+					 	<h2 className="responsiveHeading"><Typography style={{fontWeight: "700", color: "#e8a13d"}} variant="display2">Keep track of task deadlines at a glance in Calendar!</Typography></h2>
+						<img className="responsiveMon" src="/fsm.png" style={{marginTop: "5em"}} height="50px" width="50px" alt=""/>
+						<Typography style={{color: "#fec536"}} variant="subheading">Using Calendar View, you can view your deadlines clearly for effective prioritizing, or export to Google Calendar!</Typography>
+						<br/>
+						<br/>
+						<h2><Typography className="responsiveHeading" style={{textAlign: "center", fontWeight: "700", color: "#4A4A4A"}} variant="display2">So... Ready to get stuff done and collect digital pets on the blockchain?</Typography></h2>
+        		<Button style={{width: "100%"}} variant="contained" size="large" color="primary">
+          		<Link style={{textDecoration: "none", color: "#fff"}} to="/signup" exact>
+          			SIGN UP NOW!
+          		</Link>
+        		</Button>
+			</div>
 			<div className="loggedOut">
 				<Grid container spacing={24} alignItems="center" direction="row" justify="flex-start">
 					<Grid item xs={6} style={{position: "relative"}}>
@@ -199,7 +232,9 @@ class About extends Component {
 				<br/>
 				<br/>
 				<br/>
+				<Footer />
 
+			</div>
 			</div>
 		)
 	}

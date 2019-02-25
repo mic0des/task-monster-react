@@ -75,7 +75,7 @@ class SignInForm extends Component {
             </div>
             <br />
             <div>
-              <Button variant="contained" onClick={this.handleSubmit} color="primary" className="nav">Log In</Button>
+              <Button variant="contained" onClick={this.handleSubmit} color="primary" className="signInButton">Log In</Button>
             </div>
           </form>
           <br />

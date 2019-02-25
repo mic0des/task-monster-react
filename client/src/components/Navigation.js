@@ -36,10 +36,10 @@ const Navigation = (props) => {
         </Button>
         <Button className="nav" onClick={signOut}>Log Out</Button>
         <Menu className="responsiveMenu" right width={'20%'} onClick={() => this.closeMenu()} customBurgerIcon={ <img src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png" width="128"/> }>
-          <a>Tasks</a>
-          <a>New Task</a>
-          <a>📅</a>
-          <a>LogOut</a>
+          <a href="/">Tasks</a>
+          <a href="/newtask">New Task</a>
+          <a href="/calendar">📅</a>
+          <a href="/" onClick={signOut}>LogOut</a>
         </Menu>
       </Grid>
     } else {
@@ -54,9 +54,9 @@ const Navigation = (props) => {
           <Link style={{textDecoration: "none", color: "rgba(0, 0, 0, 0.87)"}} to="/signup" exact>Sign Up</Link>
         </Button>
         <Menu className="responsiveMenu" right width={'20%'} customBurgerIcon={ <img className="burger" src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png"  width="128"/> }>
-          <a>About</a>
-          <a>Sign In</a>
-          <a>Sign Up</a>
+          <a href="/">About</a>
+          <a href="/signin">Sign In</a>
+          <a href="/signup">Sign Up</a>
         </Menu>
       </Grid>
     }

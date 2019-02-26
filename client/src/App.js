@@ -17,28 +17,40 @@ import history from './history';
 import { fetchTaskLists } from './actions/taskLists';
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
+import Popup from './components/Popup'
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      showPopup: false
+    };
+  }
 
   componentWillMount = () => {
     if (typeof web3 !== 'undefined') {
       // startApp(web3);
       console.log('loaded!');
-      <SweetAlert
-        success
-        title="Woot!"
-        onConfirm={this.hideAlert}
-      >
-        I did it!
-      </SweetAlert>
     } else {
       // Warn the user that they need to get a web3 browser
       // Or install MetaMask, maybe with a nice graphic.
-      alert('Please download MetaMask to use this dApp');
+      // alert('Please download MetaMask to use this dApp');
+      document.body.classList.add('noScroll');
+      this.setState({
+        showPopup: true
+      })
     }
     if (this.props.auth.isAuthenticated === true) {
         let url = `http://localhost:3001/users/${parseJwt(localStorage.id_token).user_id}/task_lists`
         this.props.fetchTaskLists(url)
+    }
+  }
+
+  metaMask = () => {
+    if (this.state.showPopup === true) {
+      return <Popup />
+    } else {
+      null
     }
   }
 
@@ -57,6 +69,7 @@ class App extends Component {
           <div>
           <Navigation homePage={this.homePage} user={this.props.auth.isAuthenticated === true ? parseJwt(localStorage.id_token).user_id : 'guest'} />
           <br/>
+          {this.metaMask()}
           {this.homePage()}
           <Route exact path="/signup" component={SignUpForm} />
           <Route exact path="/signin" component={SignInForm} />
